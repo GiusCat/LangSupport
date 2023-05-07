@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">LangSupport</string>
+    <string name="e_mail_address">E-mail address</string>
+    <string name="password">Password</string>
 </resources>
