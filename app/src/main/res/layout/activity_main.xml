@@ -45,7 +45,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="SIGN IN"
-        app:layout_constraintTop_toBottomOf="@id/password"
         app:layout_constraintBottom_toTopOf="@id/sign_up"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -55,7 +54,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="SIGN UP"
-        app:layout_constraintTop_toBottomOf="@id/sign_in"
+        app:layout_constraintBottom_toTopOf="@id/sign_out"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/sign_out"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="SIGN OUT"
+        app:layout_constraintBottom_toTopOf="@id/fetch"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/fetch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="FETCH DATA"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
