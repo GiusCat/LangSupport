@@ -4,60 +4,150 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/small_margin"
+    android:layout_marginTop="@dimen/large_margin"
+    android:layout_marginEnd="@dimen/small_margin"
+    android:layout_marginBottom="@dimen/large_margin"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/email"
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:id = "@+id/firstSectionMain"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/email"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:autofillHints="emailAddress"
-        android:inputType="textEmailAddress"
-        android:hint="@string/e_mail_address"
-        app:layout_constraintTop_toBottomOf="@id/text"
-        app:layout_constraintBottom_toTopOf="@id/password"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHeight_percent="0.1">
 
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:autofillHints="password"
-        android:inputType="textPassword"
-        android:hint="@string/password"
-        app:layout_constraintTop_toBottomOf="@id/email"
-        app:layout_constraintBottom_toTopOf="@id/sign_in"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <EditText
+            android:id = "@+id/InsertWordTranslate"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:hint="@string/insert_word_to_translate"
+            app:layout_constraintLeft_toLeftOf="@id/firstSectionMain"
+            app:layout_constraintBottom_toBottomOf="@id/firstSectionMain"
+            app:layout_constraintTop_toTopOf="@id/firstSectionMain"
+            android:layout_marginStart="@dimen/large_margin"/>
 
-    <Button
-        android:id="@+id/sign_in"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="SIGN IN"
-        app:layout_constraintTop_toBottomOf="@id/password"
-        app:layout_constraintBottom_toTopOf="@id/sign_up"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@+id/InsertWordTranslate"
+            app:layout_constraintRight_toRightOf="@+id/firstSectionMain"
+            app:layout_constraintBottom_toBottomOf="@id/firstSectionMain"
+            app:layout_constraintTop_toTopOf="@id/firstSectionMain"
+            android:text="@string/translate"
+            android:onClick="Verify_Translate_Word"
+            android:layout_marginEnd="@dimen/large_margin"
+            android:layout_marginStart="@dimen/large_margin"
+        />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
-        android:id="@+id/sign_up"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="SIGN UP"
-        app:layout_constraintTop_toBottomOf="@id/sign_in"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:id = "@+id/secondSectionMain"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/firstSectionMain"
+        app:layout_constraintHeight_percent="0.3">
+
+        <org.eazegraph.lib.charts.PieChart
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/piechart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/large_margin"
+            android:layout_marginStart="@dimen/large_margin"
+            android:layout_marginEnd="@dimen/large_margin"
+            android:layout_marginBottom="@dimen/large_margin"
+            app:layout_constraintRight_toRightOf="@id/secondSectionMain"
+            app:layout_constraintLeft_toLeftOf="@id/secondSectionMain"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:id = "@+id/LegendPieChartSection"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/secondSectionMain"
+        app:layout_constraintHeight_percent="0.1">
+
+        <View
+            android:id = "@+id/redView"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@color/Red"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="@id/LegendPieChartSection"
+            app:layout_constraintEnd_toStartOf="@id/redText"
+            />
+        <TextView
+            android:id = "@+id/redText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/guessed_words"
+            app:layout_constraintBottom_toBottomOf="@id/LegendPieChartSection"
+            app:layout_constraintTop_toTopOf="@id/LegendPieChartSection"
+            app:layout_constraintStart_toEndOf="@id/redView"
+            app:layout_constraintEnd_toStartOf="@id/BlueView"
+            />
+
+        <View
+            android:id = "@+id/BlueView"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@color/Blue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/redText"
+            app:layout_constraintEnd_toStartOf="@id/blueText"
+            />
+
+        <TextView
+            android:id = "@+id/blueText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/wrong_words"
+            app:layout_constraintBottom_toBottomOf="@id/LegendPieChartSection"
+            app:layout_constraintTop_toTopOf="@id/LegendPieChartSection"
+            app:layout_constraintStart_toEndOf="@id/BlueView"
+            app:layout_constraintEnd_toEndOf="@id/LegendPieChartSection"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:id = "@+id/thirdSectionMain"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/LegendPieChartSection"
+        app:layout_constraintHeight_percent="0.4">
+
+        <ListView
+            android:id="@+id/listViewLastWords"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/large_margin"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:divider="@color/purple"
+            android:dividerHeight="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
