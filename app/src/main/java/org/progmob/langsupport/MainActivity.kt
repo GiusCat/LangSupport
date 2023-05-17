@@ -32,9 +32,12 @@ class MainActivity : AppCompatActivity() {
 
         binding.fetch.setOnClickListener { viewModel.fetchLanguages() }
 
+        binding.search.setOnClickListener {
+            startActivity(Intent(this, SearchActivity::class.java))
+        }
+
         binding.fetch.setOnLongClickListener {
-            val intent = Intent(this, DataActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, DataActivity::class.java))
             true
         }
 

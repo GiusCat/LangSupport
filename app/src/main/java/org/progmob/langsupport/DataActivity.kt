@@ -41,8 +41,9 @@ class DataActivity : AppCompatActivity() {
             return null
         }
 
+        // TODO: dynamic language selection
         val lang = repository.fb.firestore.collection("languages").document("de")
-        val newWord = WordData( word, trans, lang, info)
+        val newWord = WordData( word, listOf(trans), lang, info)
 
         repository.setNewWord(newWord)
         return newWord
