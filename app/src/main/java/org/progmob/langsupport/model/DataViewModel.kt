@@ -19,7 +19,7 @@ class DataViewModel: ViewModel() {
             loadedWords.value = newListFromCurrent(loadedWords.value!!).apply { add(it) }
         }
         repo.languages.observeForever { languages.value = it }
-
+        repo.lastSearchedWords.observeForever { loadedWords.value = it }
     }
 
     fun signUpUser(email: String, password: String) {
@@ -42,6 +42,12 @@ class DataViewModel: ViewModel() {
     fun fetchLanguages() {
         viewModelScope.launch(Dispatchers.IO) {
             repo.fetchLanguages()
+        }
+    }
+
+    fun fetchWords(s: CharSequence?) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.searchWords(s)
         }
     }
 
