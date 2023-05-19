@@ -13,14 +13,23 @@
         android:theme="@style/Theme.LangSupport"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".MainNav"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <nav-graph android:value="@navigation/mobile_nav" />
         </activity>
+
+        <activity
+            android:name=".PopUp"
+            android:exported="true">
+
+        </activity>
+
     </application>
 
 </manifest>

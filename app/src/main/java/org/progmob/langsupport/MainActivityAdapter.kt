@@ -4,8 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.TextView
+import android.widget.ArrayAdapter
 
 class MainActivityAdapter(context: Context, textViewResourceId: Int, wordsList: MutableList<ActivityData>) : ArrayAdapter<ActivityData> (context, textViewResourceId, wordsList) {
 
@@ -18,11 +18,11 @@ class MainActivityAdapter(context: Context, textViewResourceId: Int, wordsList: 
             view = inflater.inflate(R.layout.activity_list_item, parent, false)
         }
         val words = getItem(position)
-        showWords(context, view!!, words)
+        showWords(view!!, words)
         return view
     }
 
-    fun showWords(context: Context, view: View, WordsData: ActivityData?) {
+    fun showWords(view: View, WordsData: ActivityData?) {
         if (WordsData != null) {
 
             val italianWord = view.findViewById<TextView>(R.id.italianWord)

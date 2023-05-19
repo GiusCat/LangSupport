@@ -5,7 +5,9 @@
     <string name="guessed_words">Guessed Words</string>
     <string name="wrong_words">Wrong Words</string>
     <string name="home">Home</string>
-    <string name="prova">prova</string>
+    <string name="prova">Prova</string>
     <string name="e_mail_address">Email Address</string>
     <string name="password">Password</string>
+    <string name="Stats">stats</string>
+    <string name="inserisci_traduzione">Inserisci traduzione</string>
 </resources>
