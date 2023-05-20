@@ -22,18 +22,12 @@ class MainActivity : Fragment(){
 
     val MSG: String? = this::class.simpleName
     val MSG2: String? = this::class.simpleName
-    val MSG4: String? = this::class.simpleName
 
     var translator:Translator? = null
     var wordTr:String? = null
 
     var mycontext:Context? = null
 
-    var guessed:String? = null
-    companion object{
-        //extra message in questo modo è dichiarato come statica
-        val Extra_MSG:String = "org.progmob.langsupport"
-    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -51,9 +45,6 @@ class MainActivity : Fragment(){
             Verify_Translate_Word()
         }
 
-        view.findViewById<View>(R.id.tryButton)?.setOnClickListener {
-            Verify_Try()
-        }
          val model = TranslatorOptions.Builder().setSourceLanguage(TranslateLanguage.GERMAN).setTargetLanguage(TranslateLanguage.ITALIAN).build()
 
          val itaGerTrans: Translator = Translation.getClient(model)
@@ -113,15 +104,7 @@ class MainActivity : Fragment(){
         }
 
     }
-
-    fun Verify_Try() {
-
-        translator?.translate(wordTr.toString())?.addOnSuccessListener {
-            translatedText -> ConfirmRightWrong(translatedText)
-        }?.addOnFailureListener { exception -> Log.i(MSG2, "not found") }
-    }
-
-    private fun modifyListWords(translatedWord: String){
+    public fun modifyListWords(translatedWord: String){
 
         val newWords = mutableListOf<ActivityData>()
         val wordToTraslate = getView()?.findViewById<EditText>(R.id.InsertWordTranslate)
@@ -140,9 +123,9 @@ class MainActivity : Fragment(){
 
         //aggiungiamo la nuova parola cercata al primo posto e le due vecchie di seguito
         if(wordToTraslate?.text.toString() == translatedWord)
-            newWords.add(ActivityData(wordToTraslate?.text.toString(), "not found"))
+            newWords.add(ActivityData(this.wordTr.toString(), "not found"))
         else
-            newWords.add(ActivityData(wordToTraslate?.text.toString(), translatedWord))
+            newWords.add(ActivityData(this.wordTr.toString(), translatedWord))
 
         newWords.add(ActivityData(oldFirstWord?.text.toString(), oldSecondWord?.text.toString()))
         newWords.add(ActivityData(oldFirstWord2?.text.toString(), oldSecondWord2?.text.toString()))
@@ -157,17 +140,6 @@ class MainActivity : Fragment(){
         //svuotiamo la casella di inserimento dopo l'inserimento in lista
         wordToTraslate?.setText("")
     }
-
-    private fun ConfirmRightWrong(translatedText: String?) {
-
-        val translated:String = getActivity()?.findViewById<EditText>(R.id.tryTranslate)?.text.toString()
-
-        if(translated == translatedText) this.guessed == "guessed"
-        else this.guessed == "unguessed"
-
-        Log.i(MSG, guessed.toString())
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         this.translator?.close()

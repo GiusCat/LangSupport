@@ -1,13 +1,15 @@
 package org.progmob.langsupport
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.google.mlkit.nl.translate.Translator
 
 class PopUp(wordTr: String, translator: Translator?) : DialogFragment() {
@@ -36,10 +38,16 @@ class PopUp(wordTr: String, translator: Translator?) : DialogFragment() {
         tryButton.setOnClickListener {
             val tryText = tryEditText.text.toString()
             tryText.lowercase()
-            if(tryText == translation?.lowercase())
-                Log.i(MSG, "Indovinato")
-            else
-                Log.i(MSG, "Sbagliato")
+            if(tryText == translation?.lowercase()) {
+                this.dismiss()
+
+                val showPop = Right_PopUp(translation!!, wordTrans, true)
+                showPop.show((activity as AppCompatActivity).supportFragmentManager, "showRight")
+            }
+            else {
+                val showPop = Right_PopUp(translation!!, wordTrans, false)
+                showPop.show((activity as AppCompatActivity).supportFragmentManager, "showRight")
+            }
         }
     }
 

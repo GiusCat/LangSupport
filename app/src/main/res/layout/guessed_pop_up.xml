@@ -7,7 +7,6 @@
     android:layout_height="wrap_content"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintBottom_toBottomOf="parent"
-    android:background="@color/lightGreen"
     tools:context=".MainActivity"
     >
 
@@ -15,7 +14,6 @@
         android:id = "@+id/textGuessedFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bravo! Hai Indovinato"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,9 +33,20 @@
         app:layout_constraintEnd_toStartOf="@id/itaWordGuessed"
         app:layout_constraintBottom_toTopOf="@id/exit"
         android:layout_marginTop="@dimen/large_margin"
-        android:layout_marginBottom="@dimen/small_margin"
+        android:layout_marginBottom="@dimen/large_margin"
         android:layout_marginStart="@dimen/large_margin"
         android:layout_marginEnd = "@dimen/large_margin"
+        />
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:src="@mipmap/ic_right_arrow2"
+        app:layout_constraintTop_toBottomOf="@id/textGuessedFragment"
+        app:layout_constraintStart_toEndOf="@id/tedWordGuessed"
+        app:layout_constraintEnd_toStartOf="@id/itaWordGuessed"
+        app:layout_constraintBottom_toTopOf="@id/exit"
+
         />
 
     <TextView
@@ -49,7 +58,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/exit"
         android:layout_marginTop="@dimen/large_margin"
-        android:layout_marginBottom="@dimen/small_margin"
+        android:layout_marginBottom="@dimen/large_margin"
         android:layout_marginStart="@dimen/large_margin"
         android:layout_marginEnd = "@dimen/large_margin"
         />
