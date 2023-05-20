@@ -3,10 +3,10 @@ package org.progmob.langsupport.adapter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import org.progmob.langsupport.databinding.SearchListItemBinding
 import org.progmob.langsupport.model.WordData
-import kotlin.math.max
 
 class SearchListAdapter(private var dataSet: List<WordData>) :
     RecyclerView.Adapter<SearchListViewHolder>() {
@@ -32,9 +32,25 @@ class SearchListAdapter(private var dataSet: List<WordData>) :
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
 
-    // Returns the number of items changed in the list
-    fun setWordsList(l: List<WordData>): Int {
-        return max(dataSet.size, l.size).also { dataSet = l }
+    fun setWordsList(l: List<WordData>) {
+        val oldList = dataSet.also { dataSet = l }
+        if(oldList.isEmpty()) {
+            notifyItemRangeInserted(0, l.size)
+            return
+        }
+        DiffUtil.calculateDiff(object : DiffUtil.Callback() {
+
+            override fun getOldListSize(): Int = oldList.size
+
+            override fun getNewListSize(): Int = l.size
+
+            override fun areItemsTheSame(oldPos: Int, newPos: Int): Boolean =
+                oldList[oldPos].word == l[newPos].word
+
+            override fun areContentsTheSame(oldPos: Int, newPos: Int): Boolean =
+                oldList[oldPos].word == l[newPos].word
+
+        }).dispatchUpdatesTo(this)
     }
 
 }

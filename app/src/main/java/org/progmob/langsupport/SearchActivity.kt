@@ -43,9 +43,8 @@ class SearchActivity : AppCompatActivity() {
         }
 
         viewModel.loadedWords.observe(this) {
-            val itemsChanged = searchListAdapter.setWordsList(it.toList())
-            // searchListAdapter.notifyItemRangeChanged(0, itemsChanged)
-            searchListAdapter.notifyDataSetChanged()
+            searchListAdapter.setWordsList(it.toList())
+            // searchListAdapter.notifyDataSetChanged()
         }
     }
 }
