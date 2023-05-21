@@ -26,9 +26,10 @@ import org.progmob.langsupport.model.WordData
 
 
 class SearchFragment : Fragment() {
-    // TODO: TranslatorViewModel and TranslatorRepository
+    // TODO: TranslatorViewModel (?) and TranslatorRepository
     private lateinit var binding: FragmentSearchBinding
     private lateinit var searchListAdapter: SearchListAdapter
+    private lateinit var searchText: Editable
     private val viewModel: DataViewModel by viewModels()
 
     private var translator:Translator? = null
@@ -41,6 +42,7 @@ class SearchFragment : Fragment() {
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentSearchBinding.inflate(inflater, container, false)
+        searchText = binding.searchEdit.text
         return binding.root
     }
 
@@ -76,7 +78,7 @@ class SearchFragment : Fragment() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                viewModel.fetchWords(s)
+                viewModel.fetchWords(s?.trim())
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -96,7 +98,7 @@ class SearchFragment : Fragment() {
 
             // I can't add a word which is already added
             binding.addButton.isEnabled = it.count {
-                el -> el.wordIndex.equals(binding.searchEdit.text.toString(), ignoreCase = true)
+                el -> el.wordIndex.equals(searchText.toString().trim(), ignoreCase = true)
             } == 0
         }
     }

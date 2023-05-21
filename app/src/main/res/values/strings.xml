@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ProgMob Project</string>
+    <string name="app_name">LangBuddy</string>
     <string name="insert_word_to_translate">Insert Word to Translate</string>
     <string name="translate">Translate</string>
     <string name="guessed_words">Guessed Words</string>
@@ -10,4 +10,9 @@
     <string name="password">Password</string>
     <string name="stats">Stats</string>
     <string name="inserisci_traduzione">Inserisci traduzione</string>
+    <string name="main_flag_desc">Main Language Flag</string>
+    <string name="foreign_flag_desc">Foreign Language Flag</string>
+    <string name="sign_in_btn">Sign In</string>
+    <string name="sign_up_btn">Sign Up</string>
+    <string name="last_words_label">Last searched words</string>
 </resources>
