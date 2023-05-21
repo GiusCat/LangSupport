@@ -1,63 +1,59 @@
 package org.progmob.langsupport
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.progmob.langsupport.databinding.ActivityMainBinding
 import org.progmob.langsupport.model.DataViewModel
+
+/*
+* TODO:
+*  - Re-implement word adding (with timestamp in WordData!!)
+*  - Fix word guessing (pop-up is currently based on translator)
+*  - Implement TranslatorRepository and clear SearchFragment
+*  - Implement StatsFragment (it's present but without real data)
+*  - User management... somewhere (sign-out, name, other things?)
+*/
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val viewModel: DataViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
+        if(!viewModel.isUserSignedIn())
+            launchLoginActivity()
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
 
-        binding.signUp.setOnClickListener {
-            viewModel.signUpUser(
-                binding.email.text.toString(),
-                binding.password.text.toString())
-        }
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.my_nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
 
-        binding.signIn.setOnClickListener {
-            viewModel.signInUser(
-                binding.email.text.toString(),
-                binding.password.text.toString())
-        }
-
-        binding.signOut.setOnClickListener { viewModel.signOutUser() }
-
-        binding.fetch.setOnClickListener { viewModel.fetchLanguages() }
-
-        binding.search.setOnClickListener {
-            startActivity(Intent(this, SearchActivity::class.java))
-        }
-
-        binding.fetch.setOnLongClickListener {
-            startActivity(Intent(this, DataActivity::class.java))
-            true
-        }
+        setupBottomNavMenu(navController)
+        navController.addOnDestinationChangedListener{ _, _, _ -> /* ... */ }
 
         viewModel.currUser.observe(this) {
-            if(it != null)
-                binding.text.text = "Signed in as ${it.email}"
-            else
-                binding.text.text = "Signed out from user"
-        }
-
-        viewModel.languages.observe(this) {
-            var s = ""
-            for (document in it) {
-                s += "${document.value} => ${document.key}\n"
-            }
-            binding.text.text = s
+            if(!viewModel.isUserSignedIn())
+                launchLoginActivity()
         }
     }
 
-    companion object {
-        private const val TAG = "MainActivity"
+    private fun setupBottomNavMenu(navController: NavController) {
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav_view)
+        bottomNav.setupWithNavController(navController)
+    }
+
+    private fun launchLoginActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
     }
 }

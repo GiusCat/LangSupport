@@ -1,4 +1,4 @@
-package org.progmob.langsupport.adapter
+package org.progmob.langsupport.adapter.searchlist
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,8 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import org.progmob.langsupport.databinding.SearchListItemBinding
 import org.progmob.langsupport.model.WordData
 
-class SearchListAdapter(private var dataSet: List<WordData>) :
-    RecyclerView.Adapter<SearchListViewHolder>() {
+class SearchListAdapter(
+    private var dataSet: List<WordData> = listOf(),
+    private val listener: (WordData) -> Unit
+) : RecyclerView.Adapter<SearchListViewHolder>() {
 
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): SearchListViewHolder {
@@ -21,11 +23,11 @@ class SearchListAdapter(private var dataSet: List<WordData>) :
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: SearchListViewHolder, position: Int) {
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
-        viewHolder.textView.text = dataSet[position].word
+        val item = dataSet[position]
+        viewHolder.textView.text = item.word
+        viewHolder.root.setOnClickListener { listener(item) }
         viewHolder.button.setOnClickListener {
-            Log.i("ViewHolder", "Clicked word ${dataSet[position]}")
+            Log.i("ViewHolder", "Clicked word $item")
         }
     }
 
@@ -52,5 +54,4 @@ class SearchListAdapter(private var dataSet: List<WordData>) :
 
         }).dispatchUpdatesTo(this)
     }
-
 }

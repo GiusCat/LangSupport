@@ -15,19 +15,33 @@
 
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <nav-graph android:value="@navigation/mobile_nav" />
         </activity>
+
+        <!-- Use this to avoid the EditText upwards shift -->
+        <activity android:name=".LoginActivity"
+            android:windowSoftInputMode="adjustPan"/>
 
         <activity android:name=".DataActivity" />
 
         <!-- Use this to avoid the EditText upwards shift -->
         <activity android:name=".SearchActivity"
             android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".PopUp"
+            android:exported="true">
+
+        </activity>
+
     </application>
 
 </manifest>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/search_fragment">
+    <fragment
+        android:id="@+id/search_fragment"
+        android:label="@string/home"
+        android:name="org.progmob.langsupport.SearchFragment"
+        tools:layout="@layout/fragment_search">
+
+        <action
+            android:id="@+id/next_action"
+            app:destination="@+id/stats_fragment">
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/stats_fragment"
+        android:name="org.progmob.langsupport.StatsFragment"
+        tools:layout="@layout/fragment_stats">
+
+        <action
+            android:id="@+id/next_action"
+            app:destination="@+id/search_fragment">
+        </action>
+    </fragment>
+
+
+
+
+</navigation>

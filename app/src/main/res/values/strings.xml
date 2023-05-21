@@ -1,5 +1,13 @@
 <resources>
-    <string name="app_name">LangSupport</string>
-    <string name="e_mail_address">E-mail address</string>
+    <string name="app_name">ProgMob Project</string>
+    <string name="insert_word_to_translate">Insert Word to Translate</string>
+    <string name="translate">Translate</string>
+    <string name="guessed_words">Guessed Words</string>
+    <string name="wrong_words">Wrong Words</string>
+    <string name="home">Home</string>
+    <string name="prova">Prova</string>
+    <string name="e_mail_address">Email Address</string>
     <string name="password">Password</string>
+    <string name="stats">Stats</string>
+    <string name="inserisci_traduzione">Inserisci traduzione</string>
 </resources>

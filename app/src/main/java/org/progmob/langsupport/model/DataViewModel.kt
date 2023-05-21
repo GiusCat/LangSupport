@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -49,6 +50,10 @@ class DataViewModel: ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             repo.searchWords(s)
         }
+    }
+
+    fun isUserSignedIn(): Boolean {
+        return repo.fb.auth.currentUser != null
     }
 
 

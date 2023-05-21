@@ -5,5 +5,8 @@
     <color name="red">#FFFF0000</color>
     <color name="green">#FF00FF00</color>
     <color name="blue">#FF0000FF</color>
-
+    <color name="purple">#5C2E91</color>
+    <color name="lightPurple">#CBC3E3</color>
+    <color name="lightGreen">#90EE90</color>
+    <color name="lightRed">#A91B0D</color>
 </resources>

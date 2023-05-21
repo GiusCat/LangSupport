@@ -7,14 +7,14 @@ import android.text.TextWatcher
 import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import org.progmob.langsupport.adapter.SearchListAdapter
+import org.progmob.langsupport.adapter.searchlist.SearchListAdapter
 import org.progmob.langsupport.databinding.ActivitySearchBinding
 import org.progmob.langsupport.model.DataViewModel
 
 class SearchActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySearchBinding
     private val viewModel: DataViewModel by viewModels()
-    private val searchListAdapter = SearchListAdapter(listOf())
+    private val searchListAdapter = SearchListAdapter {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
