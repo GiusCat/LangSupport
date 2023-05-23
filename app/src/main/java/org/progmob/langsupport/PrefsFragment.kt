@@ -2,7 +2,6 @@ package org.progmob.langsupport
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,7 @@ import android.widget.ImageButton
 import android.widget.ListView
 import androidx.fragment.app.Fragment
 
-class PrefActivity: Fragment() {
+class PrefsFragment: Fragment() {
 
     var mycontext: Context? = null
 
@@ -20,7 +19,7 @@ class PrefActivity: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         mycontext = container?.context
-        return inflater.inflate(R.layout.activity_prefs, container, false)
+        return inflater.inflate(R.layout.fragment_prefs, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

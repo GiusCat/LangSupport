@@ -30,8 +30,8 @@
     <fragment
         android:id="@+id/prefs_step"
         android:label="Prefs"
-        android:name="org.progmob.langsupport.PrefActivity"
-        tools:layout="@layout/activity_prefs">
+        android:name="org.progmob.langsupport.PrefsFragment"
+        tools:layout="@layout/fragment_prefs">
     <argument
         android:name="flowStepNumber"
         app:argType="integer"
