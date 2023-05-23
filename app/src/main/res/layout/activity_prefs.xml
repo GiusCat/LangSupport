@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/small_margin"
+    android:layout_marginTop="@dimen/large_margin"
+    android:layout_marginEnd="@dimen/small_margin"
+    android:layout_marginBottom="@dimen/large_margin"
+    tools:context=".PrefActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:id = "@+id/firstSectionPrefs"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHeight_percent="0.1">
+
+        <EditText
+            android:id = "@+id/InsertWordPrefs"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:hint="Search a word searched"
+
+            app:layout_constraintLeft_toLeftOf="@id/firstSectionPrefs"
+            app:layout_constraintBottom_toBottomOf="@id/firstSectionPrefs"
+            app:layout_constraintTop_toTopOf="@id/firstSectionPrefs"
+            android:layout_marginStart="@dimen/large_margin"/>
+
+        <Button
+            android:id= "@+id/searchPrefsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/InsertWordPrefs"
+            app:layout_constraintEnd_toEndOf="@+id/firstSectionPrefs"
+            app:layout_constraintBottom_toBottomOf="@id/firstSectionPrefs"
+            app:layout_constraintTop_toTopOf="@id/firstSectionPrefs"
+            android:text="@string/search"
+            android:layout_marginEnd="@dimen/large_margin"
+            android:layout_marginStart="@dimen/large_margin"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:id = "@+id/secondSectionPrefs"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/firstSectionPrefs"
+        app:layout_constraintHeight_percent="0.8">
+
+        <ListView
+            android:id="@+id/listViewPrefs"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/large_margin"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:divider="@color/purple"
+            android:dividerHeight="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
