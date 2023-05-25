@@ -14,6 +14,9 @@ class MainActivityAdapter(
     wordsList: MutableList<WordData>
 ) : ArrayAdapter<WordData> (context, textViewResourceId, wordsList) {
 
+    companion object {
+        val MSG: String? = this::class.simpleName
+    }
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var view = convertView
 

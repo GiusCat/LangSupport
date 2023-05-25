@@ -7,86 +7,81 @@
     android:layout_height="wrap_content"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintBottom_toBottomOf="parent"
+    android:background="@color/lightPurple"
     tools:context=".OldMainActivity"
     >
 
     <TextView
-        android:id = "@+id/textGuessedFragment"
+        android:id = "@+id/textFragmentMeaning"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Aggiungi un significato alla parola:"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tedWordGuessed"
         android:layout_marginTop="@dimen/large_margin"
         android:layout_marginBottom="@dimen/small_margin"
         android:layout_marginStart="@dimen/large_margin"
         android:layout_marginEnd = "@dimen/large_margin"
-    />
-
-    <TextView
-        android:id = "@+id/tedWordGuessed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/textGuessedFragment"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/itaWordGuessed"
-        app:layout_constraintBottom_toTopOf="@id/exit"
-        android:layout_marginTop="@dimen/large_margin"
-        android:layout_marginBottom="@dimen/large_margin"
-        android:layout_marginStart="@dimen/large_margin"
-        android:layout_marginEnd = "@dimen/large_margin"
         />
 
-    <ImageView
-        android:layout_width="40dp"
-        android:layout_height="30dp"
-        android:src="@mipmap/ic_right_arrow2"
-        app:layout_constraintTop_toBottomOf="@id/textGuessedFragment"
-        app:layout_constraintStart_toEndOf="@id/tedWordGuessed"
-        app:layout_constraintEnd_toStartOf="@id/itaWordGuessed"
-        app:layout_constraintBottom_toTopOf="@id/exit"
-
-    />
 
     <TextView
-        android:id = "@+id/itaWordGuessed"
+        android:id = "@+id/wordToAddMean"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/textGuessedFragment"
-        app:layout_constraintStart_toEndOf="@id/tedWordGuessed"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/exit"
+        android:layout_height="48dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/newMeaning"
+        android:hint = "old word"
+        android:textSize="20dp"
         android:layout_marginTop="@dimen/large_margin"
-        android:layout_marginBottom="@dimen/large_margin"
         android:layout_marginStart="@dimen/large_margin"
         android:layout_marginEnd = "@dimen/large_margin"
+        android:layout_marginBottom="@dimen/large_margin"
+        />
+
+    <EditText
+        android:id = "@+id/newMeaning"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        app:layout_constraintStart_toEndOf="@id/wordToAddMean"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:hint = "Nuovo significato"
+
+        android:layout_marginStart="@dimen/large_margin"
+        android:layout_marginEnd = "@dimen/large_margin"
+        android:layout_marginBottom="@dimen/large_margin"
         />
 
     <Button
-        android:id = "@+id/exit"
+        android:id = "@+id/exitMeaningButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text = "X"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/addMean"
+        app:layout_constraintEnd_toStartOf="@id/addMeaningButton"
+        app:layout_constraintTop_toBottomOf="@id/wordToAddMean"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="@dimen/large_margin"
+        android:layout_marginStart="@dimen/large_margin"
         android:layout_marginTop="@dimen/large_margin"
         android:layout_marginEnd = "@dimen/large_margin"
-        android:layout_marginStart="@dimen/large_margin"
-       />
-
+    />
     <Button
-        android:id = "@+id/addMean"
+        android:id = "@+id/addMeaningButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text = "Aggiungi Significato"
-        app:layout_constraintStart_toEndOf="@id/exit"
+        android:text = "Aggiungi significato"
+        app:layout_constraintStart_toEndOf="@id/exitMeaningButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/wordToAddMean"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="@dimen/large_margin"
         android:layout_marginTop="@dimen/large_margin"
         android:layout_marginEnd = "@dimen/large_margin"
-        />
+    />
 </androidx.constraintlayout.widget.ConstraintLayout>

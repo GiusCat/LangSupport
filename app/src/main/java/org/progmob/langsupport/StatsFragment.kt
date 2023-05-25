@@ -33,7 +33,7 @@ class StatsFragment: Fragment() {
 
         val pie = getView()?.findViewById<PieChart>(R.id.piechart)
 
-        pie?.addPieSlice(PieModel("Guessed", 10F, Color.parseColor("#ff0000")))
-        pie?.addPieSlice(PieModel("Wrong", 20F, Color.parseColor("#0000ff")))
+        pie?.addPieSlice(PieModel("Guessed", 10F, Color.parseColor("#FF00FF00")))
+        pie?.addPieSlice(PieModel("Wrong", 20F, Color.parseColor("#FFFF0000")))
     }
 }

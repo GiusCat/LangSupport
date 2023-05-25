@@ -43,34 +43,34 @@
         app:layout_constraintHeight_percent="0.1">
 
         <View
-            android:id = "@+id/redView"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:background="@color/red"
+            android:id = "@+id/greenView"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@color/lightGreen"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="@id/LegendPieChartSection"
-            app:layout_constraintEnd_toStartOf="@id/redText"
+            app:layout_constraintEnd_toStartOf="@id/greenText"
             />
         <TextView
-            android:id = "@+id/redText"
+            android:id = "@+id/greenText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/guessed_words"
             app:layout_constraintBottom_toBottomOf="@id/LegendPieChartSection"
             app:layout_constraintTop_toTopOf="@id/LegendPieChartSection"
-            app:layout_constraintStart_toEndOf="@id/redView"
-            app:layout_constraintEnd_toStartOf="@id/BlueView"
+            app:layout_constraintStart_toEndOf="@id/greenView"
+            app:layout_constraintEnd_toStartOf="@id/RedView"
             />
 
         <View
-            android:id = "@+id/BlueView"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:background="@color/blue"
+            android:id = "@+id/RedView"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@color/red"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@id/redText"
+            app:layout_constraintStart_toEndOf="@id/greenText"
             app:layout_constraintEnd_toStartOf="@id/blueText"
             />
 
@@ -81,9 +81,100 @@
             android:text="@string/wrong_words"
             app:layout_constraintBottom_toBottomOf="@id/LegendPieChartSection"
             app:layout_constraintTop_toTopOf="@id/LegendPieChartSection"
-            app:layout_constraintStart_toEndOf="@id/BlueView"
+            app:layout_constraintStart_toEndOf="@id/RedView"
             app:layout_constraintEnd_toEndOf="@id/LegendPieChartSection"
             />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id = "@+id/TextStatsSection"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/LegendPieChartSection"
+        app:layout_constraintHeight_percent="0.5">
+
+        <TextView android:id = "@+id/paroleCercate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Parole cercate:      "
+            android:textSize="25dp"
+            android:textColor="@color/gray"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/paroleIndovinate"
+            android:layout_marginTop="@dimen/very_large_margin"
+            android:layout_marginStart="@dimen/large_margin"
+
+        />
+
+        <TextView android:id = "@+id/paroleCercateValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50"
+            android:textSize="25dp"
+            android:textColor="@color/lightPurple"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/paroleCercate"
+            app:layout_constraintBottom_toTopOf="@id/paroleIndovinateValue"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/very_large_margin"
+            android:layout_marginStart="@dimen/large_margin"
+        />
+
+        <TextView android:id = "@+id/paroleIndovinate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Parole indovinate: "
+            android:textSize="25dp"
+            android:textColor="@color/gray"
+            app:layout_constraintTop_toBottomOf="@id/paroleCercate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/paroleSbagliate"
+            android:layout_marginTop="@dimen/large_margin"
+            android:layout_marginStart="@dimen/large_margin"
+        />
+
+        <TextView android:id = "@+id/paroleIndovinateValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="30"
+            android:textSize="25dp"
+            android:textColor="@color/lightGreen"
+            app:layout_constraintTop_toBottomOf="@id/paroleCercateValue"
+            app:layout_constraintStart_toEndOf="@id/paroleIndovinate"
+            app:layout_constraintBottom_toTopOf="@id/paroleSbagliateValue"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/large_margin"
+            android:layout_marginStart="@dimen/large_margin"
+        />
+
+        <TextView android:id = "@+id/paroleSbagliate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Parole sbagliate:   "
+            android:textSize="25dp"
+            android:textColor="@color/gray"
+            app:layout_constraintTop_toBottomOf="@id/paroleIndovinate"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/large_margin"
+            android:layout_marginStart="@dimen/large_margin"
+        />
+
+        <TextView android:id = "@+id/paroleSbagliateValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20"
+            android:textSize="25dp"
+            android:textColor="@color/red"
+            app:layout_constraintTop_toBottomOf="@id/paroleIndovinateValue"
+            app:layout_constraintStart_toEndOf="@id/paroleSbagliate"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/large_margin"
+            android:layout_marginStart="@dimen/large_margin"
+        />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
