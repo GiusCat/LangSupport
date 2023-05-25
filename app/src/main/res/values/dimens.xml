@@ -2,4 +2,5 @@
 <resources>
     <dimen name="small_margin">8dp</dimen>
     <dimen name="large_margin">24dp</dimen>
+    <dimen name="very_large_margin">48dp</dimen>
 </resources>

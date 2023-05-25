@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentManager
 
 class Right_PopUp(translation: String, tedText: String, right: Boolean) : DialogFragment() {
 
@@ -51,12 +51,12 @@ class Right_PopUp(translation: String, tedText: String, right: Boolean) : Dialog
 
         exitButton.setOnClickListener {
             this.dismiss()
-            //val tmp =  MainActivity()
-            //tmp.modifyListWords(this.trans)
         }
 
         addMeaning.setOnClickListener {
 
+            val showPop = AddMeaningPopUp(tedText)
+            showPop.show((activity as AppCompatActivity).supportFragmentManager, "addMean")
         }
 
     }

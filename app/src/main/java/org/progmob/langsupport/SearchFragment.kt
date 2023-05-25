@@ -34,7 +34,6 @@ class SearchFragment : Fragment() {
 
     private var translator:Translator? = null
     private var wordTr:String? = null
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -138,7 +137,7 @@ class SearchFragment : Fragment() {
         }
 
     }
-    private fun modifyListWords(translatedWord: String){
+    public fun modifyListWords(translatedWord: String){
 
         val newWords = mutableListOf<WordData>()
         val wordToTraslate = getView()?.findViewById<EditText>(R.id.search_edit)
@@ -155,21 +154,25 @@ class SearchFragment : Fragment() {
         val oldFirstWord2:TextView? = oldSecond?.findViewById(R.id.foreign_word)
         val oldSecondWord2:TextView? = oldSecond?.findViewById(R.id.translated_word)
 
+
         //aggiungiamo la nuova parola cercata al primo posto e le due vecchie di seguito
         if(wordToTraslate?.text.toString() == translatedWord)
-            newWords.add(WordData(wordTr.toString()))
+            newWords.add(WordData(wordTr.toString(), listOf("not found")))
         else
-            newWords.add(WordData(wordTr.toString()))
+            newWords.add(WordData(wordTr.toString(), listOf(translatedWord)))
 
         newWords.add(WordData(oldFirstWord?.text.toString(), listOf(oldSecondWord?.text.toString())))
         newWords.add(WordData(oldFirstWord2?.text.toString(), listOf(oldSecondWord2?.text.toString())))
 
+
         //chiamate di default per adapter
 
         val adapter = MainActivityAdapter(requireContext(), R.layout.activity_list_item, newWords)
+        Log.i(MSG, translatedWord)
         val listView : ListView? = getView()?.findViewById(R.id.listViewLastWords)
         listView?.adapter = adapter
         adapter.notifyDataSetChanged()
+        Log.i(MSG, translatedWord)
 
         //svuotiamo la casella di inserimento dopo l'inserimento in lista
         wordToTraslate?.setText("")

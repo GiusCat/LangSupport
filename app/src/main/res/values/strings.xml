@@ -15,6 +15,6 @@
     <string name="sign_in_btn">Sign In</string>
     <string name="sign_up_btn">Sign Up</string>
     <string name="last_words_label">Last searched words</string>
-    <string name="search">search</string>
-    <string name="prefs">prefs\n</string>
+    <string name="search">Search</string>
+    <string name="prefs">Prefs\n</string>
 </resources>
