@@ -2,6 +2,7 @@ package org.progmob.langsupport
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import org.progmob.langsupport.databinding.ActivityLoginBinding
@@ -23,6 +24,12 @@ class LoginActivity : AppCompatActivity() {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
             }
+        }
+
+        // Exception handling in UI
+        viewModel.errorMsg.observe(this) {
+            if(!it.isNullOrEmpty())
+                Toast.makeText(applicationContext, it, Toast.LENGTH_SHORT).show()
         }
 
         binding.signUp.setOnClickListener {

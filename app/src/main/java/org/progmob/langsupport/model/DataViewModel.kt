@@ -7,12 +7,14 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 class DataViewModel: ViewModel() {
     private val repo = FirebaseRepository
     val loadedWords: MutableLiveData<MutableList<WordData>> = MutableLiveData(mutableListOf())
     val languages: MutableLiveData<Map<String, String>> = MutableLiveData(mapOf())
     val currUser: MutableLiveData<FirebaseUser> = MutableLiveData()
+    val errorMsg: MutableLiveData<String> = MutableLiveData()
 
     init {
         repo.currUser.observeForever { currUser.value = it }
@@ -25,13 +27,21 @@ class DataViewModel: ViewModel() {
 
     fun signUpUser(email: String, password: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            repo.signUpUser(email, password)
+            try {
+                repo.signUpUser(email, password)
+            } catch (e: Exception) {
+                errorMsg.postValue(e.message)
+            }
         }
     }
 
     fun signInUser(email: String, password: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            repo.signInUser(email, password)
+            try {
+                repo.signInUser(email, password)
+            } catch (e: Exception) {
+                errorMsg.postValue(e.message)
+            }
         }
     }
 
