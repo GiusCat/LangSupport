@@ -1,4 +1,4 @@
-package org.progmob.langsupport
+package org.progmob.langsupport.fragment
 
 import android.content.Context
 import android.graphics.Color
@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import org.eazegraph.lib.charts.PieChart
 import org.eazegraph.lib.models.PieModel
+import org.progmob.langsupport.R
 
 class StatsFragment: Fragment() {
 

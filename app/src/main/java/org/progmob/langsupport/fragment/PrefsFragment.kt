@@ -1,4 +1,4 @@
-package org.progmob.langsupport
+package org.progmob.langsupport.fragment
 
 import android.content.Context
 import android.os.Bundle
@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ListView
 import androidx.fragment.app.Fragment
+import org.progmob.langsupport.ActivityDataPrefs
+import org.progmob.langsupport.PrefsActivityAdapter
+import org.progmob.langsupport.R
 
 class PrefsFragment: Fragment() {
 

@@ -1,4 +1,4 @@
-package org.progmob.langsupport
+package org.progmob.langsupport.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +9,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import org.progmob.langsupport.R
 import org.progmob.langsupport.databinding.ActivityMainBinding
 import org.progmob.langsupport.model.DataViewModel
 

@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintBottom_toBottomOf="parent"
-    tools:context=".OldMainActivity"
+    tools:context=".activity.MainActivity"
     >
 
     <TextView

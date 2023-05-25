@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/search_fragment"
         android:label="@string/home"
-        android:name="org.progmob.langsupport.SearchFragment"
+        android:name="org.progmob.langsupport.fragment.SearchFragment"
         tools:layout="@layout/fragment_search">
 
         <action
@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/stats_fragment"
-        android:name="org.progmob.langsupport.StatsFragment"
+        android:name="org.progmob.langsupport.fragment.StatsFragment"
         tools:layout="@layout/fragment_stats">
 
         <action
@@ -30,7 +30,7 @@
     <fragment
         android:id="@+id/prefs_step"
         android:label="Prefs"
-        android:name="org.progmob.langsupport.PrefsFragment"
+        android:name="org.progmob.langsupport.fragment.PrefsFragment"
         tools:layout="@layout/fragment_prefs">
     <argument
         android:name="flowStepNumber"

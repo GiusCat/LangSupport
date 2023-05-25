@@ -1,4 +1,4 @@
-package org.progmob.langsupport
+package org.progmob.langsupport.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

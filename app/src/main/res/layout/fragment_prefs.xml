@@ -8,7 +8,7 @@
     android:layout_marginTop="@dimen/large_margin"
     android:layout_marginEnd="@dimen/small_margin"
     android:layout_marginBottom="@dimen/large_margin"
-    tools:context=".PrefsFragment">
+    tools:context=".fragment.PrefsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
 

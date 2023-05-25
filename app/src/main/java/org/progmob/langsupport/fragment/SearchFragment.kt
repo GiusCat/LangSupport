@@ -1,4 +1,4 @@
-package org.progmob.langsupport
+package org.progmob.langsupport.fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import org.progmob.langsupport.GuessPopUp
+import org.progmob.langsupport.activity.DataActivity
 import org.progmob.langsupport.adapter.searchlist.SearchListAdapter
 import org.progmob.langsupport.databinding.FragmentSearchBinding
 import org.progmob.langsupport.model.DataViewModel
