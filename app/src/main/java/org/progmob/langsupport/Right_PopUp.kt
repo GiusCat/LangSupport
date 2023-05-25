@@ -22,7 +22,7 @@ class Right_PopUp(translation: String, tedText: String, right: Boolean) : Dialog
         savedInstanceState: Bundle?
     ): View? {
 
-        return inflater.inflate(R.layout.guessed_pop_up, container, false)
+        return inflater.inflate(R.layout.result_pop_up, container, false)
     }
 
 

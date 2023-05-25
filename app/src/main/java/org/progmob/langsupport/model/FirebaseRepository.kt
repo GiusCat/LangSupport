@@ -3,48 +3,43 @@ package org.progmob.langsupport.model
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
 object FirebaseRepository {
-    val fb = Firebase
+    private val fb = Firebase
     val currUser: MutableLiveData<FirebaseUser> = MutableLiveData()
     val lastAddedWord: MutableLiveData<WordData> = MutableLiveData()
     val lastSearchedWords: MutableLiveData<MutableList<WordData>> = MutableLiveData()
-    val languages: MutableLiveData<MutableMap<String, String>> = MutableLiveData()
+    val languages: MutableLiveData<List<DocumentReference>> = MutableLiveData()
 
     init {
-        fb.auth.addAuthStateListener { auth ->
-            currUser.value = auth.currentUser
-        }
+        fb.auth.addAuthStateListener { currUser.value = it.currentUser }
     }
 
-    fun getCurrentUser(): FirebaseUser? {
-        return fb.auth.currentUser
-    }
+    fun getCurrentUser(): FirebaseUser? = fb.auth.currentUser
 
-    fun setNewWord(newWord: WordData) {
+    suspend fun setNewWord(newWord: WordData) {
         fb.firestore.collection("users/${fb.auth.currentUser!!.uid}/words")
             .document(newWord.word)
-            .set(newWord)
-            // .add(newWord)
-            .addOnCompleteListener {
-                if(it.isSuccessful) {
-                    lastAddedWord.value = newWord
-                }
-            }
+            .set(newWord).await()
+
+        lastAddedWord.value = newWord
+        fb.firestore.collection("users")
+            .document(fb.auth.currentUser!!.uid)
+            .update("knownLanguages", FieldValue.arrayUnion(newWord.lang)).await()
     }
 
     suspend fun signUpUser(email: String, password: String) {
         fb.auth.createUserWithEmailAndPassword(email, password).await()
+        // TODO: parametrize main language selection
         val mainLang = fb.firestore.collection("languages").document("it")
         fb.firestore.collection("users").document(currUser.value!!.uid).set(
-            hashMapOf(
-                "main_lang" to mainLang,
-                "name" to "New user"
-            )
+            UserData("New user", mainLang)
         ).await()
     }
 
@@ -54,12 +49,10 @@ object FirebaseRepository {
 
     suspend fun fetchLanguages() {
         val langList = fb.firestore.collection("languages").get().await()
-        languages.postValue(mutableMapOf<String, String>().apply {
-            for(el in langList) { this[el.id] = el.data["description"] as String }
-        })
+        languages.postValue(langList.documents.map { doc -> doc.reference })
     }
 
-    suspend fun searchWords(s: CharSequence?) {
+    suspend fun fetchWords(s: CharSequence?) {
         if(s.isNullOrEmpty() || getCurrentUser() == null) {
             lastSearchedWords.postValue(mutableListOf())
             return
@@ -72,13 +65,10 @@ object FirebaseRepository {
             .endAt(search + "\uf8ff")
             .get().await()
 
-        // TODO: optimise list update with DiffUtil
         lastSearchedWords.postValue(wordList.map { it.toObject<WordData>() }.toMutableList())
     }
 
     fun signOutUser() {
         fb.auth.signOut()
     }
-
-
 }

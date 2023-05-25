@@ -7,7 +7,7 @@ import java.util.Date
 data class WordData(
     val word: String = "",
     val translation: List<String> = listOf(),
-    val lang: DocumentReference? = null,
+    val lang: DocumentReference? = null, // TODO: convert 'lang' to String
     val info: String? = null,
     val searched: Int = 1,
     val guessed: Int = 1,

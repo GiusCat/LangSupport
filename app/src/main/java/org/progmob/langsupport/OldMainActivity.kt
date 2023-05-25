@@ -51,7 +51,7 @@ class OldMainActivity : AppCompatActivity() {
         viewModel.languages.observe(this) {
             var s = ""
             for (document in it) {
-                s += "${document.value} => ${document.key}\n"
+                s += "${document.id}\n"
             }
             binding.text.text = s
         }

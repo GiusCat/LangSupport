@@ -3,15 +3,16 @@ package org.progmob.langsupport
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
-import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.DocumentReference
 import org.progmob.langsupport.databinding.ActivityDataBinding
-import org.progmob.langsupport.model.FirebaseRepository
+import org.progmob.langsupport.model.DataViewModel
 import org.progmob.langsupport.model.WordData
 
 class DataActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDataBinding
-    private val repository = FirebaseRepository
+    private val viewModel: DataViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,18 +36,21 @@ class DataActivity : AppCompatActivity() {
     }
 
     private fun addWord(word: String, trans: String, info: String): WordData? {
-        if(repository.getCurrentUser() == null) {
+        if(!viewModel.isUserSignedIn()) {
             // TODO: notification of some kind
             Log.w(TAG, "User not logged in!")
             return null
         }
 
         // TODO: dynamic language selection
-        val lang = repository.fb.firestore.collection("languages").document("de")
-        val newWord = WordData( word, listOf(trans), lang, info)
+        val newWord = WordData(word, listOf(trans), getGerman(), info)
 
-        repository.setNewWord(newWord)
+        viewModel.setNewWord(newWord)
         return newWord
+    }
+
+    private fun getGerman(): DocumentReference? {
+        return viewModel.languages.value?.first { it.id == "de" }
     }
 
     companion object {

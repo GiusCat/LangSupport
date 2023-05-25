@@ -4,25 +4,30 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentReference
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
+import java.util.Locale
 
 class DataViewModel: ViewModel() {
     private val repo = FirebaseRepository
+    private val translator = TranslatorRepository
     val loadedWords: MutableLiveData<MutableList<WordData>> = MutableLiveData(mutableListOf())
-    val languages: MutableLiveData<Map<String, String>> = MutableLiveData(mapOf())
+    val translatedWord: MutableLiveData<String> = MutableLiveData()
+    val languages: MutableLiveData<List<DocumentReference>> = MutableLiveData(listOf())
     val currUser: MutableLiveData<FirebaseUser> = MutableLiveData()
     val errorMsg: MutableLiveData<String> = MutableLiveData()
 
     init {
+        fetchLanguages()
         repo.currUser.observeForever { currUser.value = it }
         repo.lastAddedWord.observeForever {
             loadedWords.value = newListFromCurrent(loadedWords.value!!).apply { add(it) }
         }
-        repo.languages.observeForever { languages.value = it }
+        repo.languages.observeForever { languages.value = it.also { setTranslators(it) } }
         repo.lastSearchedWords.observeForever { loadedWords.value = it }
+        translator.translatorResult.observeForever { translatedWord.value = it }
     }
 
     fun signUpUser(email: String, password: String) {
@@ -49,6 +54,10 @@ class DataViewModel: ViewModel() {
         repo.signOutUser()
     }
 
+    fun isUserSignedIn(): Boolean {
+        return repo.getCurrentUser() != null
+    }
+
 
     fun fetchLanguages() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -58,18 +67,39 @@ class DataViewModel: ViewModel() {
 
     fun fetchWords(s: CharSequence?) {
         viewModelScope.launch(Dispatchers.IO) {
-            repo.searchWords(s)
+            repo.fetchWords(s)
         }
     }
 
-    fun isUserSignedIn(): Boolean {
-        return repo.fb.auth.currentUser != null
+    fun setNewWord(newWord: WordData) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.setNewWord(newWord)
+        }
     }
 
+    fun translateWord(word: String, lang: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            translator.translateWord(word, lang)
+        }
+    }
+
+
+    private fun setTranslators(userData: List<DocumentReference>) {
+        for(tr in userData) {
+            viewModelScope.launch(Dispatchers.IO) {
+                translator.setNewTranslator(Locale.getDefault().language, tr.id)
+            }
+        }
+    }
 
     private fun <T> newListFromCurrent(currList: MutableList<T>): MutableList<T> {
         val newL: MutableList<T> = mutableListOf()
         for(el in currList) { newL.add(el) }
         return newL
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        translator.closeTranslators()
     }
 }
