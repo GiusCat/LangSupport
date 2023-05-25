@@ -1,5 +1,6 @@
 package org.progmob.langsupport
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -49,10 +50,6 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.translateButton.setOnClickListener {
-            verifyTranslateWord()
-        }
-
         val model = TranslatorOptions.Builder().setSourceLanguage(TranslateLanguage.GERMAN).setTargetLanguage(TranslateLanguage.ITALIAN).build()
 
         val itaGerTrans: Translator = Translation.getClient(model)
@@ -73,6 +70,23 @@ class SearchFragment : Fragment() {
             adapter.notifyDataSetChanged()
         }
 
+        searchListAdapter = SearchListAdapter { verifyTranslateWord() }
+        binding.recycler.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = searchListAdapter
+        }
+
+        /* ----- Observers ----- */
+
+        viewModel.loadedWords.observe(viewLifecycleOwner) {
+            searchListAdapter.setWordsList(it.toList())
+
+            // I can't add a word which is already added
+            binding.addButton.isEnabled = it.count {
+                    el -> el.wordIndex.equals(searchText.toString().trim(), ignoreCase = true)
+            } == 0
+        }
+
         binding.searchEdit.addTextChangedListener(object : TextWatcher {
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -85,21 +99,17 @@ class SearchFragment : Fragment() {
                 binding.historySection.visibility = if(s.isNullOrEmpty()) View.VISIBLE else View.GONE
                 binding.listSection.visibility = if(s.isNullOrEmpty()) View.GONE else View.VISIBLE
             }
+
         })
 
-        searchListAdapter = SearchListAdapter { verifyTranslateWord() }
-        binding.recycler.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = searchListAdapter
+        /* ----- Listeners ----- */
+
+        binding.addButton.setOnClickListener {
+            startActivity(Intent(requireContext(), DataActivity::class.java))
         }
 
-        viewModel.loadedWords.observe(viewLifecycleOwner) {
-            searchListAdapter.setWordsList(it.toList())
-
-            // I can't add a word which is already added
-            binding.addButton.isEnabled = it.count {
-                el -> el.wordIndex.equals(searchText.toString().trim(), ignoreCase = true)
-            } == 0
+        binding.translateButton.setOnClickListener {
+            verifyTranslateWord()
         }
     }
 

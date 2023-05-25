@@ -13,11 +13,14 @@ import org.progmob.langsupport.model.DataViewModel
 
 /*
 * TODO:
-*  - Re-implement word adding (with timestamp in WordData!!)
+*  - Re-implement word adding inside a pop-up (timestamp DONE)
 *  - Fix word guessing (pop-up is currently based on translator)
-*  - Implement TranslatorRepository and clear SearchFragment
+*  - Implement TranslatorRepository and remove translator-related logic from SearchFragment
 *  - Implement StatsFragment (it's present but without real data)
-*  - User management... somewhere (sign-out, name, other things?)
+*  - User management... somewhere (sign-out, name, main language, other things?)
+*  - String resources for multi-language support (also for error messages)
+*  - Better UI for pop-ups
+*  - Fix UI for sign in / sign up; insert main language selector
 */
 
 class MainActivity : AppCompatActivity() {
