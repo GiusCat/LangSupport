@@ -23,7 +23,7 @@ class DataActivity : AppCompatActivity() {
         binding.send.setOnClickListener {
             val word = addWord(
                 binding.word.text.toString(),
-                binding.translation.text.toString(),
+                binding.translation.text.toString().lowercase(),
                 binding.info.text.toString()
             )
             binding.text.text = word.toString()

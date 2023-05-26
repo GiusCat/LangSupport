@@ -16,13 +16,11 @@ import org.progmob.langsupport.model.DataViewModel
 /*
 * TODO:
 *  - Re-implement word adding inside a pop-up (timestamp DONE)
-*  - Fix word guessing (pop-up is currently based on translator) DONE
-*  - Implement TranslatorRepository and remove translator-related logic from SearchFragment DONE
 *  - Implement StatsFragment (it's present but without real data)
 *  - User management... somewhere (sign-out, name, main language, other things?)
 *  - String resources for multi-language support (also for error messages)
 *  - Better UI for pop-ups
-*  - Fix UI for sign in / sign up; insert main language selector (via SpinnerAdapter)
+*  - Fix UI for sign in / sign up (main language is default system language)
 */
 
 class MainActivity : AppCompatActivity() {
@@ -58,10 +56,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun launchLoginActivity() {
         try {
-
-        val intent = Intent(this, LoginActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(intent)
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
         } catch (e: Exception) {
             Log.e("MainActivity", "${e.message}")
         }

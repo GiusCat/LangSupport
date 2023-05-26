@@ -17,6 +17,7 @@ object TranslatorRepository {
     suspend fun setNewTranslator(mainLang: String, translateLang: String) {
         val sourceLangTag = TranslateLanguage.fromLanguageTag(translateLang) ?: return
         val targetLangTag = TranslateLanguage.fromLanguageTag(mainLang) ?: return
+        if(sourceLangTag == targetLangTag) return
 
         val model = TranslatorOptions.Builder()
             .setSourceLanguage(sourceLangTag)
