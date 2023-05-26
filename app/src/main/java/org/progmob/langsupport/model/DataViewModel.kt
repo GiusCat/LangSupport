@@ -59,12 +59,6 @@ class DataViewModel: ViewModel() {
     }
 
 
-    fun fetchLanguages() {
-        viewModelScope.launch(Dispatchers.IO) {
-            repo.fetchLanguages()
-        }
-    }
-
     fun fetchWords(s: CharSequence?) {
         viewModelScope.launch(Dispatchers.IO) {
             repo.fetchWords(s)
@@ -83,6 +77,12 @@ class DataViewModel: ViewModel() {
         }
     }
 
+
+    private fun fetchLanguages() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.fetchLanguages()
+        }
+    }
 
     private fun setTranslators(userData: List<DocumentReference>) {
         for(tr in userData) {

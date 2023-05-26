@@ -9,6 +9,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
+import java.util.Locale
 
 object FirebaseRepository {
     private val fb = Firebase
@@ -36,11 +37,11 @@ object FirebaseRepository {
 
     suspend fun signUpUser(email: String, password: String) {
         fb.auth.createUserWithEmailAndPassword(email, password).await()
-        // TODO: parametrize main language selection
-        val mainLang = fb.firestore.collection("languages").document("it")
-        fb.firestore.collection("users").document(currUser.value!!.uid).set(
-            UserData("New user", mainLang)
-        ).await()
+        val mainLang = fb.firestore.collection("languages")
+            .document(Locale.getDefault().language)
+        fb.firestore.collection("users")
+            .document(currUser.value!!.uid)
+            .set(UserData("New user", mainLang)).await()
     }
 
     suspend fun signInUser(email: String, password: String) {
