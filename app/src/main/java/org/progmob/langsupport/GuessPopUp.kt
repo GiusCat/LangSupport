@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import org.progmob.langsupport.databinding.GuessPopUpBinding
+import org.progmob.langsupport.model.DataViewModel
 import org.progmob.langsupport.model.WordData
 
 /*
@@ -15,6 +17,7 @@ import org.progmob.langsupport.model.WordData
 */
 class GuessPopUp(private val wordData: WordData) : DialogFragment() {
     private lateinit var binding: GuessPopUpBinding
+    private val viewModel: DataViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,6 +42,8 @@ class GuessPopUp(private val wordData: WordData) : DialogFragment() {
                 val showPop = Right_PopUp(tryText, wordData.word, false)
                 showPop.show((activity as AppCompatActivity).supportFragmentManager, "showRight")
             }
+
+            viewModel.updateWord(wordData, wordData.translation.contains(tryText))
         }
     }
 

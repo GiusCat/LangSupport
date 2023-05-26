@@ -13,7 +13,8 @@ import java.util.Locale
 class DataViewModel: ViewModel() {
     private val repo = FirebaseRepository
     private val translator = TranslatorRepository
-    val loadedWords: MutableLiveData<MutableList<WordData>> = MutableLiveData(mutableListOf())
+    val activeWords: MutableLiveData<MutableList<WordData>> = MutableLiveData(mutableListOf())
+    val historyWords: MutableLiveData<List<WordData>> = MutableLiveData(listOf())
     val translatedWord: MutableLiveData<String> = MutableLiveData()
     val languages: MutableLiveData<List<DocumentReference>> = MutableLiveData(listOf())
     val currUser: MutableLiveData<FirebaseUser> = MutableLiveData()
@@ -21,12 +22,13 @@ class DataViewModel: ViewModel() {
 
     init {
         fetchLanguages()
-        repo.currUser.observeForever { currUser.value = it }
+        repo.currUser.observeForever { currUser.value = it.also { fetchHistoryWords() } }
         repo.lastAddedWord.observeForever {
-            loadedWords.value = newListFromCurrent(loadedWords.value!!).apply { add(it) }
+            activeWords.value = newListFromCurrent(activeWords.value!!).apply { add(it) }
         }
         repo.languages.observeForever { languages.value = it.also { setTranslators(it) } }
-        repo.lastSearchedWords.observeForever { loadedWords.value = it }
+        repo.activeWords.observeForever { activeWords.value = it }
+        repo.historyWords.observeForever { historyWords.value = it }
         translator.translatorResult.observeForever { translatedWord.value = it }
     }
 
@@ -77,6 +79,12 @@ class DataViewModel: ViewModel() {
         }
     }
 
+    fun updateWord(word: WordData, guessed: Boolean) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.updateSearchedWord(word, guessed)
+        }
+    }
+
 
     private fun fetchLanguages() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -89,6 +97,12 @@ class DataViewModel: ViewModel() {
             viewModelScope.launch(Dispatchers.IO) {
                 translator.setNewTranslator(Locale.getDefault().language, tr.id)
             }
+        }
+    }
+
+    private fun fetchHistoryWords() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.fetchHistoryWords()
         }
     }
 

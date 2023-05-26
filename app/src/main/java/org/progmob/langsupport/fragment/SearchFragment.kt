@@ -1,5 +1,6 @@
 package org.progmob.langsupport.fragment
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -7,6 +8,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -14,15 +16,16 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.progmob.langsupport.GuessPopUp
 import org.progmob.langsupport.activity.DataActivity
+import org.progmob.langsupport.adapter.historylist.HistoryListAdapter
 import org.progmob.langsupport.adapter.searchlist.SearchListAdapter
 import org.progmob.langsupport.databinding.FragmentSearchBinding
 import org.progmob.langsupport.model.DataViewModel
 
 
 class SearchFragment : Fragment() {
-    // TODO: TranslatorViewModel (?) and TranslatorRepository
     private lateinit var binding: FragmentSearchBinding
     private lateinit var searchListAdapter: SearchListAdapter
+    private lateinit var historyListAdapter: HistoryListAdapter
     private lateinit var searchText: Editable
     private val viewModel: DataViewModel by viewModels()
 
@@ -40,9 +43,11 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Adapter accepts an event listener as parameter
+        // Search list adapter accepts a click event listener as parameter
+        historyListAdapter = HistoryListAdapter()
         searchListAdapter = SearchListAdapter {
             GuessPopUp(it).show((activity as AppCompatActivity).supportFragmentManager, "showPop")
+            binding.searchEdit.clearFocus()
         }
 
         binding.recycler.apply {
@@ -50,15 +55,24 @@ class SearchFragment : Fragment() {
             adapter = searchListAdapter
         }
 
+        binding.historyRecycler.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = historyListAdapter
+        }
+
         /* ----- Observers ----- */
 
-        viewModel.loadedWords.observe(viewLifecycleOwner) {
+        viewModel.activeWords.observe(viewLifecycleOwner) {
             searchListAdapter.setWordsList(it.toList())
 
             // I can't add a word which is already added
             binding.addButton.isEnabled = it.count {
                     el -> el.wordIndex.equals(searchText.toString().trim(), ignoreCase = true)
             } == 0
+        }
+
+        viewModel.historyWords.observe(viewLifecycleOwner) {
+            historyListAdapter.setWordsList(it)
         }
 
         binding.searchEdit.addTextChangedListener(object : TextWatcher {
@@ -82,6 +96,14 @@ class SearchFragment : Fragment() {
             startActivity(Intent(requireContext(), DataActivity::class.java))
         }
 
+        // Hide keyboard when the EditText loses focus
+        binding.searchEdit.setOnFocusChangeListener { v, hasFocus ->
+            if(!hasFocus) {
+                val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(v.windowToken, 0)
+            }
+        }
+
 
         /* ----- Temporary ----- */
         viewModel.translatedWord.observe(viewLifecycleOwner) {
@@ -89,7 +111,13 @@ class SearchFragment : Fragment() {
         }
 
         binding.translateButton.setOnClickListener {
+            binding.searchEdit.setText("")
+            binding.searchEdit.clearFocus()
+        }
+
+        binding.translateButton.setOnLongClickListener {
             viewModel.translateWord(binding.searchEdit.text.toString(), "de")
+            true
         }
     }
 }
