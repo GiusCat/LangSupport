@@ -1,7 +1,6 @@
 package org.progmob.langsupport.fragment
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,10 +11,10 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import org.progmob.langsupport.AddWordPopUp
 import org.progmob.langsupport.GuessPopUp
-import org.progmob.langsupport.activity.DataActivity
 import org.progmob.langsupport.adapter.historylist.HistoryListAdapter
 import org.progmob.langsupport.adapter.searchlist.SearchListAdapter
 import org.progmob.langsupport.databinding.FragmentSearchBinding
@@ -27,7 +26,7 @@ class SearchFragment : Fragment() {
     private lateinit var searchListAdapter: SearchListAdapter
     private lateinit var historyListAdapter: HistoryListAdapter
     private lateinit var searchText: Editable
-    private val viewModel: DataViewModel by viewModels()
+    private val viewModel: DataViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -93,7 +92,9 @@ class SearchFragment : Fragment() {
         /* ----- Listeners ----- */
 
         binding.addButton.setOnClickListener {
-            startActivity(Intent(requireContext(), DataActivity::class.java))
+            //startActivity(Intent(requireContext(), DataActivity::class.java))
+            val showPop = AddWordPopUp(binding.searchEdit.text.toString())
+            showPop.show((activity as AppCompatActivity).supportFragmentManager, "showRight")
         }
 
         // Hide keyboard when the EditText loses focus

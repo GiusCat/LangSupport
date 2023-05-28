@@ -2,8 +2,12 @@ package org.progmob.langsupport.model
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.AggregateQuery
+import com.google.firebase.firestore.AggregateQuerySnapshot
+import com.google.firebase.firestore.AggregateSource
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
@@ -11,6 +15,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
+import org.progmob.langsupport.MainActivityAdapter.Companion.MSG
 import java.util.Locale
 
 object FirebaseRepository {
@@ -20,6 +25,8 @@ object FirebaseRepository {
     val activeWords: MutableLiveData<MutableList<WordData>> = MutableLiveData()
     val historyWords: MutableLiveData<List<WordData>> = MutableLiveData(listOf())
     val languages: MutableLiveData<List<DocumentReference>> = MutableLiveData()
+    // mutable live data tipo stats data -> post value per assegnare
+    val stats_data:MutableLiveData<StatsData> = MutableLiveData()
 
     init {
         fb.auth.addAuthStateListener { currUser.value = it.currentUser }
@@ -89,6 +96,22 @@ object FirebaseRepository {
                 "timestamp" to FieldValue.serverTimestamp()
             )).await()
         updateHistoryWords(wordData)
+    }
+
+    suspend fun getSearchedWords(){
+
+        val doc = fb.firestore.collection("users/${getCurrentUser()!!.uid}/words")
+            .get().await()
+        val statData = StatsData(0,0, 0)
+
+        for(i in doc) {
+
+            statData.searched = (statData.searched + (i.get("searched") as Long)).toInt()
+            statData.guessed = (statData.guessed + (i.get("guessed") as Long)).toInt()
+        }
+        statData.wronged = statData.searched - statData.guessed
+
+        stats_data.postValue(statData)
     }
 
     suspend fun fetchHistoryWords() {

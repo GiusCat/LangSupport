@@ -4,8 +4,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.AggregateQuerySnapshot
 import com.google.firebase.firestore.DocumentReference
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.lang.Exception
 import java.util.Locale
@@ -19,6 +21,9 @@ class DataViewModel: ViewModel() {
     val languages: MutableLiveData<List<DocumentReference>> = MutableLiveData(listOf())
     val currUser: MutableLiveData<FirebaseUser> = MutableLiveData()
     val errorMsg: MutableLiveData<String> = MutableLiveData()
+    val stats_data:MutableLiveData<StatsData> = MutableLiveData()
+    // mutable live data stats anche qui
+    // init repo.live date . observe forever
 
     init {
         fetchLanguages()
@@ -30,6 +35,7 @@ class DataViewModel: ViewModel() {
         repo.activeWords.observeForever { activeWords.value = it }
         repo.historyWords.observeForever { historyWords.value = it }
         translator.translatorResult.observeForever { translatedWord.value = it }
+        repo.stats_data.observeForever { stats_data.value = it }
     }
 
     fun signUpUser(email: String, password: String) {
@@ -115,5 +121,12 @@ class DataViewModel: ViewModel() {
     override fun onCleared() {
         super.onCleared()
         translator.closeTranslators()
+    }
+
+    fun getSearWords(){
+
+       viewModelScope.launch(Dispatchers.IO) {
+           repo.getSearchedWords()
+       }
     }
 }

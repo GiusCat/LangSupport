@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <item
+        android:id = "@+id/NickName"
+        android:title="Nick name"
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id = "@+id/mailSettings"
+        android:title=""
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id = "@+id/logOutItem"
+        android:title="Log Out"
+        app:showAsAction="never"
+        />
+</menu>
