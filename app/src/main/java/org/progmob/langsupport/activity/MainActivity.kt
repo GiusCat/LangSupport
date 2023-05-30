@@ -1,11 +1,15 @@
 package org.progmob.langsupport.activity
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -31,6 +35,24 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId){
+            R.id.nickName_item ->{
+                //item.title = "Lorenzo"
+                true
+            }
+            R.id.mail_item-> {
+
+                true
+            }
+            R.id.logOut_item-> {
+
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)

@@ -19,18 +19,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_bias="0.1"/>
 
-    <Button
+    <ImageButton
         android:id="@+id/favourite"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="F"
-
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/empty_star_border_24"
+        android:background="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.9"
-        app:layout_constraintWidth_percent="0.15" />
+        app:layout_constraintWidth_percent="0.15"
+        android:contentDescription="put_on_prefs"
+        />
 
 
 

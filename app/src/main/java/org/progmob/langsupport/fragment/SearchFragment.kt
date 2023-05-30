@@ -93,10 +93,11 @@ class SearchFragment : Fragment() {
 
         binding.addButton.setOnClickListener {
             //startActivity(Intent(requireContext(), DataActivity::class.java))
+
             val showPop = AddWordPopUp(binding.searchEdit.text.toString())
             showPop.show((activity as AppCompatActivity).supportFragmentManager, "showRight")
+            binding.searchEdit.setText("")
         }
-
         // Hide keyboard when the EditText loses focus
         binding.searchEdit.setOnFocusChangeListener { v, hasFocus ->
             if(!hasFocus) {
@@ -107,9 +108,9 @@ class SearchFragment : Fragment() {
 
 
         /* ----- Temporary ----- */
-        viewModel.translatedWord.observe(viewLifecycleOwner) {
+        /*viewModel.translatedWord.observe(viewLifecycleOwner) {
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-        }
+        }*/
 
         binding.translateButton.setOnClickListener {
             binding.searchEdit.setText("")

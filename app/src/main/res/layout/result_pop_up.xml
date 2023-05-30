@@ -41,7 +41,7 @@
     <ImageView
         android:layout_width="40dp"
         android:layout_height="30dp"
-        android:src="@mipmap/ic_right_arrow2"
+        android:src="@drawable/arrow_forward_24"
         app:layout_constraintTop_toBottomOf="@id/textGuessedFragment"
         app:layout_constraintStart_toEndOf="@id/tedWordGuessed"
         app:layout_constraintEnd_toStartOf="@id/itaWordGuessed"

@@ -5,19 +5,20 @@
     >
 
     <item
-        android:id = "@+id/NickName"
+        android:id = "@+id/nickName_item"
         android:title="Nick name"
         app:showAsAction="never"
+
         />
 
     <item
-        android:id = "@+id/mailSettings"
+        android:id = "@+id/mail_item"
         android:title=""
         app:showAsAction="never"
         />
 
     <item
-        android:id = "@+id/logOutItem"
+        android:id = "@+id/logOut_item"
         android:title="Log Out"
         app:showAsAction="never"
         />

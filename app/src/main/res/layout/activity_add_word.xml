@@ -42,6 +42,8 @@
         android:layout_marginBottom="@dimen/large_margin"
         />
 
+
+
     <EditText
         android:id = "@+id/add_translation_edit"
         android:layout_width="wrap_content"
@@ -54,6 +56,22 @@
         android:layout_marginStart="@dimen/very_large_margin"
         android:layout_marginEnd = "@dimen/very_large_margin"
         android:layout_marginBottom="@dimen/large_margin"
+        />
+
+    <ImageButton
+        android:id = "@+id/add_transaleButton"
+        android:src="@drawable/translate_24"
+        android:background="@color/purple"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="@dimen/small_margin"
+        android:layout_marginEnd="@dimen/small_margin"
+        app:layout_constraintBottom_toTopOf="@id/add_info_edit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/add_translation_edit"
+        app:layout_constraintTop_toBottomOf="@id/add_word_edit"
+        android:layout_marginBottom="@dimen/very_large_margin"
+        android:contentDescription="translate"
         />
 
     <EditText

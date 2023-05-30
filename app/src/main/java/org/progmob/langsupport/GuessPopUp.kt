@@ -32,9 +32,9 @@ class GuessPopUp(private val wordData: WordData) : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.tryButton.setOnClickListener {
             val tryText = binding.tryTranslate.text.toString().lowercase().trim()
+            this.dismiss()
 
             if(wordData.translation.contains(tryText)) {
-                this.dismiss()
                 val showPop = Right_PopUp(tryText, wordData.word, true)
                 showPop.show((activity as AppCompatActivity).supportFragmentManager, "showRight")
             }

@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
@@ -41,6 +42,8 @@ class AddWordPopUp(wordToAdd: String) : DialogFragment() {
                 binding.addInfoEdit.text.toString()
             )
             binding.addTextFragment.text = word.toString()
+            this.dismiss()
+            Toast.makeText(context, "${wordToAdd} Inserita!", Toast.LENGTH_SHORT).show()
         }
         binding.addWordEdit.addTextChangedListener { text ->
            // Log.i(DataActivity.TAG, "${ text.toString() != "" }")
@@ -49,6 +52,13 @@ class AddWordPopUp(wordToAdd: String) : DialogFragment() {
 
         binding.addExitButton.setOnClickListener {
             this.dismiss()
+        }
+
+        binding.addTransaleButton.setOnClickListener {
+            viewModel.translateWord(wordToAdd, "de")
+            viewModel.translatedWord.observe(viewLifecycleOwner){
+                binding.addTranslationEdit.setText(it)
+            }
         }
     }
 
