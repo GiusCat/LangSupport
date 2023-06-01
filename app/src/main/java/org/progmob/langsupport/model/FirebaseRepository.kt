@@ -1,32 +1,23 @@
 package org.progmob.langsupport.model
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.AggregateQuery
-import com.google.firebase.firestore.AggregateQuerySnapshot
-import com.google.firebase.firestore.AggregateSource
-import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
-import org.progmob.langsupport.MainActivityAdapter.Companion.MSG
 import java.util.Locale
 
 object FirebaseRepository {
     private val fb = Firebase
     val currUser: MutableLiveData<FirebaseUser> = MutableLiveData()
+/*
+    val historyWords: MutableLiveData<List<WordData>> = MutableLiveData(listOf())
     val lastAddedWord: MutableLiveData<WordData> = MutableLiveData()
     val activeWords: MutableLiveData<MutableList<WordData>> = MutableLiveData()
-    val historyWords: MutableLiveData<List<WordData>> = MutableLiveData(listOf())
     val languages: MutableLiveData<List<DocumentReference>> = MutableLiveData()
-    // mutable live data tipo stats data -> post value per assegnare
     val stats_data:MutableLiveData<StatsData> = MutableLiveData()
+*/
 
     init {
         fb.auth.addAuthStateListener { currUser.value = it.currentUser }
@@ -51,7 +42,7 @@ object FirebaseRepository {
         fb.auth.signOut()
     }
 
-
+/*
     suspend fun fetchLanguages() {
         try {
             val langList = fb.firestore.collection("languages").get().await()
@@ -122,9 +113,9 @@ object FirebaseRepository {
         historyWords.postValue(histWords.take(3).map { it.toObject() })
     }
 
-
     private fun updateHistoryWords(word: WordData) {
         val newL = mutableListOf(word).apply { addAll(historyWords.value!!.take(2).filter { it != word }) }
         historyWords.postValue(newL.toList())
     }
+*/
 }

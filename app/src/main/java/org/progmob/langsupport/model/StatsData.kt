@@ -1,4 +1,3 @@
 package org.progmob.langsupport.model
 
-data class StatsData (var searched:Int, var guessed:Int, var wronged:Int){
-}
+data class StatsData(val searched: Int, val guessed: Int)

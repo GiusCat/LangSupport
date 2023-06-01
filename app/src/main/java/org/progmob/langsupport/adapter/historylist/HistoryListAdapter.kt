@@ -26,7 +26,7 @@ class HistoryListAdapter (
     override fun onBindViewHolder(viewHolder: HistoryListViewHolder, position: Int) {
         val item = dataSet[position]
         viewHolder.mainFlag.setImageResource(LanguageManager.flagOf(Locale.getDefault().language))
-        viewHolder.wordFlag.setImageResource(LanguageManager.flagOf(item.lang!!.id))
+        viewHolder.wordFlag.setImageResource(LanguageManager.flagOf(item.lang))
         viewHolder.word.text = item.word
         viewHolder.translation.text = item.translation[0]
         // viewHolder.root.setOnClickListener { listener(item) }

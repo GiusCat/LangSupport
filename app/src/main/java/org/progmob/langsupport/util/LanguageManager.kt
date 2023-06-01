@@ -13,4 +13,6 @@ object LanguageManager {
         return langFlagMap[lang] ?: R.mipmap.ic_launcher_round
     }
 
+    fun getLanguages(): List<String> = langFlagMap.keys.toList()
+
 }

@@ -43,14 +43,10 @@ class DataActivity : AppCompatActivity() {
         }
 
         // TODO: dynamic language selection
-        val newWord = WordData(word, listOf(trans), getGerman(), info)
+        val newWord = WordData(word, listOf(trans), "de", info)
 
         viewModel.setNewWord(newWord)
         return newWord
-    }
-
-    private fun getGerman(): DocumentReference? {
-        return viewModel.languages.value?.first { it.id == "de" }
     }
 
     companion object {
