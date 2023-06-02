@@ -20,11 +20,10 @@ import org.progmob.langsupport.model.DataViewModel
 
 /*
 * TODO:
-*  - Re-implement word adding inside a pop-up (timestamp DONE)
-*  - Implement StatsFragment (it's present but without real data)
-*  - User management... somewhere (sign-out, name, main language, other things?)
-*  - String resources for multi-language support (also for error messages)
 *  - Better UI for pop-ups
+*  - Define themes for unified color schemes
+*  - String resources for multi-language support (also for error messages)
+*  - User management... somewhere (sign-out, name, main language, other things?)
 *  - Fix UI for sign in / sign up (main language is default system language)
 */
 

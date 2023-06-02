@@ -35,11 +35,11 @@ class GuessPopUp(private val wordData: WordData) : DialogFragment() {
             this.dismiss()
 
             if(wordData.translation.contains(tryText)) {
-                val showPop = Right_PopUp(tryText, wordData.word, true)
+                val showPop = ResultPopUp(wordData.word, tryText, true)
                 showPop.show((activity as AppCompatActivity).supportFragmentManager, "showRight")
             }
             else {
-                val showPop = Right_PopUp(tryText, wordData.word, false)
+                val showPop = ResultPopUp(wordData.word, wordData.translation[0], false)
                 showPop.show((activity as AppCompatActivity).supportFragmentManager, "showRight")
             }
 
