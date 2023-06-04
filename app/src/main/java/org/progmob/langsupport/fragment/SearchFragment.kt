@@ -4,16 +4,22 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageButton
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.progmob.langsupport.AddWordPopUp
 import org.progmob.langsupport.GuessPopUp
+import org.progmob.langsupport.MainActivityAdapter.Companion.MSG
+import org.progmob.langsupport.R
 import org.progmob.langsupport.adapter.historylist.HistoryListAdapter
 import org.progmob.langsupport.adapter.searchlist.SearchListAdapter
 import org.progmob.langsupport.databinding.FragmentSearchBinding
@@ -41,7 +47,7 @@ class SearchFragment : Fragment() {
 
         // Search list adapter accepts a click event listener as parameter
         historyListAdapter = HistoryListAdapter()
-        searchListAdapter = SearchListAdapter {
+        searchListAdapter = SearchListAdapter(viewModel, requireContext()) {
             GuessPopUp(it).show((activity as AppCompatActivity).supportFragmentManager, "showPop")
             binding.searchEdit.clearFocus()
         }

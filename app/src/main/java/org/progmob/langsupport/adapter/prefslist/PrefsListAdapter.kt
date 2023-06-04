@@ -1,43 +1,35 @@
-package org.progmob.langsupport.adapter.searchlist
+package org.progmob.langsupport.adapter.prefslist
 
-import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-
-import org.progmob.langsupport.R
-import org.progmob.langsupport.databinding.SearchListItemBinding
+import org.progmob.langsupport.databinding.ActivityListPrefsItemBinding
 import org.progmob.langsupport.model.DataViewModel
 import org.progmob.langsupport.model.WordData
 
-
-class SearchListAdapter(
+class PrefsListAdapter(
     private var viewModel: DataViewModel,
-    private var context: Context,
-    private var dataSet: List<WordData> = listOf(),
-    private val listener: (WordData) -> Unit
-) : RecyclerView.Adapter<SearchListViewHolder>() {
+    private var dataSet: List<WordData> = listOf()
+) : RecyclerView.Adapter<PrefsListViewHolder>() {
 
     // Create new views (invoked by the layout manager)
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): SearchListViewHolder {
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): PrefsListViewHolder {
         // Create a new view, which defines the UI of the list item
-        val bind = SearchListItemBinding.inflate(
+        val bind = ActivityListPrefsItemBinding.inflate(
             LayoutInflater.from(viewGroup.context), viewGroup, false)
-        return SearchListViewHolder(bind)
+        return PrefsListViewHolder(bind)
     }
 
     // Replace the contents of a view (invoked by the layout manager)
-    override fun onBindViewHolder(viewHolder: SearchListViewHolder, position: Int) {
+    override fun onBindViewHolder(viewHolder: PrefsListViewHolder, position: Int) {
+
         val item = dataSet[position]
-        viewHolder.textView.text = item.word
-        viewHolder.root.setOnClickListener { listener(item) }
+        viewHolder.word.text = item.word
+        viewHolder.translated.text = item.translation.toString()
         viewHolder.button.setOnClickListener {
-            viewModel.updateFav(viewHolder.textView.text.toString(), false)
-            Toast.makeText(context, "Aggiunta ai Preferiti!", Toast.LENGTH_LONG).show()
-            //viewHolder.button.setBackgroundResource(R.drawable.full_star_24
+
+            viewModel.updateFav(viewHolder.word.text.toString(), true)
         }
     }
 

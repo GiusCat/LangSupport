@@ -1,63 +1,84 @@
 package org.progmob.langsupport.fragment
 
-import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.ListView
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import org.progmob.langsupport.ActivityDataPrefs
-import org.progmob.langsupport.PrefsActivityAdapter
-import org.progmob.langsupport.R
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
+import org.progmob.langsupport.adapter.prefslist.PrefsListAdapter
+import org.progmob.langsupport.databinding.FragmentPrefsBinding
+import org.progmob.langsupport.model.DataViewModel
+import org.progmob.langsupport.model.WordData
 
 class PrefsFragment: Fragment() {
 
-    var mycontext: Context? = null
-
+    private lateinit var binding: FragmentPrefsBinding
+    private lateinit var prefsListAdapter: PrefsListAdapter
+    private val viewModel:DataViewModel by activityViewModels()
+    var prefsList: MutableLiveData<List<WordData>> = MutableLiveData(listOf())
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        mycontext = container?.context
-        return inflater.inflate(R.layout.fragment_prefs, container, false)
+    ): View {
+        binding = FragmentPrefsBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<View>(R.id.searchPrefsButton)?.setOnClickListener {
-            SearchWorInDB()
+        prefsListAdapter = PrefsListAdapter(viewModel)
+
+
+        binding.listViewPrefs.apply {
+
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = prefsListAdapter
         }
 
-        val words_list = initWordsList()
+        /*viewModel.prefsData.observe(viewLifecycleOwner){
+            prefsListAdapter.setWordsList(it.toList())
+        }*/
 
-        if(words_list.size > 0){
-
-            val adapter = PrefsActivityAdapter(mycontext!!, R.layout.activity_list_prefs_item, words_list)
-
-            val listView : ListView? = getView()?.findViewById(R.id.listViewPrefs)
-            listView?.adapter = adapter
-            adapter.notifyDataSetChanged()
+        binding.searchPrefsButton.setOnClickListener {
+            viewModel.prefsData.observe(viewLifecycleOwner){
+                prefsListAdapter.setWordsList(it.toList())
+            }
+            //SearchWordInDB()
         }
+
+       viewModel.activeWordsPrefs.observe(viewLifecycleOwner){
+
+           binding.InsertWordPrefs.addTextChangedListener(object : TextWatcher {
+
+               override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+               override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                   viewModel.fetchWordsPrefs(s?.trim())
+                   prefsListAdapter.setWordsList(it.toList())
+               }
+
+               override fun afterTextChanged(s: Editable?) {}
+           })
+
+       }
+
+        Log.i("lista preferiti", prefsList.value.toString())
 
     }
 
-    private fun initWordsList():MutableList<ActivityDataPrefs>{
-
-        val activityList = mutableListOf<ActivityDataPrefs>()
-        val imButt = getActivity()?.findViewById<ImageButton>(R.id.starButton)
-
-        activityList.add(ActivityDataPrefs("apfel", "mela", imButt))
-        activityList.add(ActivityDataPrefs("hallo", "ciao", imButt))
-        activityList.add(ActivityDataPrefs("danke", "grazie", imButt))
-
-        return activityList
-    }
-
-    private fun SearchWorInDB() {
+    private fun SearchWordInDB() {
         TODO("Not yet implemented")
+
     }
 }

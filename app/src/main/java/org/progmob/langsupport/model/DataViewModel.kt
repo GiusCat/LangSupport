@@ -21,6 +21,8 @@ class DataViewModel(application: Application): AndroidViewModel(application) {
     val currUser: MutableLiveData<FirebaseUser> = MutableLiveData()
     val errorMsg: MutableLiveData<String> = MutableLiveData()
     val statsData: MutableLiveData<StatsData> = MutableLiveData()
+    val prefsData:MutableLiveData<List<WordData>> = MutableLiveData(listOf())
+    val activeWordsPrefs : MutableLiveData<List<WordData>> = MutableLiveData(mutableListOf())
 
     init {
         setTranslators()
@@ -35,12 +37,16 @@ class DataViewModel(application: Application): AndroidViewModel(application) {
         }
         // repo.activeWords.observeForever { activeWords.value = it }
         room.activeWords.observeForever { activeWords.value = it }
+        room.activeWordsPrefs.observeForever {
+            activeWordsPrefs.value = it
+        }
         // repo.historyWords.observeForever { historyWords.value = it }
         room.historyWords.observeForever { historyWords.value = it }
 
         // repo.stats_data.observeForever { stats_data.value = it }
         room.currentStats.observeForever { statsData.value = it }
         translator.translatorResult.observeForever { translatedWord.value = it }
+        room.prefsWords.observeForever { prefsData.value = it.also { updateListPrefs() } }
     }
 
     fun signUpUser(email: String, password: String) {
@@ -79,6 +85,12 @@ class DataViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
+    fun fetchWordsPrefs(s:CharSequence?){
+        viewModelScope.launch(Dispatchers.IO) {
+            room.getWordsLikePrefs(s.toString())
+        }
+    }
+
     fun setNewWord(newWord: WordData) {
         viewModelScope.launch(Dispatchers.IO) {
             // repo.setNewWord(newWord)
@@ -106,6 +118,17 @@ class DataViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
+    fun updateFav(word:String, b:Boolean){
+        viewModelScope.launch(Dispatchers.IO) {
+            room.updateFav(word,b)
+        }
+    }
+
+    fun updateListPrefs(){
+        viewModelScope.launch(Dispatchers.IO) {
+            room.prefsHistoryWords()
+        }
+    }
 
     private fun setTranslators() {
         for(tr in LanguageManager.getLanguages()) {

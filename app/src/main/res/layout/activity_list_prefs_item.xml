@@ -57,7 +57,7 @@
 
     <ImageButton
         android:id = "@+id/starButton"
-        android:src="@drawable/empty_star_border_24"
+        android:src="@drawable/full_star_24"
         android:background="@color/white"
         android:layout_width="48dp"
         android:layout_height="48dp"

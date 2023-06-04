@@ -36,4 +36,6 @@ class PrefsActivityAdapter(context: Context, textViewResourceId: Int, wordsList:
             WordsData.imButton = butt
         }
     }
+
+
 }
