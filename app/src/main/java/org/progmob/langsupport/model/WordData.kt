@@ -16,7 +16,8 @@ data class WordData(
     var timestamp: Date = Date()
 ) {
     override fun equals(other: Any?): Boolean {
-        return other != null && other::class == WordData::class && word == (other as WordData).word
+        return other != null && other::class == WordData::class &&
+                word.equals((other as WordData).word, ignoreCase = true)
     }
 
     override fun toString(): String {

@@ -25,17 +25,14 @@ interface WordDao {
     @Query("SELECT * FROM WordData WHERE word LIKE :s || '%'")
     suspend fun getWordsLike(s: String): List<WordData>
 
-    @Query("SELECT * FROM WordData WHERE favourite = :t AND word LIKE :s || '%'")
-    suspend fun getWordsLikePrefs(s: String, t:String): List<WordData>
+    @Query("SELECT * FROM WordData WHERE favourite = 1 AND word LIKE :s || '%' ORDER BY word DESC")
+    suspend fun getFavWordsLike(s: String): List<WordData>
 
     @Query("SELECT sum(searched) AS searched, sum(guessed) AS guessed FROM WordData")
     suspend fun getStatsData(): StatsData?
 
     @Query("SELECT * FROM WordData ORDER BY timestamp DESC")
     suspend fun getWordsOrdered(): List<WordData>
-
-    @Query("Update WordData SET favourite = :t WHERE word = :word")
-    suspend fun updateFav(word: String, t:String)
 
     @Query("SELECT * FROM WordData WHERE favourite = :t ORDER BY timestamp DESC")
     suspend fun updatePrefs(t:String):List<WordData>

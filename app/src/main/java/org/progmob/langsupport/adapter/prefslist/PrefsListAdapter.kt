@@ -4,39 +4,34 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import org.progmob.langsupport.databinding.ActivityListPrefsItemBinding
-import org.progmob.langsupport.model.DataViewModel
+import org.progmob.langsupport.databinding.PrefListItemBinding
 import org.progmob.langsupport.model.WordData
 
 class PrefsListAdapter(
-    private var viewModel: DataViewModel,
-    private var dataSet: List<WordData> = listOf()
+    private val starClickListener: (WordData) -> Unit
 ) : RecyclerView.Adapter<PrefsListViewHolder>() {
 
-    // Create new views (invoked by the layout manager)
+    private var dataSet: List<WordData> = listOf()
+
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): PrefsListViewHolder {
-        // Create a new view, which defines the UI of the list item
-        val bind = ActivityListPrefsItemBinding.inflate(
+        val bind = PrefListItemBinding.inflate(
             LayoutInflater.from(viewGroup.context), viewGroup, false)
         return PrefsListViewHolder(bind)
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: PrefsListViewHolder, position: Int) {
-
         val item = dataSet[position]
         viewHolder.word.text = item.word
-        viewHolder.translated.text = item.translation.toString()
-        viewHolder.button.setOnClickListener {
-
-            viewModel.updateFav(viewHolder.word.text.toString(), true)
+        viewHolder.translation.text = item.translation.toString()
+        viewHolder.starButton.setOnClickListener {
+            starClickListener(item)
         }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
 
-    fun setWordsList(l: List<WordData>) {
+    fun setFavWordsList(l: List<WordData>) {
         val oldList = dataSet.also { dataSet = l }
         if(oldList.isEmpty()) {
             notifyItemRangeInserted(0, l.size)

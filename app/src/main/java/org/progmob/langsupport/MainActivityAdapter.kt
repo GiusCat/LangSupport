@@ -33,10 +33,10 @@ class MainActivityAdapter(
     private fun showWords(view: View, wordData: WordData?) {
         if (wordData != null) {
 
-            val word = view.findViewById<TextView>(R.id.foreign_word)
+            val word = view.findViewById<TextView>(R.id.word_hist)
             word.text = wordData.word
 
-            val translation = view.findViewById<TextView>(R.id.translated_word)
+            val translation = view.findViewById<TextView>(R.id.translation_hist)
             translation.text = wordData.translation.toString()
 
         }

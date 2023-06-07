@@ -4,13 +4,10 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.ImageButton
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -18,8 +15,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.progmob.langsupport.AddWordPopUp
 import org.progmob.langsupport.GuessPopUp
-import org.progmob.langsupport.MainActivityAdapter.Companion.MSG
-import org.progmob.langsupport.R
 import org.progmob.langsupport.adapter.historylist.HistoryListAdapter
 import org.progmob.langsupport.adapter.searchlist.SearchListAdapter
 import org.progmob.langsupport.databinding.FragmentSearchBinding
@@ -47,10 +42,16 @@ class SearchFragment : Fragment() {
 
         // Search list adapter accepts a click event listener as parameter
         historyListAdapter = HistoryListAdapter()
-        searchListAdapter = SearchListAdapter(viewModel, requireContext()) {
+        searchListAdapter = SearchListAdapter( {
+            // Item click listener
             GuessPopUp(it).show((activity as AppCompatActivity).supportFragmentManager, "showPop")
             binding.searchEdit.clearFocus()
-        }
+        }, {
+            // Star click listener
+            it.favourite = !it.favourite
+            viewModel.updateFavouriteWord(it)
+            Toast.makeText(context, "Preferito: ${!it.favourite}!", Toast.LENGTH_SHORT).show()
+        } )
 
         binding.recycler.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -82,7 +83,7 @@ class SearchFragment : Fragment() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                viewModel.fetchWords(s?.trim())
+                viewModel.getWordsLike(s?.trim())
             }
 
             override fun afterTextChanged(s: Editable?) {

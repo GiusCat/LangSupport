@@ -7,12 +7,12 @@
     android:paddingBottom="@dimen/large_margin">
 
     <ImageView
-        android:id="@+id/foreign_flag"
+        android:id="@+id/word_flag_hist"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:src="@mipmap/ic_german_flag"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/foreign_word"
+        app:layout_constraintEnd_toStartOf="@id/word_hist"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginStart="@dimen/large_margin"
@@ -20,38 +20,38 @@
         android:contentDescription="@string/foreign_flag_desc" />
 
     <TextView
-        android:id="@+id/foreign_word"
+        android:id="@+id/word_hist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/translated_word"
+        app:layout_constraintEnd_toStartOf="@id/translation_hist"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginStart="@dimen/small_margin"
         android:layout_marginEnd="@dimen/small_margin" />
 
     <ImageView
-        android:id="@+id/translated_flag"
+        android:id="@+id/translation_flag_hist"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:src="@mipmap/ic_italian_flag"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/foreign_word"
-        app:layout_constraintEnd_toStartOf="@id/translated_word"
+        app:layout_constraintStart_toEndOf="@id/word_hist"
+        app:layout_constraintEnd_toStartOf="@id/translation_hist"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginStart="@dimen/large_margin"
         android:layout_marginEnd="@dimen/small_margin"
         android:contentDescription="@string/main_flag_desc" />
 
     <TextView
-        android:id="@+id/translated_word"
+        android:id="@+id/translation_hist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/small_margin"
         android:layout_marginEnd="@dimen/small_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/foreign_word"
+        app:layout_constraintStart_toEndOf="@id/word_hist"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

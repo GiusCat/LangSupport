@@ -7,8 +7,8 @@ class HistoryListViewHolder(
     binding: HistoryListItemBinding
 ) : RecyclerView.ViewHolder(binding.root) {
     // val root = binding.root
-    val wordFlag = binding.foreignFlag
-    val mainFlag = binding.translatedFlag
-    val word = binding.foreignWord
-    val translation = binding.translatedWord
+    val wordFlag = binding.wordFlagHist
+    val translationFlag = binding.translationFlagHist
+    val word = binding.wordHist
+    val translation = binding.translationHist
 }

@@ -11,6 +11,6 @@ class SearchListViewHolder(
     binding: SearchListItemBinding
 ) : RecyclerView.ViewHolder(binding.root) {
     val textView = binding.word
-    val button = binding.favourite
+    val starButton = binding.favourite
     val root = binding.root
 }

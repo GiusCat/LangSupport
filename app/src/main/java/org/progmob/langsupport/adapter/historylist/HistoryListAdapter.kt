@@ -10,8 +10,7 @@ import org.progmob.langsupport.util.LanguageManager
 import java.util.Locale
 
 class HistoryListAdapter (
-    private var dataSet: List<WordData> = listOf(),
-    // private val listener: (WordData) -> Unit
+    private var dataSet: List<WordData> = listOf()
 ) : RecyclerView.Adapter<HistoryListViewHolder>() {
 
     // Create new views (invoked by the layout manager)
@@ -25,11 +24,10 @@ class HistoryListAdapter (
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: HistoryListViewHolder, position: Int) {
         val item = dataSet[position]
-        viewHolder.mainFlag.setImageResource(LanguageManager.flagOf(Locale.getDefault().language))
+        viewHolder.translationFlag.setImageResource(LanguageManager.flagOf(Locale.getDefault().language))
         viewHolder.wordFlag.setImageResource(LanguageManager.flagOf(item.lang))
         viewHolder.word.text = item.word
         viewHolder.translation.text = item.translation[0]
-        // viewHolder.root.setOnClickListener { listener(item) }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

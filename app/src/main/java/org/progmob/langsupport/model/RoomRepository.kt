@@ -10,10 +10,9 @@ object RoomRepository {
     private lateinit var db: WordDatabase
     val activeWords: MutableLiveData<List<WordData>> = MutableLiveData(listOf())
     val historyWords: MutableLiveData<List<WordData>> = MutableLiveData(listOf())
+    val activeFavWords: MutableLiveData<List<WordData>> = MutableLiveData(listOf())
     val lastAddedWord: MutableLiveData<WordData> = MutableLiveData()
     val currentStats: MutableLiveData<StatsData> = MutableLiveData()
-    val prefsWords: MutableLiveData<List<WordData>> = MutableLiveData(listOf())
-    val activeWordsPrefs:MutableLiveData<List<WordData>> = MutableLiveData(listOf())
 
     fun initDatabase(context: Context) {
         db = Room.databaseBuilder(context, WordDatabase::class.java, "words").build()
@@ -25,15 +24,17 @@ object RoomRepository {
         updateHistoryWords(word)
     }
 
+    suspend fun getHistoryWords() {
+        historyWords.postValue(db.wordDao().getWordsOrdered().take(3))
+    }
+
     suspend fun getWordsLike(s: CharSequence?) {
         activeWords.postValue(
             if(s.isNullOrEmpty()) listOf() else db.wordDao().getWordsLike(s.toString()))
     }
 
-    suspend fun getWordsLikePrefs(s:CharSequence){
-        activeWordsPrefs.postValue(
-            if(s.isEmpty()) listOf() else db.wordDao().getWordsLikePrefs(s.toString(), "true")
-        )
+    suspend fun getFavWordsLike(s: String) {
+        activeFavWords.postValue(db.wordDao().getFavWordsLike(s).sortedBy { it.word.lowercase() })
     }
 
     suspend fun updateSearchedWord(word: WordData, isGuessed: Boolean) {
@@ -46,19 +47,20 @@ object RoomRepository {
         updateHistoryWords(word)
     }
 
-    suspend fun updateFav(word: String, b:Boolean){
-        if(b == false)
-            db.wordDao().updateFav(word, "true")
-        else
-            db.wordDao().updateFav(word, "false")
-    }
+    suspend fun updateFavouriteWord(word: WordData) {
+        db.wordDao().updateWord(word)
 
-    suspend fun getHistoryWords() {
-        historyWords.postValue(db.wordDao().getWordsOrdered().take(3))
+        var copy = activeFavWords.value!!.map { it }.toMutableList()
+        if(word.favourite) {
+            copy.add(word)
+        } else {
+            copy = copy.filter { !word.word.equals(it.word, ignoreCase = true) }.toMutableList()
+        }
+        activeFavWords.postValue(copy.sortedBy { it.word.lowercase() })
     }
 
     suspend fun prefsHistoryWords(){
-        prefsWords.postValue(db.wordDao().updatePrefs("true"))
+        activeFavWords.postValue(db.wordDao().updatePrefs("true"))
     }
 
     suspend fun getStatsData() {

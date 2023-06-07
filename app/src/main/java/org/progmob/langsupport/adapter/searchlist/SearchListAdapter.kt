@@ -1,25 +1,20 @@
 package org.progmob.langsupport.adapter.searchlist
 
-import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-
 import org.progmob.langsupport.R
 import org.progmob.langsupport.databinding.SearchListItemBinding
-import org.progmob.langsupport.model.DataViewModel
 import org.progmob.langsupport.model.WordData
 
 
 class SearchListAdapter(
-    private var viewModel: DataViewModel,
-    private var context: Context,
-    private var dataSet: List<WordData> = listOf(),
-    private val listener: (WordData) -> Unit
+    private val rootClickListener: (WordData) -> Unit,
+    private val starClickListener: (WordData) -> Unit
 ) : RecyclerView.Adapter<SearchListViewHolder>() {
+
+    private var dataSet: List<WordData> = listOf()
 
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): SearchListViewHolder {
@@ -33,11 +28,14 @@ class SearchListAdapter(
     override fun onBindViewHolder(viewHolder: SearchListViewHolder, position: Int) {
         val item = dataSet[position]
         viewHolder.textView.text = item.word
-        viewHolder.root.setOnClickListener { listener(item) }
-        viewHolder.button.setOnClickListener {
-            viewModel.updateFav(viewHolder.textView.text.toString(), false)
-            Toast.makeText(context, "Aggiunta ai Preferiti!", Toast.LENGTH_LONG).show()
-            //viewHolder.button.setBackgroundResource(R.drawable.full_star_24
+        viewHolder.root.setOnClickListener { rootClickListener(item) }
+        viewHolder.starButton.setImageResource(
+            if(item.favourite) R.drawable.full_star_24 else R.drawable.empty_star_border_24)
+
+        viewHolder.starButton.setOnClickListener {
+            starClickListener(item)
+            viewHolder.starButton.setImageResource(
+                if(item.favourite) R.drawable.full_star_24 else R.drawable.empty_star_border_24)
         }
     }
 
