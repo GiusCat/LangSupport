@@ -47,7 +47,11 @@ object RoomRepository {
         updateHistoryWords(word)
     }
 
+    /*
+    * Changes the "favourite" status of a word and updates the database
+    */
     suspend fun updateFavouriteWord(word: WordData) {
+        word.favourite = !word.favourite
         db.wordDao().updateWord(word)
 
         var copy = activeFavWords.value!!.map { it }.toMutableList()
@@ -59,9 +63,6 @@ object RoomRepository {
         activeFavWords.postValue(copy.sortedBy { it.word.lowercase() })
     }
 
-    suspend fun prefsHistoryWords(){
-        activeFavWords.postValue(db.wordDao().updatePrefs("true"))
-    }
 
     suspend fun getStatsData() {
         currentStats.postValue(db.wordDao().getStatsData())

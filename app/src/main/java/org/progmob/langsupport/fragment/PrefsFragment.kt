@@ -31,7 +31,7 @@ class PrefsFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         favouriteListAdapter = PrefsListAdapter {
-            viewModel.updateFavouriteWord(it.apply { favourite = false })
+            viewModel.updateFavouriteWord(it)
         }
 
         binding.favouritesList.apply {

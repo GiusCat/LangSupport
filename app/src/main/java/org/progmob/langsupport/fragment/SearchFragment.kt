@@ -48,9 +48,11 @@ class SearchFragment : Fragment() {
             binding.searchEdit.clearFocus()
         }, {
             // Star click listener
-            it.favourite = !it.favourite
+            val isFav = !it.favourite
             viewModel.updateFavouriteWord(it)
-            Toast.makeText(context, "Preferito: ${!it.favourite}!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,
+                "${it.word} ${if(isFav) "added to" else "removed from"} favourites!",
+                Toast.LENGTH_SHORT).show()
         } )
 
         binding.recycler.apply {
@@ -96,7 +98,7 @@ class SearchFragment : Fragment() {
         /* ----- Listeners ----- */
 
         binding.addButton.setOnClickListener {
-            val showPop = AddWordPopUp(binding.searchEdit.text.toString())
+            val showPop = AddWordPopUp(binding.searchEdit.text.toString().trim())
             showPop.show((activity as AppCompatActivity).supportFragmentManager, "showRight")
             binding.searchEdit.setText("")
         }
