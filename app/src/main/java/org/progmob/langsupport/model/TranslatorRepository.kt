@@ -12,7 +12,7 @@ import kotlinx.coroutines.tasks.await
 
 object TranslatorRepository {
     private val activeTranslators: MutableMap<String, Translator> = mutableMapOf()
-    val translatorResult: MutableLiveData<String> = MutableLiveData()
+    val translatorResult: MutableLiveData<String?> = MutableLiveData()
 
     suspend fun setNewTranslator(mainLang: String, translateLang: String) {
         val sourceLangTag = TranslateLanguage.fromLanguageTag(translateLang) ?: return
@@ -35,10 +35,10 @@ object TranslatorRepository {
     }
 
     suspend fun translateWord(word: String, lang: String) {
-        val langTag = TranslateLanguage.fromLanguageTag(lang) ?: return
-        val translator = activeTranslators[langTag] ?: return
+        val langTag = TranslateLanguage.fromLanguageTag(lang)
+        val translator = activeTranslators[langTag]
 
-        translatorResult.postValue(translator.translate(word).await())
+        translatorResult.postValue(translator?.translate(word)?.await())
     }
 
     fun closeTranslators() {

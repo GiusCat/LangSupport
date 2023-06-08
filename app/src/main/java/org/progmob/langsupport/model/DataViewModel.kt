@@ -18,7 +18,7 @@ class DataViewModel(application: Application): AndroidViewModel(application) {
     val activeWords: MutableLiveData<List<WordData>> = MutableLiveData(mutableListOf())
     val activeFavWords: MutableLiveData<List<WordData>> = MutableLiveData(listOf())
     val historyWords: MutableLiveData<List<WordData>> = MutableLiveData(listOf())
-    val translatedWord: MutableLiveData<String> = MutableLiveData()
+    val translatedWord: MutableLiveData<String?> = MutableLiveData()
 
     val currUser: MutableLiveData<FirebaseUser> = MutableLiveData()
     val errorMsg: MutableLiveData<String> = MutableLiveData()
@@ -116,11 +116,6 @@ class DataViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    fun updateListPrefs(){
-        viewModelScope.launch(Dispatchers.IO) {
-            room.prefsHistoryWords()
-        }
-    }
 
     private fun setTranslators() {
         for(tr in LanguageManager.getLanguages()) {

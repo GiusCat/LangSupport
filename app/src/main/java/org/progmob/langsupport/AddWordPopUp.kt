@@ -9,16 +9,13 @@ import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import com.google.firebase.firestore.DocumentReference
 import org.progmob.langsupport.databinding.ActivityAddWordBinding
 import org.progmob.langsupport.model.DataViewModel
 import org.progmob.langsupport.model.WordData
 
-class AddWordPopUp(wordToAdd: String) : DialogFragment() {
-
+class AddWordPopUp(private val wordToAdd: String) : DialogFragment() {
     private lateinit var binding:ActivityAddWordBinding
     private val viewModel: DataViewModel by activityViewModels()
-    private val wordToAdd:String = wordToAdd
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,34 +28,42 @@ class AddWordPopUp(wordToAdd: String) : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.addWordEdit.setText(wordToAdd)
 
-        binding.sendButton.setOnClickListener {
 
+        /* ----- Observers ----- */
+
+        viewModel.translatedWord.observe(viewLifecycleOwner) {
+            if(it.isNullOrEmpty())
+                Toast.makeText(context, "Translator is not available right now!", Toast.LENGTH_SHORT).show()
+            else
+                binding.addTranslationEdit.setText(it)
+        }
+
+
+        /* ----- Listeners ----- */
+
+        binding.sendButton.setOnClickListener {
             val word = addWord(
-                binding.addWordEdit.text.toString(),
-                binding.addTranslationEdit.text.toString().lowercase(),
+                binding.addWordEdit.text.toString().trim(),
+                binding.addTranslationEdit.text.toString().lowercase().trim(),
                 binding.addInfoEdit.text.toString()
             )
             binding.addTextFragment.text = word.toString()
+            Toast.makeText(context, "$wordToAdd added!", Toast.LENGTH_SHORT).show()
             this.dismiss()
-            Toast.makeText(context, "${wordToAdd} Inserita!", Toast.LENGTH_SHORT).show()
-        }
-        binding.addWordEdit.addTextChangedListener { text ->
-           // Log.i(DataActivity.TAG, "${ text.toString() != "" }")
-            binding.sendButton.isEnabled = (text.toString() != "")
         }
 
-        binding.addExitButton.setOnClickListener {
-            this.dismiss()
+        binding.addWordEdit.addTextChangedListener { text ->
+            binding.sendButton.isEnabled = (text.toString() != "")
         }
 
         binding.addTransaleButton.setOnClickListener {
             viewModel.translateWord(wordToAdd, "de")
-            viewModel.translatedWord.observe(viewLifecycleOwner){
-                binding.addTranslationEdit.setText(it)
-            }
+        }
+
+        binding.addExitButton.setOnClickListener {
+            this.dismiss()
         }
     }
 
