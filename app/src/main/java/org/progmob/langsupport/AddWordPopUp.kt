@@ -1,5 +1,6 @@
 package org.progmob.langsupport
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,12 +10,12 @@ import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import org.progmob.langsupport.databinding.ActivityAddWordBinding
+import org.progmob.langsupport.databinding.PopUpAddWordBinding
 import org.progmob.langsupport.model.DataViewModel
 import org.progmob.langsupport.model.WordData
 
 class AddWordPopUp(private val wordToAdd: String) : DialogFragment() {
-    private lateinit var binding:ActivityAddWordBinding
+    private lateinit var binding: PopUpAddWordBinding
     private val viewModel: DataViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -22,26 +23,13 @@ class AddWordPopUp(private val wordToAdd: String) : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = ActivityAddWordBinding.inflate(inflater, container, false)
+        binding = PopUpAddWordBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.addWordEdit.setText(wordToAdd)
-
-
-        /* ----- Observers ----- */
-
-        viewModel.translatedWord.observe(viewLifecycleOwner) {
-            if(it.isNullOrEmpty())
-                Toast.makeText(context, "Translator is not available right now!", Toast.LENGTH_SHORT).show()
-            else
-                binding.addTranslationEdit.setText(it)
-        }
-
-
-        /* ----- Listeners ----- */
 
         binding.sendButton.setOnClickListener {
             val word = addWord(
@@ -58,8 +46,16 @@ class AddWordPopUp(private val wordToAdd: String) : DialogFragment() {
             binding.sendButton.isEnabled = (text.toString() != "")
         }
 
-        binding.addTransaleButton.setOnClickListener {
+        binding.translateButton.setOnClickListener {
             viewModel.translateWord(wordToAdd, "de")
+
+            // Observer is put here to get just the last translated word
+            viewModel.translatedWord.observe(viewLifecycleOwner) {
+                if(it.isNullOrEmpty())
+                    Toast.makeText(context, "Translator is not available right now!", Toast.LENGTH_LONG).show()
+                else
+                    binding.addTranslationEdit.setText(it)
+            }
         }
 
         binding.addExitButton.setOnClickListener {
@@ -79,6 +75,10 @@ class AddWordPopUp(private val wordToAdd: String) : DialogFragment() {
 
         viewModel.setNewWord(newWord)
         return newWord
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
     }
 
     companion object {

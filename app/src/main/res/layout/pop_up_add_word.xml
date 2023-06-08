@@ -59,7 +59,7 @@
         />
 
     <ImageButton
-        android:id = "@+id/add_transaleButton"
+        android:id = "@+id/translate_button"
         android:src="@drawable/translate_24"
         android:background="@color/purple"
         android:layout_width="48dp"

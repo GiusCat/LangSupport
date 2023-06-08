@@ -103,28 +103,17 @@ class SearchFragment : Fragment() {
             binding.searchEdit.setText("")
         }
 
+        binding.dismissButton.setOnClickListener {
+            binding.searchEdit.setText("")
+            binding.searchEdit.clearFocus()
+        }
+
         // Hide keyboard when the EditText loses focus
         binding.searchEdit.setOnFocusChangeListener { v, hasFocus ->
             if(!hasFocus) {
                 val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(v.windowToken, 0)
             }
-        }
-
-
-        /* ----- Temporary ----- */
-        /*viewModel.translatedWord.observe(viewLifecycleOwner) {
-            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-        }*/
-
-        binding.translateButton.setOnClickListener {
-            binding.searchEdit.setText("")
-            binding.searchEdit.clearFocus()
-        }
-
-        binding.translateButton.setOnLongClickListener {
-            viewModel.translateWord(binding.searchEdit.text.toString(), "de")
-            true
         }
     }
 }

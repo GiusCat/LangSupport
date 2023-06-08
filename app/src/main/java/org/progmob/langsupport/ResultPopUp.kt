@@ -6,21 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
-import org.progmob.langsupport.databinding.ResultPopUpBinding
+import org.progmob.langsupport.databinding.PopUpResultBinding
 
 class ResultPopUp(
     val word: String,
     val translation: String,
     val guessed: Boolean
 ) : DialogFragment() {
-    private lateinit var binding: ResultPopUpBinding
+    private lateinit var binding: PopUpResultBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = ResultPopUpBinding.inflate(inflater, container, false)
+        binding = PopUpResultBinding.inflate(inflater, container, false)
         return binding.root
     }
 

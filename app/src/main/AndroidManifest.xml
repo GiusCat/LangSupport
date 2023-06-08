@@ -30,8 +30,6 @@
         <activity android:name=".activity.LoginActivity"
             android:windowSoftInputMode="adjustPan"/>
 
-        <activity android:name=".activity.DataActivity" />
-
         <activity
             android:name=".GuessPopUp"
             android:exported="true">

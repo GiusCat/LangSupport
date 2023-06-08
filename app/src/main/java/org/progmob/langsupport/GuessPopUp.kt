@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import org.progmob.langsupport.databinding.GuessPopUpBinding
+import org.progmob.langsupport.databinding.PopUpGuessBinding
 import org.progmob.langsupport.model.DataViewModel
 import org.progmob.langsupport.model.WordData
 
@@ -16,7 +16,7 @@ import org.progmob.langsupport.model.WordData
 * The dialog lets the user guess the word and shows the result of their guess
 */
 class GuessPopUp(private val wordData: WordData) : DialogFragment() {
-    private lateinit var binding: GuessPopUpBinding
+    private lateinit var binding: PopUpGuessBinding
     private val viewModel: DataViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -24,7 +24,7 @@ class GuessPopUp(private val wordData: WordData) : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = GuessPopUpBinding.inflate(inflater, container, false)
+        binding = PopUpGuessBinding.inflate(inflater, container, false)
         return binding.root
     }
 
