@@ -1,6 +1,5 @@
 package org.progmob.langsupport
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -73,12 +72,8 @@ class AddWordPopUp(private val wordToAdd: String) : DialogFragment() {
         // TODO: dynamic language selection
         val newWord = WordData(word, listOf(trans), "de", info)
 
-        viewModel.setNewWord(newWord)
+        viewModel.addNewWord(newWord)
         return newWord
-    }
-
-    override fun onDismiss(dialog: DialogInterface) {
-        super.onDismiss(dialog)
     }
 
     companion object {

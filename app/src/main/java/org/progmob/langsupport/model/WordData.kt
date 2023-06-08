@@ -7,7 +7,7 @@ import java.util.Date
 @Entity
 data class WordData(
     @PrimaryKey val word: String = "",
-    val translation: List<String> = listOf(),
+    var translation: List<String> = listOf(),
     val lang: String = "en",
     val info: String? = null,
     var searched: Int = 1,

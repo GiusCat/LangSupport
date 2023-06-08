@@ -72,7 +72,6 @@ class DataViewModel(application: Application): AndroidViewModel(application) {
 
     fun getWordsLike(s: CharSequence?) {
         viewModelScope.launch(Dispatchers.IO) {
-            // repo.fetchWords(s)
             room.getWordsLike(s)
         }
     }
@@ -83,10 +82,14 @@ class DataViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    fun setNewWord(newWord: WordData) {
+    fun addNewWord(newWord: WordData) {
         viewModelScope.launch(Dispatchers.IO) {
-            // repo.setNewWord(newWord)
             room.addNewWord(newWord)
+        }
+    }
+    fun addWordMeaning(word: WordData, newMeaning: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            room.addWordMeaning(word, newMeaning)
         }
     }
 
@@ -96,16 +99,14 @@ class DataViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    fun updateWord(word: WordData, guessed: Boolean) {
+    fun updateSearchedWord(word: WordData, guessed: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
-            // repo.updateSearchedWord(word, guessed)
             room.updateSearchedWord(word, guessed)
         }
     }
 
     fun getStatsData(){
         viewModelScope.launch(Dispatchers.IO) {
-            // repo.getSearchedWords()
             room.getStatsData()
         }
     }
@@ -126,6 +127,7 @@ class DataViewModel(application: Application): AndroidViewModel(application) {
     }
 
     private fun getHistoryAndFavWords() {
+        if(!isUserSignedIn()) return
         viewModelScope.launch(Dispatchers.IO) {
             room.getHistoryWords()
             room.getFavWordsLike("")

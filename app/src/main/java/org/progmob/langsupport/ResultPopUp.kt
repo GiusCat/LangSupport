@@ -6,14 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import org.progmob.langsupport.databinding.PopUpResultBinding
+import org.progmob.langsupport.model.DataViewModel
+import org.progmob.langsupport.model.WordData
 
 class ResultPopUp(
-    val word: String,
-    val translation: String,
-    val guessed: Boolean
+    private val wordData: WordData,
+    private val guessedIndex: Int
 ) : DialogFragment() {
     private lateinit var binding: PopUpResultBinding
+    private val viewModel: DataViewModel by activityViewModels()
+    private val guessed = guessedIndex >= 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,6 +30,7 @@ class ResultPopUp(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.updateSearchedWord(wordData, guessed)
 
         if(guessed) {
             binding.textGuessedFragment.text = "Eccellente! Hai indovinato"
@@ -34,17 +39,18 @@ class ResultPopUp(
             binding.textGuessedFragment.text = "Peccato! Hai Sbagliato"
             binding.section1frag.setBackgroundColor(resources.getColor(R.color.red))
         }
-        binding.itaWordGuessed.text = translation
-        binding.tedWordGuessed.text = word
+        binding.tedWordGuessed.text = wordData.word
+        binding.itaWordGuessed.text =
+            wordData.translation.getOrElse(guessedIndex){ wordData.translation[0] }
+
 
         binding.exit.setOnClickListener {
             this.dismiss()
         }
 
         binding.addMean.setOnClickListener {
-            val showPop = AddMeaningPopUp(word)
+            val showPop = AddMeaningPopUp(wordData)
             showPop.show((activity as AppCompatActivity).supportFragmentManager, "addMean")
         }
-
     }
 }

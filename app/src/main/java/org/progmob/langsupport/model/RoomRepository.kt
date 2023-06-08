@@ -37,6 +37,12 @@ object RoomRepository {
         activeFavWords.postValue(db.wordDao().getFavWordsLike(s).sortedBy { it.word.lowercase() })
     }
 
+    suspend fun addWordMeaning(wordData: WordData, newMeaning: String) {
+        val newL = wordData.translation.toMutableList().apply { add(newMeaning) }
+        wordData.translation = newL.toList()
+        db.wordDao().updateWord(wordData)
+    }
+
     suspend fun updateSearchedWord(word: WordData, isGuessed: Boolean) {
         word.apply {
             searched++
