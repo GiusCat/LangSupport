@@ -5,16 +5,40 @@
     <string name="guessed_words">Guessed Words</string>
     <string name="wrong_words">Wrong Words</string>
     <string name="home">Home</string>
-    <string name="prova">Prova</string>
     <string name="e_mail_address">Email Address</string>
     <string name="password">Password</string>
     <string name="stats">Stats</string>
-    <string name="inserisci_traduzione">Inserisci traduzione</string>
+    <string name="insert_translation">Insert Translation</string>
     <string name="main_flag_desc">Main Language Flag</string>
     <string name="foreign_flag_desc">Foreign Language Flag</string>
     <string name="sign_in_btn">Sign In</string>
     <string name="sign_up_btn">Sign Up</string>
-    <string name="last_words_label">Last searched words</string>
+    <string name="last_words_label">Last 3 searched words</string>
     <string name="search">Search</string>
     <string name="prefs">Prefs\n</string>
+    <string name="lang_support">Lang Support</string>
+    <string name="favourites">Favourites</string>
+    <string name="search_in_favourites">Search in Favourites</string>
+    <string name="cancel">Cancel</string>
+    <string name="add_word">Add word</string>
+    <string name="searched_words">Searched Words:</string>
+    <string name="guessed_words_stats">Guessed Words:</string>
+    <string name="wronged_words">Wronged Words:</string>
+    <string name="new_meaning">New Meaning</string>
+    <string name="add_meaning">Add Meaning</string>
+    <string name="add_translation">Add Translation</string>
+    <string name="add_info">Add Info</string>
+    <string name="Confirm">Confirm</string>
+    <string name="word_already_searched_guess_you">Word already searched, Guess You!</string>
+    <string name="try_">Try</string>
+    <string name="show_user_mail">Show user mail</string>
+    <string name="log_out">Log Out</string>
+    <string-array name="languages_array">
+        <item>German</item>
+        <item>English</item>
+        <item>Spanish</item>
+        <item>French</item>
+        <item>Italian</item>
+    </string-array>
+
 </resources>

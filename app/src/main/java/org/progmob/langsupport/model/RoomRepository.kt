@@ -69,9 +69,12 @@ object RoomRepository {
         activeFavWords.postValue(copy.sortedBy { it.word.lowercase() })
     }
 
-
     suspend fun getStatsData() {
         currentStats.postValue(db.wordDao().getStatsData())
+    }
+
+    suspend fun deleteWord(word:WordData){
+        db.wordDao().deleteWord(word)
     }
 
     private fun updateHistoryWords(word: WordData) {

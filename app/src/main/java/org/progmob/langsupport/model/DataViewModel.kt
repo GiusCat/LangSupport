@@ -117,6 +117,12 @@ class DataViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
+    fun deleteWord(word: WordData){
+        viewModelScope.launch(Dispatchers.IO) {
+            room.deleteWord(word)
+        }
+    }
+
 
     private fun setTranslators() {
         for(tr in LanguageManager.getLanguages()) {

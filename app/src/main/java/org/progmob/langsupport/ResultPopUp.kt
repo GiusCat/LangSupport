@@ -33,10 +33,10 @@ class ResultPopUp(
         viewModel.updateSearchedWord(wordData, guessed)
 
         if(guessed) {
-            binding.textGuessedFragment.text = "Eccellente! Hai indovinato"
+            binding.textGuessedFragment.text = "Great! You have guessed"
             binding.section1frag.setBackgroundColor(resources.getColor(R.color.lightGreen))
         } else {
-            binding.textGuessedFragment.text = "Peccato! Hai Sbagliato"
+            binding.textGuessedFragment.text = "What a pity!"
             binding.section1frag.setBackgroundColor(resources.getColor(R.color.red))
         }
         binding.tedWordGuessed.text = wordData.word
