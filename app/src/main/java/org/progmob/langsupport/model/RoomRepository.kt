@@ -18,10 +18,14 @@ object RoomRepository {
         db = Room.databaseBuilder(context, WordDatabase::class.java, "words").build()
     }
 
-    suspend fun addNewWord(word: WordData) {
-        db.wordDao().insertWord(word)
-        lastAddedWord.postValue(word)
-        updateHistoryWords(word)
+    suspend fun addNewWord(wordData: WordData) {
+        val old = getWord(wordData.word)
+        if(old == null)
+            db.wordDao().insertWord(wordData)
+        else
+            db.wordDao().updateWord(old.apply { deleted = false; favourite = false })
+        lastAddedWord.postValue(wordData)
+        updateHistoryWords(wordData)
     }
 
     suspend fun getWord(s: String): WordData? {
@@ -29,16 +33,22 @@ object RoomRepository {
     }
 
     suspend fun getHistoryWords() {
-        historyWords.postValue(db.wordDao().getWordsOrdered().take(3))
+        historyWords.postValue(
+            db.wordDao().getWordsOrdered().filter { !it.deleted }.take(3))
     }
 
     suspend fun getWordsLike(s: CharSequence?) {
         activeWords.postValue(
-            if(s.isNullOrEmpty()) listOf() else db.wordDao().getWordsLike(s.toString()))
+            if(s.isNullOrEmpty())
+                listOf()
+            else
+                db.wordDao().getWordsLike(s.toString()).filter { !it.deleted })
     }
 
     suspend fun getFavWordsLike(s: String) {
-        activeFavWords.postValue(db.wordDao().getFavWordsLike(s).sortedBy { it.word.lowercase() })
+        activeFavWords.postValue(db.wordDao().getFavWordsLike(s)
+            .filter { !it.deleted }
+            .sortedBy { it.word.lowercase() })
     }
 
     suspend fun addWordMeaning(wordData: WordData, newMeaning: String) {
@@ -83,8 +93,16 @@ object RoomRepository {
         currentStats.postValue(db.wordDao().getStatsData())
     }
 
-    suspend fun deleteWord(word:WordData){
-        db.wordDao().deleteWord(word)
+    suspend fun deleteWord(word: WordData) {
+        word.deleted = true
+        db.wordDao().updateWord(word)
+        getHistoryWords()
+
+        val newActiveWords = activeWords.value?.toMutableList()
+        if(newActiveWords!!.size == 1 && newActiveWords[0].word == word.word)
+            activeWords.postValue(listOf())
+        else
+            activeWords.postValue(newActiveWords.filter{ !it.deleted }.toList())
     }
 
     private fun updateHistoryWords(word: WordData) {

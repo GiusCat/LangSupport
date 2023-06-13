@@ -15,24 +15,16 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.progmob.langsupport.R
 import org.progmob.langsupport.databinding.ActivityMainBinding
 import org.progmob.langsupport.model.DataViewModel
-import org.progmob.langsupport.model.FirebaseRepository
 
 /*
 * TODO:
-*  - Better UI for pop-ups
 *  - Define themes for unified color schemes
 *  - String resources for multi-language support (also for error messages)
-*  - User management... somewhere (sign-out, name, main language, other things?)
-*  - Fix UI for sign in / sign up (main language is default system language)
-*  - IMPORTANT: language selection spinner
-*  - IMPORTANT: WorkManager
-*  - IMPORTANT(?): word management (delete, add meaning)
 */
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val viewModel: DataViewModel by viewModels()
-    private val fb = FirebaseRepository
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
@@ -42,11 +34,11 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId){
             R.id.mail_item-> {
-                Toast.makeText(this,  fb.getMail(), Toast.LENGTH_LONG).show()
+                Toast.makeText(this, viewModel.currUser.value!!.email, Toast.LENGTH_LONG).show()
                 true
             }
             R.id.logOut_item-> {
-                fb.signOutUser()
+                viewModel.signOutUser()
                 true
             }
             else -> super.onOptionsItemSelected(item)

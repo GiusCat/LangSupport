@@ -54,6 +54,7 @@ class SearchFragment : Fragment() {
                 "${it.word} ${if(isFav) "added to" else "removed from"} favourites!",
                 Toast.LENGTH_SHORT).show()
         }, {
+            // Trash click listener
             viewModel.deleteWord(it)
             Toast.makeText(context, "${it.word} deleted", Toast.LENGTH_SHORT).show()
         })

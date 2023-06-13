@@ -13,6 +13,7 @@ data class WordData(
     var searched: Int = 1,
     var guessed: Int = 1,
     var favourite: Boolean = false,
+    var deleted: Boolean = false,
     var timestamp: Date = Date()
 ) {
     override fun equals(other: Any?): Boolean {
