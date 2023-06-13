@@ -1,20 +1,30 @@
 package org.progmob.langsupport.model
 
 import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.progmob.langsupport.util.FirebaseUpdaterWorker
 import org.progmob.langsupport.util.LanguageManager
-import java.lang.Exception
 import java.util.Locale
+import java.util.concurrent.TimeUnit
+import kotlin.Exception
 
-class DataViewModel(application: Application): AndroidViewModel(application) {
+class DataViewModel(private val application: Application): AndroidViewModel(application) {
     private val firebase = FirebaseRepository
     private val translator = TranslatorRepository
     private val room = RoomRepository
+    private val prefs: SharedPreferences =
+        application.applicationContext.getSharedPreferences("first_run", Context.MODE_PRIVATE)
     val activeWords: MutableLiveData<List<WordData>> = MutableLiveData(mutableListOf())
     val activeFavWords: MutableLiveData<List<WordData>> = MutableLiveData(listOf())
     val historyWords: MutableLiveData<List<WordData>> = MutableLiveData(listOf())
@@ -25,9 +35,10 @@ class DataViewModel(application: Application): AndroidViewModel(application) {
     val statsData: MutableLiveData<StatsData> = MutableLiveData()
 
     init {
-        setTranslators()
+        firebase.initFirebase(prefs.getBoolean("first_run", true))
         room.initDatabase(application.applicationContext)
-        firebase.currUser.observeForever { currUser.value = it.also { getHistoryAndFavWords() } }
+
+        firebase.currUser.observeForever { currUser.value = it.also { dataSetUp() } }
 
         room.lastAddedWord.observeForever {
             activeWords.value = newListFromCurrent(activeWords.value!!, it)
@@ -44,6 +55,7 @@ class DataViewModel(application: Application): AndroidViewModel(application) {
     fun signUpUser(email: String, password: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
+                prefs.edit().putBoolean("first_run", false).apply()
                 firebase.signUpUser(email, password)
             } catch (e: Exception) {
                 errorMsg.postValue(e.message)
@@ -54,6 +66,7 @@ class DataViewModel(application: Application): AndroidViewModel(application) {
     fun signInUser(email: String, password: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
+                prefs.edit().putBoolean("first_run", false).apply()
                 firebase.signInUser(email, password)
             } catch (e: Exception) {
                 errorMsg.postValue(e.message)
@@ -93,10 +106,22 @@ class DataViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
+    fun setTranslators() {
+        for(tr in LanguageManager.getLanguages()) {
+            viewModelScope.launch(Dispatchers.IO) {
+                translator.setNewTranslator(Locale.getDefault().language, tr)
+            }
+        }
+    }
+
     fun translateWord(word: String, lang: String) {
         viewModelScope.launch(Dispatchers.IO) {
             translator.translateWord(word, lang)
         }
+    }
+
+    fun closeTranslators() {
+        translator.closeTranslators()
     }
 
     fun updateSearchedWord(word: WordData, guessed: Boolean) {
@@ -117,20 +142,40 @@ class DataViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
+    fun setRegularUpdater() {
+        Log.i("TAG", "SCHEDULE REGULAR UPDATER")
+        val saveRequest =
+            PeriodicWorkRequestBuilder<FirebaseUpdaterWorker>(15, TimeUnit.MINUTES)
+            .build()
 
-    private fun setTranslators() {
-        for(tr in LanguageManager.getLanguages()) {
-            viewModelScope.launch(Dispatchers.IO) {
-                translator.setNewTranslator(Locale.getDefault().language, tr)
-            }
-        }
+        WorkManager.getInstance(application.applicationContext)
+            .enqueueUniquePeriodicWork(
+                saveRequest::class.simpleName!!,
+                ExistingPeriodicWorkPolicy.UPDATE,
+                saveRequest)
     }
 
-    private fun getHistoryAndFavWords() {
+
+    private fun dataSetUp() {
         if(!isUserSignedIn()) return
         viewModelScope.launch(Dispatchers.IO) {
-            room.getHistoryWords()
-            room.getFavWordsLike("")
+            try {
+                val remoteWords = firebase.fetchAllUserWords()
+                for(w in remoteWords) {
+                    val localWord = room.getWord(w.word)
+                    if(localWord == null) {
+                        room.addNewWord(w)
+                        continue
+                    }
+                    if(w.timestamp > localWord.timestamp)
+                        // Favourite status is kept from local
+                        room.updateWord(w.apply { favourite = localWord.favourite })
+                }
+                room.getHistoryWords()
+                room.getFavWordsLike("")
+            } catch (e: Exception) {
+                Log.i("TAG", "Exception during DataSetUp - ${e.message}")
+            }
         }
     }
 
@@ -138,10 +183,5 @@ class DataViewModel(application: Application): AndroidViewModel(application) {
         val newL: MutableList<T> = mutableListOf()
         for(el in currList) { newL.add(el) }
         return newL.apply { add(newEl) }.toList()
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        translator.closeTranslators()
     }
 }

@@ -22,6 +22,12 @@ interface WordDao {
     @Delete
     suspend fun deleteWord(word: WordData)
 
+    @Query("SELECT * FROM WordData WHERE word = :s")
+    suspend fun getWord(s: String): WordData?
+
+    @Query("SELECT * FROM WordData")
+    suspend fun getAllWords(): List<WordData>
+
     @Query("SELECT * FROM WordData WHERE word LIKE :s || '%'")
     suspend fun getWordsLike(s: String): List<WordData>
 
@@ -33,7 +39,4 @@ interface WordDao {
 
     @Query("SELECT * FROM WordData ORDER BY timestamp DESC")
     suspend fun getWordsOrdered(): List<WordData>
-
-    @Query("SELECT * FROM WordData WHERE favourite = :t ORDER BY timestamp DESC")
-    suspend fun updatePrefs(t:String):List<WordData>
 }

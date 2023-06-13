@@ -24,6 +24,10 @@ object RoomRepository {
         updateHistoryWords(word)
     }
 
+    suspend fun getWord(s: String): WordData? {
+        return db.wordDao().getWord(s)
+    }
+
     suspend fun getHistoryWords() {
         historyWords.postValue(db.wordDao().getWordsOrdered().take(3))
     }
@@ -40,7 +44,12 @@ object RoomRepository {
     suspend fun addWordMeaning(wordData: WordData, newMeaning: String) {
         val newL = wordData.translation.toMutableList().apply { add(newMeaning) }
         wordData.translation = newL.toList()
+        wordData.timestamp = Date()
         db.wordDao().updateWord(wordData)
+    }
+
+    suspend fun updateWord(word: WordData) {
+        db.wordDao().updateWord(word)
     }
 
     suspend fun updateSearchedWord(word: WordData, isGuessed: Boolean) {
@@ -58,6 +67,7 @@ object RoomRepository {
     */
     suspend fun updateFavouriteWord(word: WordData) {
         word.favourite = !word.favourite
+        word.timestamp = Date()
         db.wordDao().updateWord(word)
 
         var copy = activeFavWords.value!!.map { it }.toMutableList()
@@ -69,10 +79,10 @@ object RoomRepository {
         activeFavWords.postValue(copy.sortedBy { it.word.lowercase() })
     }
 
-
     suspend fun getStatsData() {
         currentStats.postValue(db.wordDao().getStatsData())
     }
+
 
     private fun updateHistoryWords(word: WordData) {
         val newL = mutableListOf(word).apply { addAll(historyWords.value!!.take(2).filter { it != word }) }

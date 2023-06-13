@@ -22,6 +22,9 @@ import org.progmob.langsupport.model.DataViewModel
 *  - String resources for multi-language support (also for error messages)
 *  - User management... somewhere (sign-out, name, main language, other things?)
 *  - Fix UI for sign in / sign up (main language is default system language)
+*  - IMPORTANT: language selection spinner
+*  - IMPORTANT: WorkManager
+*  - IMPORTANT(?): word management (delete, add meaning)
 */
 
 class MainActivity : AppCompatActivity() {
@@ -50,14 +53,20 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
-    override fun onCreate(savedInstanceState: Bundle?){
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         if(!viewModel.isUserSignedIn())
             launchLoginActivity()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
+
+        viewModel.currUser.observe(this) {
+            if(!viewModel.isUserSignedIn())
+                launchLoginActivity()
+        }
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.my_nav_host_fragment) as NavHostFragment
@@ -66,10 +75,8 @@ class MainActivity : AppCompatActivity() {
         setupBottomNavMenu(navController)
         navController.addOnDestinationChangedListener{ _, _, _ -> /* ... */ }
 
-        viewModel.currUser.observe(this) {
-            if(!viewModel.isUserSignedIn())
-                launchLoginActivity()
-        }
+        viewModel.setTranslators()
+        viewModel.setRegularUpdater()
     }
 
     private fun setupBottomNavMenu(navController: NavController) {
@@ -85,5 +92,10 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception) {
             Log.e("MainActivity", "${e.message}")
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.closeTranslators()
     }
 }
