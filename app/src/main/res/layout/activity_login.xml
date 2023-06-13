@@ -10,11 +10,14 @@
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/email"
+        android:text="@string/lang_support"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/sign_up"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="30dp"
+        android:layout_marginTop="@dimen/very_large_margin"
+        />
 
     <EditText
         android:id="@+id/email"
@@ -24,9 +27,10 @@
         android:inputType="textEmailAddress"
         android:hint="@string/e_mail_address"
         app:layout_constraintTop_toBottomOf="@id/text"
-        app:layout_constraintBottom_toTopOf="@id/password"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/very_large_margin"
+        />
 
     <EditText
         android:id="@+id/password"
@@ -36,9 +40,10 @@
         android:inputType="textPassword"
         android:hint="@string/password"
         app:layout_constraintTop_toBottomOf="@id/email"
-        app:layout_constraintBottom_toTopOf="@id/sign_in"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/large_margin"
+        />
 
     <Button
         android:id="@+id/sign_in"
@@ -47,9 +52,10 @@
         android:hint="@string/sign_in_btn"
         android:textAllCaps="true"
         app:layout_constraintTop_toBottomOf="@id/password"
-        app:layout_constraintBottom_toTopOf="@id/sign_up"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/large_margin"
+        />
 
     <Button
         android:id="@+id/sign_up"
@@ -57,9 +63,10 @@
         android:layout_height="wrap_content"
         android:hint="@string/sign_up_btn"
         android:textAllCaps="true"
-        app:layout_constraintTop_toBottomOf="@id/sign_in"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/small_margin"
+        android:layout_marginTop="@dimen/large_margin"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

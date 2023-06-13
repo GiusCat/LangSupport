@@ -106,6 +106,12 @@ class DataViewModel(private val application: Application): AndroidViewModel(appl
         }
     }
 
+    fun deleteWord(word: WordData){
+        viewModelScope.launch(Dispatchers.IO) {
+            room.deleteWord(word)
+        }
+    }
+
     fun setTranslators() {
         for(tr in LanguageManager.getLanguages()) {
             viewModelScope.launch(Dispatchers.IO) {

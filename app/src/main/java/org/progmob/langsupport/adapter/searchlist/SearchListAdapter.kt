@@ -11,7 +11,8 @@ import org.progmob.langsupport.model.WordData
 
 class SearchListAdapter(
     private val rootClickListener: (WordData) -> Unit,
-    private val starClickListener: (WordData) -> Unit
+    private val starClickListener: (WordData) -> Unit,
+    private val trashClickListener: (WordData) -> Unit
 ) : RecyclerView.Adapter<SearchListViewHolder>() {
 
     private var dataSet: List<WordData> = listOf()
@@ -36,6 +37,12 @@ class SearchListAdapter(
             starClickListener(item)
             viewHolder.starButton.setImageResource(
                 if(item.favourite) R.drawable.full_star_24 else R.drawable.empty_star_border_24)
+        }
+
+        viewHolder.trashButton.setOnClickListener {
+            //insert code to remove a word in DB
+            // controllare se viene rimossa anche dai preferiti in modo diretto
+            trashClickListener(item)
         }
     }
 

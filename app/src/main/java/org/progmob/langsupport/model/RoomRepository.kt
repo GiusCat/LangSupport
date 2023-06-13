@@ -83,6 +83,9 @@ object RoomRepository {
         currentStats.postValue(db.wordDao().getStatsData())
     }
 
+    suspend fun deleteWord(word:WordData){
+        db.wordDao().deleteWord(word)
+    }
 
     private fun updateHistoryWords(word: WordData) {
         val newL = mutableListOf(word).apply { addAll(historyWords.value!!.take(2).filter { it != word }) }

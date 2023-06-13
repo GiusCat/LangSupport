@@ -53,7 +53,10 @@ class SearchFragment : Fragment() {
             Toast.makeText(context,
                 "${it.word} ${if(isFav) "added to" else "removed from"} favourites!",
                 Toast.LENGTH_SHORT).show()
-        } )
+        }, {
+            viewModel.deleteWord(it)
+            Toast.makeText(context, "${it.word} deleted", Toast.LENGTH_SHORT).show()
+        })
 
         binding.recycler.apply {
             layoutManager = LinearLayoutManager(requireContext())

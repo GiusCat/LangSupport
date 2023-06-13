@@ -33,9 +33,9 @@
 
         <Button
             android:id="@+id/dismiss_button"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:text="X"
+            android:text="@string/cancel"
 
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -71,7 +71,7 @@
             android:id="@+id/add_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Add word"
+            android:text="@string/add_word"
             android:textAllCaps="true"
             android:layout_marginTop="@dimen/large_margin"
 
@@ -95,7 +95,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintHeight_percent="0.6"
+        app:layout_constraintHeight_percent="0.8"
         app:layout_constraintVertical_bias="0.8">
 
         <TextView

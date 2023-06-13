@@ -3,19 +3,27 @@ package org.progmob.langsupport
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import kotlinx.coroutines.NonDisposableHandle.parent
 import org.progmob.langsupport.databinding.PopUpAddWordBinding
 import org.progmob.langsupport.model.DataViewModel
+import org.progmob.langsupport.model.TranslatorRepository
 import org.progmob.langsupport.model.WordData
+import org.progmob.langsupport.util.LanguageManager
 
 class AddWordPopUp(private val wordToAdd: String) : DialogFragment() {
     private lateinit var binding: PopUpAddWordBinding
     private val viewModel: DataViewModel by activityViewModels()
+    private var currentLang: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,6 +36,9 @@ class AddWordPopUp(private val wordToAdd: String) : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val lm = LanguageManager
+        val hashLang = lm.hashmap
+
         binding.addWordEdit.setText(wordToAdd)
 
         binding.sendButton.setOnClickListener {
@@ -46,7 +57,8 @@ class AddWordPopUp(private val wordToAdd: String) : DialogFragment() {
         }
 
         binding.translateButton.setOnClickListener {
-            viewModel.translateWord(wordToAdd, "de")
+
+            viewModel.translateWord(wordToAdd, getLang(hashLang).toString())
 
             // Observer is put here to get just the last translated word
             viewModel.translatedWord.observe(viewLifecycleOwner) {
@@ -60,9 +72,37 @@ class AddWordPopUp(private val wordToAdd: String) : DialogFragment() {
         binding.addExitButton.setOnClickListener {
             this.dismiss()
         }
+
+        val spinner:Spinner = binding.languageSpinner
+
+        ArrayAdapter.createFromResource(requireContext(), R.array.languages_array, android.R.layout.simple_spinner_item).also{
+            adapter ->
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                spinner.adapter = adapter
+                spinner.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        currentLang = parent?.getItemAtPosition(position) as String?
+
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        TODO("Not yet implemented")
+                    }
+
+                }
+        }
+
     }
 
     private fun addWord(word: String, trans: String, info: String): WordData? {
+        val lm = LanguageManager
+        val hashLang = lm.hashmap
+
         if(!viewModel.isUserSignedIn()) {
             // TODO: notification of some kind
             Log.w(TAG, "User not logged in!")
@@ -70,10 +110,14 @@ class AddWordPopUp(private val wordToAdd: String) : DialogFragment() {
         }
 
         // TODO: dynamic language selection
-        val newWord = WordData(word, listOf(trans), "de", info)
+        val newWord = WordData(word, listOf(trans), getLang(hashLang).toString(), info)
 
         viewModel.addNewWord(newWord)
         return newWord
+    }
+
+    private fun getLang(hashmap:Map<String, String>): String? {
+        return hashmap[currentLang]
     }
 
     companion object {

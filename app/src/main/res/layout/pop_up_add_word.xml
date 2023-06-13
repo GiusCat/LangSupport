@@ -14,7 +14,8 @@
         android:id = "@+id/add_textFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Aggiungi la parola!"
+        android:text="@string/add_word"
+        android:textStyle="bold"
         android:textSize="18dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,6 +27,15 @@
         android:layout_marginEnd = "@dimen/very_large_margin"
         />
 
+    <Spinner
+        android:id = "@+id/languageSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/add_textFragment"
+        app:layout_constraintBottom_toTopOf="@id/translate_button"
+        android:layout_marginBottom="@dimen/small_margin"
+        android:layout_marginStart="@dimen/small_margin"
+     />
 
     <EditText
         android:id = "@+id/add_word_edit"
@@ -35,7 +45,7 @@
         app:layout_constraintTop_toBottomOf="@id/add_textFragment"
 
         app:layout_constraintEnd_toEndOf="parent"
-        android:hint = "Add Word"
+        android:hint = "@string/add_word"
         android:layout_marginTop="@dimen/large_margin"
         android:layout_marginStart="@dimen/very_large_margin"
         android:layout_marginEnd = "@dimen/very_large_margin"
@@ -51,7 +61,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/add_word_edit"
         app:layout_constraintEnd_toEndOf="parent"
-        android:hint = "Add Translation"
+        android:hint = "@string/add_translation"
 
         android:layout_marginStart="@dimen/very_large_margin"
         android:layout_marginEnd = "@dimen/very_large_margin"
@@ -81,7 +91,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/add_translation_edit"
         app:layout_constraintEnd_toEndOf="parent"
-        android:hint = "Add Info"
+        android:hint = "@string/add_info"
 
         android:layout_marginStart="@dimen/very_large_margin"
         android:layout_marginEnd = "@dimen/very_large_margin"
@@ -92,7 +102,7 @@
         android:id = "@+id/add_exitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text = "X"
+        android:text = "@string/cancel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/sendButton"
@@ -106,7 +116,7 @@
         android:id = "@+id/sendButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text = "Send"
+        android:text = "@string/Confirm"
         app:layout_constraintStart_toEndOf="@id/add_exitButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

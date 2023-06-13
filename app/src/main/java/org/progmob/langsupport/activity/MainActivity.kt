@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -14,6 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.progmob.langsupport.R
 import org.progmob.langsupport.databinding.ActivityMainBinding
 import org.progmob.langsupport.model.DataViewModel
+import org.progmob.langsupport.model.FirebaseRepository
 
 /*
 * TODO:
@@ -30,6 +32,7 @@ import org.progmob.langsupport.model.DataViewModel
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val viewModel: DataViewModel by viewModels()
+    private val fb = FirebaseRepository
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
@@ -38,16 +41,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId){
-            R.id.nickName_item ->{
-                //item.title = "Lorenzo"
-                true
-            }
             R.id.mail_item-> {
-
+                Toast.makeText(this,  fb.getMail(), Toast.LENGTH_LONG).show()
                 true
             }
             R.id.logOut_item-> {
-
+                fb.signOutUser()
                 true
             }
             else -> super.onOptionsItemSelected(item)
