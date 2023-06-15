@@ -19,11 +19,15 @@ object RoomRepository {
     }
 
     suspend fun addNewWord(wordData: WordData) {
-        val old = getWord(wordData.word)
+        val old = db.wordDao().getWord(wordData.word)
         if(old == null)
             db.wordDao().insertWord(wordData)
         else
-            db.wordDao().updateWord(old.apply { deleted = false; favourite = false })
+            db.wordDao().updateWord(old.apply {
+                translation = listOf(wordData.translation[0])
+                deleted = false
+                timestamp = Date()
+            })
         lastAddedWord.postValue(wordData)
         updateHistoryWords(wordData)
     }

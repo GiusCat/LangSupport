@@ -1,9 +1,7 @@
 package org.progmob.langsupport
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -13,10 +11,8 @@ import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import kotlinx.coroutines.NonDisposableHandle.parent
 import org.progmob.langsupport.databinding.PopUpAddWordBinding
 import org.progmob.langsupport.model.DataViewModel
-import org.progmob.langsupport.model.TranslatorRepository
 import org.progmob.langsupport.model.WordData
 import org.progmob.langsupport.util.LanguageManager
 
@@ -41,24 +37,26 @@ class AddWordPopUp(private val wordToAdd: String) : DialogFragment() {
 
         binding.addWordEdit.setText(wordToAdd)
 
-        binding.sendButton.setOnClickListener {
-            val word = addWord(
+        viewModel.errorMsg.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        }
+
+        binding.confirmButton.setOnClickListener {
+            addWord(
                 binding.addWordEdit.text.toString().trim(),
                 binding.addTranslationEdit.text.toString().lowercase().trim(),
                 binding.addInfoEdit.text.toString()
             )
-            binding.addTextFragment.text = word.toString()
-            Toast.makeText(context, "$wordToAdd added!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "${binding.addWordEdit.text} added!", Toast.LENGTH_SHORT).show()
             this.dismiss()
         }
 
         binding.addWordEdit.addTextChangedListener { text ->
-            binding.sendButton.isEnabled = (text.toString() != "")
+            binding.confirmButton.isEnabled = (text.toString() != "")
         }
 
         binding.translateButton.setOnClickListener {
-
-            viewModel.translateWord(wordToAdd, getLang(hashLang).toString())
+            viewModel.translateWord(binding.addWordEdit.text.toString(), getLang(hashLang).toString())
 
             // Observer is put here to get just the last translated word
             viewModel.translatedWord.observe(viewLifecycleOwner) {
@@ -69,17 +67,17 @@ class AddWordPopUp(private val wordToAdd: String) : DialogFragment() {
             }
         }
 
-        binding.addExitButton.setOnClickListener {
+        binding.cancelButton.setOnClickListener {
             this.dismiss()
         }
 
-        val spinner:Spinner = binding.languageSpinner
+        val spinner: Spinner = binding.languageSpinner
 
-        ArrayAdapter.createFromResource(requireContext(), R.array.languages_array, android.R.layout.simple_spinner_item).also{
+        ArrayAdapter.createFromResource(requireContext(), R.array.languages_array, android.R.layout.simple_spinner_item).also {
             adapter ->
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 spinner.adapter = adapter
-                spinner.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
+                spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(
                         parent: AdapterView<*>?,
                         view: View?,
@@ -87,40 +85,24 @@ class AddWordPopUp(private val wordToAdd: String) : DialogFragment() {
                         id: Long
                     ) {
                         currentLang = parent?.getItemAtPosition(position) as String?
-
                     }
 
-                    override fun onNothingSelected(parent: AdapterView<*>?) {
-                        TODO("Not yet implemented")
-                    }
-
+                    override fun onNothingSelected(parent: AdapterView<*>?) {}
                 }
         }
-
     }
 
-    private fun addWord(word: String, trans: String, info: String): WordData? {
+    private fun addWord(word: String, trans: String, info: String) {
         val lm = LanguageManager
         val hashLang = lm.hashmap
-
-        if(!viewModel.isUserSignedIn()) {
-            // TODO: notification of some kind
-            Log.w(TAG, "User not logged in!")
-            return null
-        }
 
         // TODO: dynamic language selection
         val newWord = WordData(word, listOf(trans), getLang(hashLang).toString(), info)
 
         viewModel.addNewWord(newWord)
-        return newWord
     }
 
     private fun getLang(hashmap:Map<String, String>): String? {
         return hashmap[currentLang]
-    }
-
-    companion object {
-        private const val TAG = "DataActivity"
     }
 }
