@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import org.progmob.langsupport.databinding.PrefListItemBinding
 import org.progmob.langsupport.model.WordData
+import org.progmob.langsupport.util.LanguageManager
+import java.util.Locale
 
 class PrefsListAdapter(
     private val starClickListener: (WordData) -> Unit
@@ -21,11 +23,14 @@ class PrefsListAdapter(
 
     override fun onBindViewHolder(viewHolder: PrefsListViewHolder, position: Int) {
         val item = dataSet[position]
+        val lm = LanguageManager
         viewHolder.word.text = item.word
-        viewHolder.translation.text = item.translation.toString()
+        viewHolder.translation.text = item.translation[0].toString()
         viewHolder.starButton.setOnClickListener {
             starClickListener(item)
         }
+        viewHolder.translated_flag.setImageResource(lm.flagOf(item.lang))
+        viewHolder.target_lang_flag.setImageResource(lm.flagOf(Locale.getDefault().language))
     }
 
     // Return the size of your dataset (invoked by the layout manager)

@@ -1,6 +1,7 @@
 package org.progmob.langsupport
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,6 +44,11 @@ class ResultPopUp(
         binding.itaWordGuessed.text =
             wordData.translation.getOrElse(guessedIndex){ wordData.translation[0] }
 
+        Log.i("info", wordData.word)
+        viewModel.getInfo(wordData.word)
+        viewModel.infoWord.observe(viewLifecycleOwner){
+            binding.infoText.text = it
+        }
 
         binding.exit.setOnClickListener {
             this.dismiss()

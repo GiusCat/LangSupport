@@ -39,4 +39,7 @@ interface WordDao {
 
     @Query("SELECT * FROM WordData ORDER BY timestamp DESC")
     suspend fun getWordsOrdered(): List<WordData>
+
+    @Query("SELECT info FROM WordData WHERE word = :w")
+    suspend fun getInfo(w:String):String
 }

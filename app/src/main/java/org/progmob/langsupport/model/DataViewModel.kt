@@ -29,7 +29,7 @@ class DataViewModel(private val application: Application): AndroidViewModel(appl
     val activeFavWords: MutableLiveData<List<WordData>> = MutableLiveData(listOf())
     val historyWords: MutableLiveData<List<WordData>> = MutableLiveData(listOf())
     val translatedWord: MutableLiveData<String?> = MutableLiveData()
-
+    val infoWord:MutableLiveData<String> =MutableLiveData()
     val currUser: MutableLiveData<FirebaseUser> = MutableLiveData()
     val errorMsg: MutableLiveData<String> = MutableLiveData()
     val statsData: MutableLiveData<StatsData> = MutableLiveData()
@@ -50,6 +50,7 @@ class DataViewModel(private val application: Application): AndroidViewModel(appl
 
         room.currentStats.observeForever { statsData.value = it }
         translator.translatorResult.observeForever { translatedWord.value = it }
+        room.infoWord.observeForever {  infoWord.value = it}
     }
 
     fun signUpUser(email: String, password: String) {
@@ -148,6 +149,13 @@ class DataViewModel(private val application: Application): AndroidViewModel(appl
         }
     }
 
+    fun getInfo(word:String){
+        viewModelScope.launch(Dispatchers.IO) {
+            room.getInfo(word)
+        }
+    }
+
+
     fun setRegularUpdater() {
         Log.i("TAG", "SCHEDULE REGULAR UPDATER")
         val saveRequest =
@@ -160,7 +168,6 @@ class DataViewModel(private val application: Application): AndroidViewModel(appl
                 ExistingPeriodicWorkPolicy.UPDATE,
                 saveRequest)
     }
-
 
     private fun dataSetUp() {
         if(!isUserSignedIn()) return

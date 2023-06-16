@@ -16,7 +16,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_bias="0.1"/>
-
+    <ImageView
+        android:id = "@+id/imageLang"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        app:layout_constraintStart_toEndOf="@id/word"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="@dimen/medium_margin"
+        />
     <ImageButton
         android:id="@+id/favourite"
         android:layout_width="48dp"

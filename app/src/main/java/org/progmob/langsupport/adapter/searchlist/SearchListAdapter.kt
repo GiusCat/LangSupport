@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.progmob.langsupport.R
 import org.progmob.langsupport.databinding.SearchListItemBinding
 import org.progmob.langsupport.model.WordData
+import org.progmob.langsupport.util.LanguageManager
 
 
 class SearchListAdapter(
@@ -28,10 +29,13 @@ class SearchListAdapter(
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: SearchListViewHolder, position: Int) {
         val item = dataSet[position]
+        val lm = LanguageManager
         viewHolder.textView.text = item.word
         viewHolder.root.setOnClickListener { rootClickListener(item) }
         viewHolder.starButton.setImageResource(
             if(item.favourite) R.drawable.full_star_24 else R.drawable.empty_star_border_24)
+
+        viewHolder.imageLang.setImageResource(lm.flagOf(item.lang))
 
         viewHolder.starButton.setOnClickListener {
             starClickListener(item)

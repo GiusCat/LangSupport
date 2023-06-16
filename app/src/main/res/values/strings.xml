@@ -34,6 +34,7 @@
     <string name="show_user_mail">Show user mail</string>
     <string name="log_out">Log Out</string>
     <string name="default_language">Language</string>
+    <string name="info">Info:</string>
     <string-array name="languages_array">
         <item>German</item>
         <item>English</item>
