@@ -1,11 +1,11 @@
 package org.progmob.langsupport
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import org.progmob.langsupport.databinding.PopUpResultBinding
@@ -34,21 +34,17 @@ class ResultPopUp(
         viewModel.updateSearchedWord(wordData, guessed)
 
         if(guessed) {
-            binding.textGuessedFragment.text = "Great! You have guessed"
-            binding.section1frag.setBackgroundColor(resources.getColor(R.color.lightGreen))
+            binding.textGuessedFragment.text = getString(R.string.guessed_text)
+            binding.section1frag.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.lightGreen))
         } else {
-            binding.textGuessedFragment.text = "What a pity!"
-            binding.section1frag.setBackgroundColor(resources.getColor(R.color.red))
+            binding.textGuessedFragment.text = getString(R.string.not_guessed_text)
+            binding.section1frag.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.lightRed))
         }
+
+        binding.infoText.text = wordData.info
         binding.tedWordGuessed.text = wordData.word
         binding.itaWordGuessed.text =
             wordData.translation.getOrElse(guessedIndex){ wordData.translation[0] }
-
-        Log.i("info", wordData.word)
-        viewModel.getInfo(wordData.word)
-        viewModel.infoWord.observe(viewLifecycleOwner){
-            binding.infoText.text = it
-        }
 
         binding.exit.setOnClickListener {
             this.dismiss()
