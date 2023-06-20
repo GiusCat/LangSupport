@@ -3,55 +3,70 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/large_margin"
-    android:paddingBottom="@dimen/large_margin">
+    android:padding="@dimen/medium_margin"
+    android:layout_marginBottom="@dimen/medium_margin">
 
     <ImageView
         android:id="@+id/word_flag_hist"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:src="@mipmap/ic_german_flag"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/word_hist"
-        app:layout_constraintStart_toStartOf="parent"
+        android:src="@mipmap/ic_launcher_round"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:contentDescription="@string/foreign_flag_desc"
+
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="@dimen/large_margin"
-        android:layout_marginEnd="@dimen/small_margin"
-        android:contentDescription="@string/foreign_flag_desc" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0" />
 
     <TextView
         android:id="@+id/word_hist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/translation_hist"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/medium_margin"
+        android:text="@string/word_placeholder"
+        android:textSize="18sp"
+
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="@dimen/small_margin"
-        android:layout_marginEnd="@dimen/small_margin" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/word_flag_hist"
+        />
 
     <ImageView
-        android:id="@+id/translation_flag_hist"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:src="@mipmap/ic_italian_flag"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/word_hist"
-        app:layout_constraintEnd_toStartOf="@id/translation_hist"
+        android:id="@+id/equals"
+        android:src="@drawable/arrow_forward_24"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="@dimen/medium_margin"
+        android:contentDescription="@string/arrow"
+
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="@dimen/large_margin"
-        android:layout_marginEnd="@dimen/small_margin"
-        android:contentDescription="@string/main_flag_desc" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/word_hist" />
 
     <TextView
         android:id="@+id/translation_hist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/small_margin"
-        android:layout_marginEnd="@dimen/small_margin"
+        android:layout_marginStart="@dimen/medium_margin"
+        android:text="@string/word_placeholder"
+        android:textSize="22sp"
+
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/word_hist"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@id/equals" />
+
+    <TextView
+        android:id="@+id/translation_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/very_small_margin"
+        android:text="@string/translation_number"
+        android:textSize="11sp"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/translation_hist"
+        app:layout_constraintVertical_bias="1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

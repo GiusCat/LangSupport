@@ -1,11 +1,11 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.LangSupport" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <item name="colorPrimary">@color/purple</item>
         <item name="colorSecondary">@color/black</item>
         <item name="android:textColor">@color/black</item>
-
+        <item name="android:colorBackground">@color/eggWhite</item>
     </style>
 
     <style name="Theme.LangSupport" parent="Base.Theme.LangSupport" />

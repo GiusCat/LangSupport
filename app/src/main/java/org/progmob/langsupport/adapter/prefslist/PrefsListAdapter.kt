@@ -1,13 +1,14 @@
 package org.progmob.langsupport.adapter.prefslist
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import org.progmob.langsupport.databinding.PrefListItemBinding
 import org.progmob.langsupport.model.WordData
 import org.progmob.langsupport.util.LanguageManager
-import java.util.Locale
 
 class PrefsListAdapter(
     private val starClickListener: (WordData) -> Unit
@@ -21,16 +22,21 @@ class PrefsListAdapter(
         return PrefsListViewHolder(bind)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(viewHolder: PrefsListViewHolder, position: Int) {
         val item = dataSet[position]
         val lm = LanguageManager
         viewHolder.word.text = item.word
-        viewHolder.translation.text = item.translation[0].toString()
+        viewHolder.translation.text = item.translation[0]
         viewHolder.starButton.setOnClickListener {
             starClickListener(item)
         }
-        viewHolder.translated_flag.setImageResource(lm.flagOf(item.lang))
-        viewHolder.target_lang_flag.setImageResource(lm.flagOf(Locale.getDefault().language))
+        viewHolder.translatedFlag.setImageResource(lm.flagOf(item.lang))
+
+        viewHolder.translationNumber.apply {
+            visibility = if(item.translation.size > 1) View.VISIBLE else View.GONE
+            text = "+${item.translation.size - 1}"
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

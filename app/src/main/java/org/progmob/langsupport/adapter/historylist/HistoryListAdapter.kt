@@ -1,19 +1,19 @@
 package org.progmob.langsupport.adapter.historylist
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import org.progmob.langsupport.databinding.HistoryListItemBinding
 import org.progmob.langsupport.model.WordData
 import org.progmob.langsupport.util.LanguageManager
-import java.util.Locale
 
 class HistoryListAdapter (
     private var dataSet: List<WordData> = listOf()
 ) : RecyclerView.Adapter<HistoryListViewHolder>() {
 
-    // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): HistoryListViewHolder {
         // Create a new view, which defines the UI of the list item
         val bind = HistoryListItemBinding.inflate(
@@ -21,16 +21,19 @@ class HistoryListAdapter (
         return HistoryListViewHolder(bind)
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(viewHolder: HistoryListViewHolder, position: Int) {
         val item = dataSet[position]
-        viewHolder.translationFlag.setImageResource(LanguageManager.flagOf(Locale.getDefault().language))
         viewHolder.wordFlag.setImageResource(LanguageManager.flagOf(item.lang))
         viewHolder.word.text = item.word
         viewHolder.translation.text = item.translation[0]
+
+        viewHolder.translationNumber.apply {
+            visibility = if(item.translation.size > 1) View.VISIBLE else View.GONE
+            text = "+${item.translation.size - 1}"
+        }
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
 
     fun setWordsList(l: List<WordData>) {

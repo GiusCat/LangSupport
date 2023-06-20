@@ -14,6 +14,6 @@ class PrefsListViewHolder(
     val word = binding.wordPref
     val translation = binding.translationPref
     val starButton = binding.starButton
-    val translated_flag = binding.wordFlagPref
-    val target_lang_flag = binding.translationFlagPref
+    val translatedFlag = binding.wordFlagPref
+    val translationNumber = binding.translationNumber
 }

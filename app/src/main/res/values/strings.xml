@@ -23,7 +23,7 @@
     <string name="add_word">Add word</string>
     <string name="searched_words">Searched Words:</string>
     <string name="guessed_words_stats">Guessed Words:</string>
-    <string name="wronged_words">Wronged Words:</string>
+    <string name="wronged_words">Wrong Words:</string>
     <string name="new_meaning">New Meaning</string>
     <string name="add_meaning">Add Meaning</string>
     <string name="add_translation">Add Translation</string>
@@ -35,12 +35,13 @@
     <string name="log_out">Log Out</string>
     <string name="default_language">Language</string>
     <string name="info">Info:</string>
-    <string-array name="languages_array">
-        <item>German</item>
-        <item>English</item>
-        <item>Spanish</item>
-        <item>French</item>
-        <item>Italian</item>
-    </string-array>
-
+    <string name="guessed_text">Great! You have guessed</string>
+    <string name="not_guessed_text">What a pity!</string>
+    <string name="word_placeholder">Word</string>
+    <string name="delete_word_icon_desc">Delete word icon</string>
+    <string name="favourite_word_icon_desc">Favourite word icon</string>
+    <string name="or">or</string>
+    <string name="one_hundred">100</string>
+    <string name="arrow">Arrow</string>
+    <string name="translation_number">(+1)</string>
 </resources>

@@ -95,8 +95,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintHeight_percent="0.8"
-        app:layout_constraintVertical_bias="0.8">
+        app:layout_constraintHeight_percent="0.5"
+        app:layout_constraintVertical_bias="0.6">
 
         <TextView
             android:id="@+id/last_searched_text"
