@@ -9,7 +9,14 @@
     app:layout_constraintBottom_toBottomOf="parent"
     tools:context=".activity.MainActivity"
     >
-
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id = "@+id/titleSectionResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+    >
     <TextView
         android:id = "@+id/textGuessedFragment"
         android:textStyle="bold"
@@ -18,21 +25,32 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tedWordGuessed"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginTop="@dimen/large_margin"
-        android:layout_marginBottom="@dimen/small_margin"
+        android:layout_marginBottom="@dimen/large_margin"
         android:layout_marginStart="@dimen/large_margin"
         android:layout_marginEnd = "@dimen/large_margin"
     />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id = "@+id/secondSectionResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleSectionResult"
+        android:background="@color/white"
+        >
     <TextView
         android:id = "@+id/tedWordGuessed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/textGuessedFragment"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/itaWordGuessed"
-        app:layout_constraintBottom_toTopOf="@id/exit"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/info"
         android:layout_marginTop="@dimen/large_margin"
         android:layout_marginBottom="@dimen/large_margin"
         android:layout_marginStart="@dimen/large_margin"
@@ -43,10 +61,11 @@
         android:layout_width="40dp"
         android:layout_height="30dp"
         android:src="@drawable/arrow_forward_24"
-        app:layout_constraintTop_toBottomOf="@id/textGuessedFragment"
         app:layout_constraintStart_toEndOf="@id/tedWordGuessed"
         app:layout_constraintEnd_toStartOf="@id/itaWordGuessed"
-        app:layout_constraintBottom_toTopOf="@id/exit"
+        app:layout_constraintBottom_toTopOf="@id/info"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="@dimen/small_margin"
 
     />
 
@@ -54,10 +73,10 @@
         android:id = "@+id/itaWordGuessed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/textGuessedFragment"
         app:layout_constraintStart_toEndOf="@id/tedWordGuessed"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/exit"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/info_text"
         android:layout_marginTop="@dimen/large_margin"
         android:layout_marginBottom="@dimen/large_margin"
         android:layout_marginStart="@dimen/large_margin"
@@ -75,7 +94,18 @@
         android:text="@string/info"
         android:textColor="@color/gray"
         android:layout_marginTop="@dimen/medium_margin"
-        android:layout_marginBottom="@dimen/medium_margin"
+        android:layout_marginBottom="@dimen/large_margin"
+        />
+    <TextView
+        android:id="@+id/noAddInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tedWordGuessed"
+        app:layout_constraintBottom_toTopOf="@id/exit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/gray"
+        android:textStyle="italic"
         />
 
     <TextView
@@ -87,8 +117,8 @@
         app:layout_constraintStart_toEndOf="@id/info"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="@dimen/medium_margin"
-        android:layout_marginBottom="@dimen/medium_margin"
-        android:text="Placeholder"
+        android:layout_marginBottom="@dimen/large_margin"
+        android:text=""
         />
 
     <Button
@@ -117,4 +147,5 @@
         android:layout_marginTop="@dimen/large_margin"
         android:layout_marginEnd = "@dimen/large_margin"
         />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

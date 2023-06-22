@@ -44,4 +44,6 @@
     <string name="one_hundred">100</string>
     <string name="arrow">Arrow</string>
     <string name="translation_number">(+1)</string>
+    <string name="noAddInfo" translatable="false">"no additional info for this word"</string>
+    <string name="addMeaningText" translatable="false">You can use the new meaning to guess!</string>
 </resources>

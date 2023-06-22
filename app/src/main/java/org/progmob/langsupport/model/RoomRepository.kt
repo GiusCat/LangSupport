@@ -13,7 +13,7 @@ object RoomRepository {
     val activeFavWords: MutableLiveData<List<WordData>> = MutableLiveData(listOf())
     val lastAddedWord: MutableLiveData<WordData> = MutableLiveData()
     val currentStats: MutableLiveData<StatsData> = MutableLiveData()
-
+    val lastLang: MutableLiveData<String> = MutableLiveData()
     fun initDatabase(context: Context) {
         db = Room.databaseBuilder(context, WordDatabase::class.java, "words").build()
     }
@@ -30,6 +30,7 @@ object RoomRepository {
             })
         lastAddedWord.postValue(wordData)
         updateHistoryWords(wordData)
+        getLastLang()
     }
 
     suspend fun getWord(s: String): WordData? {
@@ -108,11 +109,18 @@ object RoomRepository {
         else
             activeWords.postValue(newActiveWords.filter{ !it.deleted }.toList())
     }
+     suspend fun getLastLang(){
 
+        lastLang.postValue(
+            db.wordDao().getLastLang()
+        )
+    }
     private fun updateHistoryWords(word: WordData) {
         val newL = mutableListOf(word).apply {
             addAll(historyWords.value!!.take(2).filter { it != word })
         }
         historyWords.postValue(newL.toList())
     }
+
+
 }

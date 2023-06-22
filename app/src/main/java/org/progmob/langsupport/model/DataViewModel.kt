@@ -32,6 +32,7 @@ class DataViewModel(private val application: Application): AndroidViewModel(appl
     val currUser: MutableLiveData<FirebaseUser> = MutableLiveData()
     val errorMsg: MutableLiveData<String> = MutableLiveData()
     val statsData: MutableLiveData<StatsData> = MutableLiveData()
+    var lastLang: String? = null
 
     init {
         firebase.initFirebase(prefs.getBoolean("first_run", true))
@@ -49,6 +50,7 @@ class DataViewModel(private val application: Application): AndroidViewModel(appl
 
         room.currentStats.observeForever { statsData.value = it }
         translator.translatorResult.observeForever { translatedWord.value = it }
+        room.lastLang.observeForever{lastLang = it}
     }
 
     fun signUpUser(email: String, password: String) {
@@ -177,6 +179,7 @@ class DataViewModel(private val application: Application): AndroidViewModel(appl
                 }
                 room.getHistoryWords()
                 room.getFavWordsLike("")
+                room.getLastLang()
             } catch (e: Exception) {
                 Log.i("TAG", "Exception during DataSetUp - ${e.message}")
             }

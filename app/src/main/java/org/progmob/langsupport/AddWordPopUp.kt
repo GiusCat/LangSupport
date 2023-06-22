@@ -1,6 +1,7 @@
 package org.progmob.langsupport
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import org.progmob.langsupport.adapter.SpinnerAdapter
 import org.progmob.langsupport.databinding.PopUpAddWordBinding
 import org.progmob.langsupport.model.DataViewModel
 import org.progmob.langsupport.model.WordData
+import org.progmob.langsupport.util.LanguageManager
 
 class AddWordPopUp(private val wordToAdd: String) : DialogFragment() {
     private lateinit var binding: PopUpAddWordBinding
@@ -35,6 +37,17 @@ class AddWordPopUp(private val wordToAdd: String) : DialogFragment() {
         viewModel.errorMsg.observe(viewLifecycleOwner) {
             Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
+
+        /*viewModel.lastLang.observe(viewLifecycleOwner){
+            Log.i("lingua", it.toString())
+            Log.i("lingua", LanguageManager.getLanguages().indexOf(viewModel.lastLang))
+
+            binding.languageSpinner.setSelection(LanguageManager.getLanguages().indexOf(it))
+        }*/
+        Log.i("lingua", viewModel.lastLang!!)
+        Log.i("lingua", LanguageManager.getLanguages().indexOf(viewModel.lastLang).toString())
+
+        binding.languageSpinner.setSelection(LanguageManager.getLanguages().indexOf(viewModel.lastLang))
 
         binding.confirmButton.setOnClickListener {
             viewModel.addNewWord(WordData(
