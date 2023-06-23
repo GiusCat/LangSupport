@@ -20,6 +20,7 @@
     <string name="favourites">Favourites</string>
     <string name="search_in_favourites">Search in Favourites</string>
     <string name="cancel">Cancel</string>
+    <string name="close">Close</string>
     <string name="add_word">Add word</string>
     <string name="searched_words">Searched Words:</string>
     <string name="guessed_words_stats">Guessed Words:</string>
@@ -29,12 +30,12 @@
     <string name="add_translation">Add Translation</string>
     <string name="add_info">Add Info</string>
     <string name="Confirm">Confirm</string>
-    <string name="word_already_searched_guess_you">Word already searched, Guess You!</string>
+    <string name="word_already_searched_guess_you">Word already searched, try to guess it!</string>
     <string name="try_">Try</string>
     <string name="show_user_mail">Show user mail</string>
     <string name="log_out">Log Out</string>
     <string name="default_language">Language</string>
-    <string name="info">Info:</string>
+    <string name="info"><b><i>Info:</i></b></string>
     <string name="guessed_text">Great! You have guessed</string>
     <string name="not_guessed_text">What a pity!</string>
     <string name="word_placeholder">Word</string>
@@ -44,6 +45,6 @@
     <string name="one_hundred">100</string>
     <string name="arrow">Arrow</string>
     <string name="translation_number">(+1)</string>
-    <string name="noAddInfo" translatable="false">"no additional info for this word"</string>
-    <string name="addMeaningText" translatable="false">You can use the new meaning to guess!</string>
+    <string name="noAddInfo"><b><i>No additional info</i></b></string>
+    <string name="addMeaningText">You can use the new meaning to guess!</string>
 </resources>

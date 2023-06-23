@@ -35,7 +35,7 @@
             android:id="@+id/dismiss_button"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:text="@string/cancel"
+            android:text="@string/close"
 
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -7,145 +7,151 @@
     android:layout_height="wrap_content"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintBottom_toBottomOf="parent"
-    tools:context=".activity.MainActivity"
-    >
+    tools:context=".activity.MainActivity">
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id = "@+id/titleSectionResult"
-        android:layout_width="wrap_content"
+        android:id="@+id/title_subsection"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-    >
-    <TextView
-        android:id = "@+id/textGuessedFragment"
-        android:textStyle="bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginTop="@dimen/large_margin"
-        android:layout_marginBottom="@dimen/large_margin"
-        android:layout_marginStart="@dimen/large_margin"
-        android:layout_marginEnd = "@dimen/large_margin"
-    />
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/textGuessedFragment"
+            android:text="@string/word_placeholder"
+            android:textStyle="bold"
+            android:textColor="@color/eggWhite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/medium_margin"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id = "@+id/secondSectionResult"
-        android:layout_width="wrap_content"
+        android:id="@+id/translation_subsection"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@id/title_subsection"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titleSectionResult"
-        android:background="@color/white"
-        >
-    <TextView
-        android:id = "@+id/tedWordGuessed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/itaWordGuessed"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/info"
-        android:layout_marginTop="@dimen/large_margin"
-        android:layout_marginBottom="@dimen/large_margin"
-        android:layout_marginStart="@dimen/large_margin"
-        android:layout_marginEnd = "@dimen/large_margin"
-        />
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <ImageView
-        android:layout_width="40dp"
-        android:layout_height="30dp"
-        android:src="@drawable/arrow_forward_24"
-        app:layout_constraintStart_toEndOf="@id/tedWordGuessed"
-        app:layout_constraintEnd_toStartOf="@id/itaWordGuessed"
-        app:layout_constraintBottom_toTopOf="@id/info"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginBottom="@dimen/small_margin"
+        <TextView
+            android:id="@+id/word"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/large_margin"
+            android:text="@string/word_placeholder"
 
-    />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/arrow" />
 
-    <TextView
-        android:id = "@+id/itaWordGuessed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/tedWordGuessed"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/info_text"
-        android:layout_marginTop="@dimen/large_margin"
-        android:layout_marginBottom="@dimen/large_margin"
-        android:layout_marginStart="@dimen/large_margin"
-        android:layout_marginEnd = "@dimen/large_margin"
-        />
+        <ImageView
+            android:id="@+id/arrow"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/arrow_forward_24"
+            android:layout_margin="@dimen/small_margin"
+            android:contentDescription="@string/arrow"
 
-    <TextView
-        android:id = "@+id/info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tedWordGuessed"
-        app:layout_constraintBottom_toTopOf="@id/exit"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/info_text"
-        android:text="@string/info"
-        android:textColor="@color/gray"
-        android:layout_marginTop="@dimen/medium_margin"
-        android:layout_marginBottom="@dimen/large_margin"
-        />
-    <TextView
-        android:id="@+id/noAddInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tedWordGuessed"
-        app:layout_constraintBottom_toTopOf="@id/exit"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textColor="@color/gray"
-        android:textStyle="italic"
-        />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
-        android:id = "@+id/info_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/itaWordGuessed"
-        app:layout_constraintBottom_toTopOf="@id/addMean"
-        app:layout_constraintStart_toEndOf="@id/info"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="@dimen/medium_margin"
-        android:layout_marginBottom="@dimen/large_margin"
-        android:text=""
-        />
+        <TextView
+            android:id="@+id/translation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/large_margin"
+            android:text="@string/word_placeholder"
 
-    <Button
-        android:id = "@+id/exit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text = "@string/cancel"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/addMean"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="@dimen/large_margin"
-        android:layout_marginTop="@dimen/large_margin"
-        android:layout_marginEnd = "@dimen/large_margin"
-        android:layout_marginStart="@dimen/large_margin"
-       />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/arrow" />
 
-    <Button
-        android:id = "@+id/addMean"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text = "@string/add_meaning"
-        app:layout_constraintStart_toEndOf="@id/exit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="@dimen/large_margin"
-        android:layout_marginTop="@dimen/large_margin"
-        android:layout_marginEnd = "@dimen/large_margin"
-        />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/info_subsection"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/medium_margin"
+        android:visibility="visible"
+
+        app:layout_constraintTop_toBottomOf="@id/translation_subsection"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/info_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/info"
+            android:textColor="@color/gray"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="0.2"/>
+
+        <TextView
+            android:id="@+id/info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/word_placeholder"
+            android:textAlignment="center"
+            android:textColor="@color/gray"
+
+            app:layout_constraintTop_toBottomOf="@id/info_status"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/buttons_subsection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/info_subsection"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <Button
+            android:id="@+id/exit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/medium_margin"
+            android:text="@string/close"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0" />
+
+        <Button
+            android:id="@+id/addMean"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/medium_margin"
+            android:text="@string/add_meaning"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/exit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="1"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

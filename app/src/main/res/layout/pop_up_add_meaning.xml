@@ -91,7 +91,7 @@
         android:id = "@+id/exitMeaningButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text = "@string/cancel"
+        android:text = "@string/close"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/addMeaningButton"
         app:layout_constraintTop_toBottomOf="@id/wordToAddMean"

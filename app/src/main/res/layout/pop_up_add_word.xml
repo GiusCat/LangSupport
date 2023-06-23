@@ -179,7 +179,7 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/large_margin"
         android:layout_marginHorizontal="@dimen/large_margin"
-        android:text = "@string/cancel"
+        android:text = "@string/close"
 
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

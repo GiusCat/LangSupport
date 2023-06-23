@@ -35,23 +35,21 @@ class ResultPopUp(
 
         if(guessed) {
             binding.textGuessedFragment.text = getString(R.string.guessed_text)
-            binding.section1frag.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.lightGreen))
-            binding.titleSectionResult.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.lightGreen))
+            binding.titleSubsection.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.darkGreen))
         } else {
             binding.textGuessedFragment.text = getString(R.string.not_guessed_text)
-            binding.section1frag.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.lightRed))
-            binding.titleSectionResult.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.lightRed))
-        }
-        if(wordData.info?.length!! > 0)
-            binding.infoText.text = wordData.info
-        else {
-            binding.info.text = ""
-            binding.noAddInfo.text = getString(R.string.noAddInfo)
+            binding.titleSubsection.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.darkRed))
         }
 
-        binding.tedWordGuessed.text = wordData.word
-        binding.itaWordGuessed.text =
+        binding.word.text = wordData.word
+        binding.translation.text =
             wordData.translation.getOrElse(guessedIndex){ wordData.translation[0] }
+
+        binding.info.text = wordData.info
+        if(wordData.info.isNullOrEmpty()) {
+            binding.infoStatus.text = getString(R.string.noAddInfo)
+            binding.info.visibility = View.GONE
+        }
 
         binding.exit.setOnClickListener {
             this.dismiss()

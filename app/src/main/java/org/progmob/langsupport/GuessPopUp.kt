@@ -1,9 +1,11 @@
 package org.progmob.langsupport
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import org.progmob.langsupport.databinding.PopUpGuessBinding
@@ -34,6 +36,11 @@ class GuessPopUp(private val wordData: WordData) : DialogFragment() {
             showPop.show((activity as AppCompatActivity).supportFragmentManager, "showRight")
             this.dismiss()
         }
-    }
 
+        binding.tryTranslate.requestFocus()
+        binding.tryTranslate.post {
+            (requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
+                .showSoftInput(binding.tryTranslate, InputMethodManager.SHOW_IMPLICIT)
+        }
+    }
 }
