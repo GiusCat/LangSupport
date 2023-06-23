@@ -22,6 +22,9 @@ interface WordDao {
     @Delete
     suspend fun deleteWord(word: WordData)
 
+    @Query("DELETE FROM WordData")
+    suspend fun deleteAllWords()
+
     @Query("SELECT * FROM WordData WHERE word = :s")
     suspend fun getWord(s: String): WordData?
 

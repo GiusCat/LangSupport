@@ -25,6 +25,8 @@ class DataViewModel(private val application: Application): AndroidViewModel(appl
     private val room = RoomRepository
     private val prefs: SharedPreferences =
         application.applicationContext.getSharedPreferences("first_run", Context.MODE_PRIVATE)
+    var lastLang: String? = null
+
     val activeWords: MutableLiveData<List<WordData>> = MutableLiveData(mutableListOf())
     val activeFavWords: MutableLiveData<List<WordData>> = MutableLiveData(listOf())
     val historyWords: MutableLiveData<List<WordData>> = MutableLiveData(listOf())
@@ -32,7 +34,6 @@ class DataViewModel(private val application: Application): AndroidViewModel(appl
     val currUser: MutableLiveData<FirebaseUser> = MutableLiveData()
     val errorMsg: MutableLiveData<String> = MutableLiveData()
     val statsData: MutableLiveData<StatsData> = MutableLiveData()
-    var lastLang: String? = null
 
     init {
         firebase.initFirebase(prefs.getBoolean("first_run", true))
@@ -77,6 +78,9 @@ class DataViewModel(private val application: Application): AndroidViewModel(appl
 
     fun signOutUser() {
         firebase.signOutUser()
+        viewModelScope.launch(Dispatchers.IO) {
+            room.deleteAllWords()
+        }
     }
 
     fun isUserSignedIn(): Boolean {

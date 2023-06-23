@@ -3,7 +3,7 @@ package org.progmob.langsupport.util
 import org.progmob.langsupport.R
 
 object LanguageManager {
-    private var languages = listOf("it", "en", "de", "fr", "es")
+    private val languages = listOf("it", "en", "de", "fr", "es")
 
     private val langFlagMap: Map<String, Int> = mapOf(
         "it" to R.mipmap.ic_italian_flag_round,
