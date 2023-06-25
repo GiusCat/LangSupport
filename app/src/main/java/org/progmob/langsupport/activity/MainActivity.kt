@@ -8,19 +8,12 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.progmob.langsupport.R
 import org.progmob.langsupport.databinding.ActivityMainBinding
 import org.progmob.langsupport.model.DataViewModel
 
-/*
-* TODO:
-*  - Define themes for unified color schemes
-*  - String resources for multi-language support (also for error messages)
-*/
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -63,16 +56,11 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.my_nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
-        setupBottomNavMenu(navController)
+        binding.bottomNavView.setupWithNavController(navController)
         navController.addOnDestinationChangedListener{ _, _, _ -> /* ... */ }
 
         viewModel.setTranslators()
         viewModel.setRegularUpdater()
-    }
-
-    private fun setupBottomNavMenu(navController: NavController) {
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav_view)
-        bottomNav.setupWithNavController(navController)
     }
 
     private fun launchLoginActivity() {

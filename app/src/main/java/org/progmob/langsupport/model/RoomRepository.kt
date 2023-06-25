@@ -59,9 +59,10 @@ object RoomRepository {
 
     suspend fun addWordMeaning(wordData: WordData, newMeaning: String) {
         val newL = wordData.translation.toMutableList().apply { add(newMeaning) }
-        wordData.translation = newL.toList()
+        wordData.translation = newL.distinct().toList()
         wordData.timestamp = Date()
         db.wordDao().updateWord(wordData)
+        updateHistoryWords(wordData)
     }
 
     suspend fun updateWord(word: WordData) {

@@ -18,7 +18,8 @@ data class WordData(
 ) {
     override fun equals(other: Any?): Boolean {
         return other != null && other::class == WordData::class &&
-                word.equals((other as WordData).word, ignoreCase = true)
+                word.equals((other as WordData).word, ignoreCase = true) &&
+                translation.size == other.translation.size
     }
 
     override fun toString(): String {

@@ -49,10 +49,12 @@ class HistoryListAdapter (
             override fun getNewListSize(): Int = l.size
 
             override fun areItemsTheSame(oldPos: Int, newPos: Int): Boolean =
-                oldList[oldPos].word == l[newPos].word
+                oldList[oldPos].word == l[newPos].word &&
+                oldList[oldPos].translation.size == l[newPos].translation.size
 
             override fun areContentsTheSame(oldPos: Int, newPos: Int): Boolean =
-                oldList[oldPos].word == l[newPos].word
+                oldList[oldPos].word == l[newPos].word &&
+                oldList[oldPos].translation.size == l[newPos].translation.size
 
         }).dispatchUpdatesTo(this)
     }

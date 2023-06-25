@@ -25,16 +25,13 @@ object FirebaseRepository {
 
     fun getCurrentUser(): FirebaseUser? = fb.auth.currentUser
 
-    fun getMail():String{
-       return fb.auth.currentUser?.email.toString()
-    }
     suspend fun signUpUser(email: String, password: String) {
         fb.auth.createUserWithEmailAndPassword(email, password).await()
-        val mainLang = fb.firestore.collection("languages")
-            .document(Locale.getDefault().language)
         fb.firestore.collection("users")
             .document(currUser.value!!.uid)
-            .set(UserData("New user", mainLang)).await()
+            .set(hashMapOf(
+                "name" to "New user",
+                "mainLang" to Locale.getDefault().language)).await()
     }
 
     suspend fun signInUser(email: String, password: String) {

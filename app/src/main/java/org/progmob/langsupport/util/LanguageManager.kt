@@ -30,6 +30,10 @@ object LanguageManager {
         return langFlagMap[languages[langIndex]] ?: R.mipmap.ic_launcher_round
     }
 
+    fun nameOf(langTag: String): String {
+        return langNameMap[langTag] ?: "---"
+    }
+
     fun nameOf(langIndex: Int): String {
         if(!languages.indices.contains(langIndex)) return "---"
         return langNameMap[languages[langIndex]] ?: "---"
