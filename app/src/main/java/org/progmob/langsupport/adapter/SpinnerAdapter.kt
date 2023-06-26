@@ -23,7 +23,7 @@ class SpinnerAdapter(context: Context) : ArrayAdapter<String>(
         return getCustomView(position, parent)
     }
 
-    private fun getCustomView(position: Int, /*convertView: View?,*/ parent: ViewGroup): View {
+    private fun getCustomView(position: Int, parent: ViewGroup): View {
         return SpinnerItemBinding.inflate(LayoutInflater.from(context), parent, false)
             .apply {
                 langFlag.setImageResource(lm.flagOf(position))

@@ -44,8 +44,7 @@ class SearchListAdapter(
         }
 
         viewHolder.trashButton.setOnClickListener {
-            //insert code to remove a word in DB
-            // controllare se viene rimossa anche dai preferiti in modo diretto
+
             trashClickListener(item)
         }
     }

@@ -10,7 +10,7 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:contentDescription="@string/foreign_flag_desc"
-        android:src="@mipmap/ic_launcher_round"
+        android:src="@mipmap/icon_app"
 
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

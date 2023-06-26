@@ -47,14 +47,14 @@ class SearchFragment : Fragment() {
             GuessPopUp(it).show((activity as AppCompatActivity).supportFragmentManager, "showPop")
             binding.searchEdit.clearFocus()
         }, {
-            // Star click listener
+
             val isFav = !it.favourite
             viewModel.updateFavouriteWord(it)
             Toast.makeText(context,
                 "${it.word} ${if(isFav) "added to" else "removed from"} favourites!",
                 Toast.LENGTH_SHORT).show()
         }, {
-            // Trash click listener
+
             viewModel.deleteWord(it)
             Toast.makeText(context, "${it.word} deleted", Toast.LENGTH_SHORT).show()
         })

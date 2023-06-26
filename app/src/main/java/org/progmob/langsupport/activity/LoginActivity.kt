@@ -26,7 +26,6 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        // Exception handling in UI
         viewModel.errorMsg.observe(this) {
             if(!it.isNullOrEmpty())
                 Toast.makeText(applicationContext, it, Toast.LENGTH_SHORT).show()

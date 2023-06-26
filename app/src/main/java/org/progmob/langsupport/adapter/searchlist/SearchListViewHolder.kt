@@ -3,10 +3,6 @@ package org.progmob.langsupport.adapter.searchlist
 import androidx.recyclerview.widget.RecyclerView
 import org.progmob.langsupport.databinding.SearchListItemBinding
 
-/**
- * Provide a reference to the type of views that you are using
- * (custom ViewHolder)
- */
 class SearchListViewHolder(
     binding: SearchListItemBinding
 ) : RecyclerView.ViewHolder(binding.root) {

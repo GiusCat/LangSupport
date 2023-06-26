@@ -47,4 +47,6 @@
     <string name="translation_number">(+1)</string>
     <string name="noAddInfo"><b><i>No additional info</i></b></string>
     <string name="addMeaningText">You can use the new meaning to guess!</string>
+    <string name="search_for_words" translatable="false">Search for words...</string>
+    <string name="history_information_should_go_here_and_disappear_once_i_start_looking_for_words" translatable="false">History information should go here and disappear once I start looking for words</string>
 </resources>

@@ -7,7 +7,7 @@
 
     <ImageView
         android:id="@+id/word_flag_pref"
-        android:src="@mipmap/ic_launcher_round"
+        android:src="@mipmap/icon_app"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:contentDescription="@string/foreign_flag_desc"

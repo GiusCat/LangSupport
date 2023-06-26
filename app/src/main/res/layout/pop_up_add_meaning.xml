@@ -65,8 +65,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/newMeaning"
-        android:hint = "old word"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:layout_marginTop="@dimen/large_margin"
         android:layout_marginStart="@dimen/large_margin"
         android:layout_marginEnd = "@dimen/large_margin"
@@ -85,7 +84,9 @@
         android:layout_marginStart="@dimen/large_margin"
         android:layout_marginEnd = "@dimen/large_margin"
         android:layout_marginBottom="@dimen/large_margin"
-        />
+        android:inputType="text"
+        android:importantForAutofill="no"
+         />
 
     <Button
         android:id = "@+id/exitMeaningButton"

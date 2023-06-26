@@ -2,9 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/search_layout"
@@ -23,7 +21,7 @@
             android:layout_height="0dp"
             android:inputType="text"
             android:autofillHints=""
-            android:hint="Search for words..."
+            android:hint="@string/search_for_words"
 
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -71,7 +69,7 @@
             android:id="@+id/text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="History information should go here and disappear once I start looking for words"
+            android:text="@string/history_information_should_go_here_and_disappear_once_i_start_looking_for_words"
             android:textAlignment="center"
             android:textSize="32sp"
 
