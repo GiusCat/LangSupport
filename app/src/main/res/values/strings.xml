@@ -1,5 +1,52 @@
 <resources>
-    <string name="app_name">LangSupport</string>
-    <string name="e_mail_address">E-mail address</string>
+    <string name="app_name">LangBuddy</string>
+    <string name="insert_word_to_translate">Insert Word to Translate</string>
+    <string name="translate">Translate</string>
+    <string name="guessed_words">Guessed Words</string>
+    <string name="wrong_words">Wrong Words</string>
+    <string name="home">Home</string>
+    <string name="e_mail_address">Email Address</string>
     <string name="password">Password</string>
+    <string name="stats">Stats</string>
+    <string name="insert_translation">Insert Translation</string>
+    <string name="main_flag_desc">Main Language Flag</string>
+    <string name="foreign_flag_desc">Foreign Language Flag</string>
+    <string name="sign_in_btn">Sign In</string>
+    <string name="sign_up_btn">Sign Up</string>
+    <string name="last_words_label">Last 3 searched words</string>
+    <string name="search">Search</string>
+    <string name="prefs">Prefs\n</string>
+    <string name="lang_support">Lang Support</string>
+    <string name="favourites">Favourites</string>
+    <string name="search_in_favourites">Search in Favourites</string>
+    <string name="cancel">Cancel</string>
+    <string name="close">Close</string>
+    <string name="add_word">Add word</string>
+    <string name="searched_words">Searched Words:</string>
+    <string name="guessed_words_stats">Guessed Words:</string>
+    <string name="wronged_words">Wrong Words:</string>
+    <string name="new_meaning">New Meaning</string>
+    <string name="add_meaning">Add Meaning</string>
+    <string name="add_translation">Add Translation</string>
+    <string name="add_info">Add Info</string>
+    <string name="Confirm">Confirm</string>
+    <string name="word_already_searched_guess_you">Word already searched, try to guess it!</string>
+    <string name="try_">Try</string>
+    <string name="show_user_mail">Show user mail</string>
+    <string name="log_out">Log Out</string>
+    <string name="default_language">Language</string>
+    <string name="info"><b><i>Info:</i></b></string>
+    <string name="guessed_text">Great! You have guessed</string>
+    <string name="not_guessed_text">What a pity!</string>
+    <string name="word_placeholder">Word</string>
+    <string name="delete_word_icon_desc">Delete word icon</string>
+    <string name="favourite_word_icon_desc">Favourite word icon</string>
+    <string name="or">or</string>
+    <string name="one_hundred">100</string>
+    <string name="arrow">Arrow</string>
+    <string name="translation_number">(+1)</string>
+    <string name="noAddInfo"><b><i>No additional info</i></b></string>
+    <string name="addMeaningText">You can use the new meaning to guess!</string>
+    <string name="search_for_words" translatable="false">Search for words...</string>
+    <string name="history_information_should_go_here_and_disappear_once_i_start_looking_for_words" translatable="false">History information should go here and disappear once I start looking for words</string>
 </resources>
