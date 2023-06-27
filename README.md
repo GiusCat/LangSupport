@@ -2,7 +2,7 @@
 
 Android app to support the learning of new languages by storing a personal "word-log" of learnt lemmas, along with stats related to their usage and recall rate.
 
-## Usage
+## Usage
 
 The code in this repository works with minimum SDK version 24, and target SDK version 33.
 
