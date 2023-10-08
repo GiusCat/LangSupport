@@ -13,8 +13,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import org.progmob.langsupport.AddWordPopUp
-import org.progmob.langsupport.GuessPopUp
+import org.progmob.langsupport.popup.AddWordPopUp
+import org.progmob.langsupport.popup.GuessPopUp
 import org.progmob.langsupport.adapter.historylist.HistoryListAdapter
 import org.progmob.langsupport.adapter.searchlist.SearchListAdapter
 import org.progmob.langsupport.databinding.FragmentSearchBinding
@@ -47,14 +47,12 @@ class SearchFragment : Fragment() {
             GuessPopUp(it).show((activity as AppCompatActivity).supportFragmentManager, "showPop")
             binding.searchEdit.clearFocus()
         }, {
-
             val isFav = !it.favourite
             viewModel.updateFavouriteWord(it)
             Toast.makeText(context,
                 "${it.word} ${if(isFav) "added to" else "removed from"} favourites!",
                 Toast.LENGTH_SHORT).show()
         }, {
-
             viewModel.deleteWord(it)
             Toast.makeText(context, "${it.word} deleted", Toast.LENGTH_SHORT).show()
         })
@@ -76,7 +74,7 @@ class SearchFragment : Fragment() {
 
             // I can't add a word which is already added
             binding.addButton.isEnabled = it.count {
-                    el -> el.word.equals(binding.searchEdit.text.toString().trim(), ignoreCase = true)
+                el -> el.word.equals(binding.searchEdit.text.toString().trim(), ignoreCase = true)
             } == 0
         }
 

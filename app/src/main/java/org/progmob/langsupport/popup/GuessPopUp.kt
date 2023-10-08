@@ -1,4 +1,4 @@
-package org.progmob.langsupport
+package org.progmob.langsupport.popup
 
 import android.content.Context
 import android.os.Bundle

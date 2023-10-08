@@ -1,4 +1,4 @@
-package org.progmob.langsupport
+package org.progmob.langsupport.popup
 
 import android.os.Bundle
 import android.text.Editable

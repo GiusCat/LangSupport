@@ -1,4 +1,4 @@
-package org.progmob.langsupport
+package org.progmob.langsupport.popup
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import org.progmob.langsupport.R
 import org.progmob.langsupport.databinding.PopUpResultBinding
 import org.progmob.langsupport.model.DataViewModel
 import org.progmob.langsupport.model.WordData
@@ -35,10 +36,14 @@ class ResultPopUp(
 
         if(guessed) {
             binding.textGuessedFragment.text = getString(R.string.guessed_text)
-            binding.titleSubsection.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.darkGreen))
+            binding.titleSubsection.setBackgroundColor(ContextCompat.getColor(requireContext(),
+                R.color.darkGreen
+            ))
         } else {
             binding.textGuessedFragment.text = getString(R.string.not_guessed_text)
-            binding.titleSubsection.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.darkRed))
+            binding.titleSubsection.setBackgroundColor(ContextCompat.getColor(requireContext(),
+                R.color.darkRed
+            ))
         }
 
         binding.word.text = wordData.word
