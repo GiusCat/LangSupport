@@ -30,16 +30,16 @@
     <string name="add_meaning">Aggiungi significato</string>
     <string name="add_translation">Traduzione</string>
     <string name="add_info">Info (opzionali)</string>
-    <string name="Confirm">Conferma</string>
+    <string name="confirm">Conferma</string>
     <string name="word_already_searched_guess_you">La parola esiste già, prova a indovinarla!</string>
     <string name="try_">Prova</string>
     <string name="show_user_mail">E-mail utente</string>
     <string name="log_out">Esci</string>
     <string name="default_language">Lingua</string>
-    <string name="info"><b><i>Info:</i></b></string>
+    <string name="info">Info</string>
     <string name="guessed_text">Complimenti, hai indovinato!</string>
     <string name="not_guessed_text">Che peccato!</string>
-    <string name="word_placeholder">Parola</string>
+    <string name="word">Parola</string>
     <string name="delete_word_icon_desc">Icona di cancellazione parola</string>
     <string name="favourite_word_icon_desc">Icona di toggle preferito parola</string>
     <string name="or">oppure</string>
@@ -48,4 +48,15 @@
     <string name="translation_number">(+1)</string>
     <string name="noAddInfo"><b><i>Nessuna info</i></b></string>
     <string name="addMeaningText">Aggiungi un nuovo significato!</string>
+    <string name="search_for_words">Cerca tra le parole</string>
+    <string name="translation">Traduzione</string>
+    <string name="dismiss">Chiudi</string>
+    <string name="guess_the_word">Indovina la parola</string>
+    <string name="correct">Corretto!</string>
+    <string name="wrong">Sbagliato!</string>
+    <string name="show_translations">Mostra traduzioni</string>
+    <string name="hide_translations">Nascondi traduzioni</string>
+    <string name="add">Aggiungi</string>
+    <string name="search_screen_text">Inizia ad aggiungere nuove parole, oppure cerca di indovinare parole già cercate</string>
+    <string name="filter_favourites">Filtra preferiti</string>
 </resources>
