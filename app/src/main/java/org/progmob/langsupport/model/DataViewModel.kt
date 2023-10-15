@@ -105,6 +105,13 @@ class DataViewModel(private val application: Application): AndroidViewModel(appl
             room.addNewWord(newWord)
         }
     }
+
+    fun updateWord(word: WordData) {
+        viewModelScope.launch(Dispatchers.IO) {
+            room.updateWord(word)
+        }
+    }
+
     fun addWordMeaning(word: WordData, newMeaning: String) {
         viewModelScope.launch(Dispatchers.IO) {
             room.addWordMeaning(word, newMeaning)
