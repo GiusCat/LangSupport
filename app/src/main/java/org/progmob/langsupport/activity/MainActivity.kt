@@ -1,8 +1,6 @@
 package org.progmob.langsupport.activity
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -39,32 +37,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if(!viewModel.isUserSignedIn())
-            launchLoginActivity()
-
         setContent {
             LangSupportTheme {
                 LangSupportApp(viewModel = viewModel)
             }
         }
 
-        viewModel.currUser.observe(this) {
-            if(!viewModel.isUserSignedIn())
-                launchLoginActivity()
-        }
-
         viewModel.setTranslators()
         viewModel.setRegularUpdater()
-    }
-
-    private fun launchLoginActivity() {
-        try {
-            val intent = Intent(this, LoginActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
-        } catch (e: Exception) {
-            Log.e("MainActivity", "${e.message}")
-        }
     }
 
     override fun onDestroy() {

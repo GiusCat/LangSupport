@@ -168,7 +168,7 @@ fun GuessDialog(
                     label = { Text(text = stringResource(id = R.string.insert_translation)) },
                     singleLine = true,
                     enabled = translationEnabled,
-                    onValueChange = { translation = it.lowercase().trim() },
+                    onValueChange = { translation = it },
                     colors = TextFieldDefaults.colors(
                         unfocusedContainerColor = backgroundColor,
                         focusedContainerColor = backgroundColor,

@@ -1,5 +1,6 @@
 package org.progmob.langsupport.util
 
+import androidx.compose.ui.text.intl.Locale
 import org.progmob.langsupport.R
 
 object LanguageManager {
@@ -40,4 +41,8 @@ object LanguageManager {
     }
 
     fun getLanguages(): List<String> = languages
+
+    fun getSystemLanguage(): String =
+        if(Locale.current.language in languages) Locale.current.language
+        else "en"
 }

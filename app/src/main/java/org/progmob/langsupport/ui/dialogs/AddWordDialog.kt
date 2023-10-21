@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -19,36 +18,22 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import androidx.lifecycle.viewmodel.compose.viewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 import org.progmob.langsupport.R
 import org.progmob.langsupport.model.DataViewModel
-import org.progmob.langsupport.model.TranslatorRepository
 import org.progmob.langsupport.model.WordData
 import org.progmob.langsupport.ui.composables.LanguageSpinner
-import org.progmob.langsupport.ui.theme.LangSupportTheme
 
 @Composable
 fun AddWordDialog(
@@ -58,7 +43,6 @@ fun AddWordDialog(
     onConfirmClick: (WordData) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val coroutineScope = rememberCoroutineScope()
     var word by remember { mutableStateOf(inputWord) }
     var translation: String by remember { mutableStateOf("") }
     var language by remember { mutableStateOf(viewModel.lastLang ?: "en") }
@@ -123,15 +107,7 @@ fun AddWordDialog(
                     )
 
                     Button(
-                        onClick = {
-                            coroutineScope.launch(Dispatchers.IO) {
-                                translation = TranslatorRepository
-                                    .translateWordReturn(
-                                        word, language, viewModel.translateLang.first()
-                                    ).orEmpty()
-                            }
-                            // viewModel.translateWord(word, language)
-                        },
+                        onClick = { viewModel.translateWord(word, language) { translation = it } },
                         colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary),
                         shape = MaterialTheme.shapes.small,
                         modifier = Modifier.wrapContentSize()
@@ -176,7 +152,7 @@ fun AddWordDialog(
                             val tr = translation.lowercase().trim()
                             onConfirmClick(WordData(word, listOf(tr), language, info))
                         },
-                        enabled = (word.isNotEmpty() && !translation.isNullOrEmpty())
+                        enabled = (word.isNotEmpty() && translation.isNotEmpty())
                     ) {
                         Text(text = stringResource(id = R.string.confirm))
                     }
