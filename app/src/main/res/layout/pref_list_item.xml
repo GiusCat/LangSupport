@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/medium_margin"
-        android:text="@string/word_placeholder"
+        android:text="@string/word"
         android:textSize="18sp"
 
         app:layout_constraintTop_toTopOf="parent"
@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/medium_margin"
         android:paddingBottom="4dp"
-        android:text="@string/word_placeholder"
+        android:text="@string/word"
         android:textSize="22sp"
 
         app:layout_constraintTop_toTopOf="parent"

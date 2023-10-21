@@ -66,7 +66,12 @@ object RoomRepository {
     }
 
     suspend fun updateWord(word: WordData) {
+        word.timestamp = Date()
         db.wordDao().updateWord(word)
+        activeWords.postValue(
+            // Replace updated word in active words
+            activeWords.value?.map { if(it == word) word else it }
+        )
     }
 
     suspend fun updateSearchedWord(word: WordData, isGuessed: Boolean) {
@@ -110,6 +115,8 @@ object RoomRepository {
             activeWords.postValue(listOf())
         else
             activeWords.postValue(newActiveWords.filter{ !it.deleted }.toList())
+
+        activeFavWords.postValue( activeFavWords.value?.filter { it != word } )
     }
 
     suspend fun deleteAllWords() {

@@ -15,7 +15,7 @@
     <string name="sign_up_btn">Sign Up</string>
     <string name="last_words_label">Last 3 searched words</string>
     <string name="search">Search</string>
-    <string name="prefs">Prefs\n</string>
+    <string name="prefs">Prefs</string>
     <string name="lang_support">Lang Support</string>
     <string name="favourites">Favourites</string>
     <string name="search_in_favourites">Search in Favourites</string>
@@ -29,16 +29,16 @@
     <string name="add_meaning">Add Meaning</string>
     <string name="add_translation">Add Translation</string>
     <string name="add_info">Add Info</string>
-    <string name="Confirm">Confirm</string>
+    <string name="confirm">Confirm</string>
     <string name="word_already_searched_guess_you">Word already searched, try to guess it!</string>
     <string name="try_">Try</string>
     <string name="show_user_mail">Show user mail</string>
     <string name="log_out">Log Out</string>
     <string name="default_language">Language</string>
-    <string name="info"><b><i>Info:</i></b></string>
+    <string name="info">Info</string>
     <string name="guessed_text">Great! You have guessed</string>
     <string name="not_guessed_text">What a pity!</string>
-    <string name="word_placeholder">Word</string>
+    <string name="word">Word</string>
     <string name="delete_word_icon_desc">Delete word icon</string>
     <string name="favourite_word_icon_desc">Favourite word icon</string>
     <string name="or">or</string>
@@ -47,6 +47,17 @@
     <string name="translation_number">(+1)</string>
     <string name="noAddInfo"><b><i>No additional info</i></b></string>
     <string name="addMeaningText">You can use the new meaning to guess!</string>
-    <string name="search_for_words" translatable="false">Search for words...</string>
+    <string name="search_for_words">Search for words</string>
     <string name="history_information_should_go_here_and_disappear_once_i_start_looking_for_words" translatable="false">History information should go here and disappear once I start looking for words</string>
+    <string name="translation">Translation</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="guess_the_word">Guess the word</string>
+    <string name="correct">Correct!</string>
+    <string name="wrong">Wrong!</string>
+    <string name="show_translations">Show translations</string>
+    <string name="hide_translations">Hide translations</string>
+    <string name="add">Add</string>
+    <string name="search_screen_text">Start adding new words, or try to guess already searched words</string>
+    <string name="filter_favourites">Filter favourites</string>
+    <string name="translate_to">Translate to</string>
 </resources>

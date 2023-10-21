@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/medium_margin"
-        android:text="@string/word_placeholder"
+        android:text="@string/word"
         android:textSize="24sp"
 
         app:layout_constraintTop_toTopOf="parent"

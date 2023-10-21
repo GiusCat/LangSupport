@@ -9,7 +9,7 @@ data class WordData(
     @PrimaryKey val word: String = "",
     var translation: List<String> = listOf(),
     val lang: String = "en",
-    val info: String? = null,
+    var info: String? = null,
     var searched: Int = 1,
     var guessed: Int = 1,
     var favourite: Boolean = false,

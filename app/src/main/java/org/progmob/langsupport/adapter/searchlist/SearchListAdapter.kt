@@ -44,7 +44,6 @@ class SearchListAdapter(
         }
 
         viewHolder.trashButton.setOnClickListener {
-
             trashClickListener(item)
         }
     }
