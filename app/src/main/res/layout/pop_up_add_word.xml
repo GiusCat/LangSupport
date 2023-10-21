@@ -191,7 +191,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:enabled="false"
-        android:text="@string/Confirm"
+        android:text="@string/confirm"
         android:layout_marginVertical="@dimen/large_margin"
         android:layout_marginHorizontal="@dimen/large_margin"
 

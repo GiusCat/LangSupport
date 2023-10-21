@@ -20,7 +20,7 @@
 
         <TextView
             android:id="@+id/textGuessedFragment"
-            android:text="@string/word_placeholder"
+            android:text="@string/word"
             android:textStyle="bold"
             android:textColor="@color/eggWhite"
             android:layout_width="wrap_content"
@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/large_margin"
-            android:text="@string/word_placeholder"
+            android:text="@string/word"
 
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -72,7 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/large_margin"
-            android:text="@string/word_placeholder"
+            android:text="@string/word"
 
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -107,7 +107,7 @@
             android:id="@+id/info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/word_placeholder"
+            android:text="@string/word"
             android:textAlignment="center"
             android:textColor="@color/gray"
 

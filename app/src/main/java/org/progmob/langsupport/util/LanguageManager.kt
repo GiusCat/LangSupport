@@ -1,16 +1,17 @@
 package org.progmob.langsupport.util
 
+import androidx.compose.ui.text.intl.Locale
 import org.progmob.langsupport.R
 
 object LanguageManager {
     private val languages = listOf("it", "en", "de", "fr", "es")
 
     private val langFlagMap: Map<String, Int> = mapOf(
-        "it" to R.mipmap.ic_italian_flag_round,
-        "en" to R.mipmap.ic_english_flag_round,
-        "de" to R.mipmap.ic_german_flag_round,
-        "fr" to R.mipmap.ic_french_flag_round,
-        "es" to R.mipmap.ic_spanish_flag_round
+        "it" to R.drawable.italian_flag,
+        "en" to R.drawable.english_flag,
+        "de" to R.drawable.german_flag,
+        "fr" to R.drawable.french_flag,
+        "es" to R.drawable.spanish_flag
     )
 
     private val langNameMap: Map<String, String> = mapOf(
@@ -40,4 +41,8 @@ object LanguageManager {
     }
 
     fun getLanguages(): List<String> = languages
+
+    fun getSystemLanguage(): String =
+        if(Locale.current.language in languages) Locale.current.language
+        else "en"
 }
