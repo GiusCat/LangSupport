@@ -3,6 +3,7 @@ package org.progmob.langsupport.ui.screens
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -54,8 +55,7 @@ fun SearchScreen(
                     search = it
                     viewModel.getWordsLike(search)
                 },
-                modifier = Modifier
-                    .fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
             )
 
             AnimatedVisibility(search.isNotEmpty()) {
@@ -66,14 +66,19 @@ fun SearchScreen(
                     onDeleteClicked = { viewModel.deleteWord(it) }
                 ) {
                     if(activeWordsState.none { word -> word.word == search })
-                        Button(onClick = { showAddDialog = true }) {
+                        Button(
+                            onClick = { showAddDialog = true },
+                            modifier = Modifier.fillMaxWidth(0.75f)) {
                             Text(text = stringResource(id = R.string.add_word))
                         }
                 }
             }
 
-            if(search.isEmpty())
+            if(search.isEmpty()) {
+                Spacer(Modifier.weight(1f))
                 SearchBackground()
+                Spacer(Modifier.weight(1f))
+            }
         }
 
         if(showAddDialog) {

@@ -238,11 +238,11 @@ fun GuessDialog(
                             contentColor = primaryColor
                         )
                     ) {
-                        val text = stringResource(id =
-                            if(!translationsExpanded) R.string.show_translations
-                            else R.string.hide_translations
-                        )
-                        Text(text = "$text (${word.translation.size})")
+                        val text = if(!translationsExpanded)
+                            stringResource(id = R.string.show_translations) + " (${word.translation.size})"
+                        else
+                            stringResource(id = R.string.hide_translations)
+                        Text(text = text)
 
                         Icon(
                             imageVector =
@@ -256,6 +256,7 @@ fun GuessDialog(
                 AnimatedVisibility(visible = translationsExpanded) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         LazyColumn(
