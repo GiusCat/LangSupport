@@ -192,7 +192,7 @@ fun GuessDialog(
 
                 Spacer(modifier = Modifier
                     .fillMaxWidth()
-                    .height(16.dp)
+                    .height(12.dp)
                 )
 
                 if(guessed == null) {
@@ -229,7 +229,7 @@ fun GuessDialog(
 
                     Spacer(modifier = Modifier
                         .fillMaxWidth()
-                        .height(16.dp)
+                        .height(24.dp)
                     )
 
                     OutlinedButton(
@@ -238,12 +238,12 @@ fun GuessDialog(
                             contentColor = primaryColor
                         )
                     ) {
-                        Text(
-                            text = stringResource(id =
-                                if(!translationsExpanded) R.string.show_translations
-                                else R.string.hide_translations
-                            )
+                        val text = stringResource(id =
+                            if(!translationsExpanded) R.string.show_translations
+                            else R.string.hide_translations
                         )
+                        Text(text = "$text (${word.translation.size})")
+
                         Icon(
                             imageVector =
                                 if(!translationsExpanded) Icons.Default.KeyboardArrowDown

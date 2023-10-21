@@ -4,6 +4,9 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -12,12 +15,18 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.progmob.langsupport.util.FirebaseUpdaterWorker
 import org.progmob.langsupport.util.LanguageManager
-import java.util.Locale
 import java.util.concurrent.TimeUnit
 import kotlin.Exception
+
+private val Context.dataStore by preferencesDataStore(name = "settings")
+private val TRANSLATE_TO = stringPreferencesKey("translate_lang")
 
 class DataViewModel(private val application: Application): AndroidViewModel(application) {
     private val firebase = FirebaseRepository
@@ -25,12 +34,13 @@ class DataViewModel(private val application: Application): AndroidViewModel(appl
     private val room = RoomRepository
     private val prefs: SharedPreferences =
         application.applicationContext.getSharedPreferences("first_run", Context.MODE_PRIVATE)
-    var lastLang: String? = null
 
+    var lastLang: String? = null
+    val translateLang: Flow<String> = application.dataStore.data.map { it[TRANSLATE_TO] ?: "en" }
     val activeWords: MutableLiveData<List<WordData>> = MutableLiveData(mutableListOf())
     val activeFavWords: MutableLiveData<List<WordData>> = MutableLiveData(listOf())
     val historyWords: MutableLiveData<List<WordData>> = MutableLiveData(listOf())
-    val translatedWord: MutableLiveData<String?> = MutableLiveData()
+    val translatedWord: MutableLiveData<String> = MutableLiveData("")
     val currUser: MutableLiveData<FirebaseUser> = MutableLiveData()
     val errorMsg: MutableLiveData<String> = MutableLiveData()
     val statsData: MutableLiveData<StatsData> = MutableLiveData()
@@ -50,8 +60,8 @@ class DataViewModel(private val application: Application): AndroidViewModel(appl
         room.historyWords.observeForever { historyWords.value = it }
 
         room.currentStats.observeForever { statsData.value = it }
-        translator.translatorResult.observeForever { translatedWord.value = it }
         room.lastLang.observeForever{lastLang = it}
+        translator.translatorResult.observeForever { translatedWord.value = it }
     }
 
     fun signUpUser(email: String, password: String) {
@@ -124,17 +134,30 @@ class DataViewModel(private val application: Application): AndroidViewModel(appl
         }
     }
 
+    fun getTranslateLanguage(): String = runBlocking { translateLang.first() }
+
+    fun setTranslateLanguage(lang: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            application.dataStore.edit { it[TRANSLATE_TO] = lang }
+            closeTranslators()
+            setTranslators()
+        }
+    }
+
     fun setTranslators() {
-        for(tr in LanguageManager.getLanguages()) {
-            viewModelScope.launch(Dispatchers.IO) {
-                translator.setNewTranslator(Locale.getDefault().language, tr)
+        viewModelScope.launch(Dispatchers.IO) {
+            translateLang.collect { translate ->
+                for(tr in LanguageManager.getLanguages()) {
+                    translator.setNewTranslator(translate, tr)
+                }
             }
         }
     }
 
+    @Deprecated("This method and its related object will soon be deleted")
     fun translateWord(word: String, lang: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            translator.translateWord(word, lang)
+            translator.translateWord(word, lang, translateLang.first())
         }
     }
 
@@ -160,6 +183,8 @@ class DataViewModel(private val application: Application): AndroidViewModel(appl
         }
     }
 
+    fun getUserEmail(): String = firebase.getCurrentUser()?.email!!
+
     fun setRegularUpdater() {
         Log.i("TAG", "SCHEDULE REGULAR UPDATER")
         val saveRequest =
@@ -175,6 +200,7 @@ class DataViewModel(private val application: Application): AndroidViewModel(appl
 
     private fun dataSetUp() {
         if(!isUserSignedIn()) return
+
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val remoteWords = firebase.fetchAllUserWords()

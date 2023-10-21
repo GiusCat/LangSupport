@@ -33,7 +33,6 @@ import org.progmob.langsupport.util.LanguageManager
 
 @Composable
 fun LanguageSpinner(
-    languages: List<String>,
     preselected: String,
     onSelectionChanged: (String) -> Unit,
     modifier: Modifier = Modifier
@@ -71,7 +70,7 @@ fun LanguageSpinner(
             expanded = expanded,
             onDismissRequest = { expanded = !expanded }
         ) {
-            languages.forEach {
+            LanguageManager.getLanguages().forEach {
                 DropdownMenuItem(
                     text = { LanguageSpinnerItem(lang = it) },
                     onClick = {
@@ -112,7 +111,6 @@ fun SpinnerPreview() {
     LangSupportTheme {
         Column {
             LanguageSpinner(
-                LanguageManager.getLanguages(),
                 preselected = "en",
                 onSelectionChanged = { },
                 modifier = Modifier.wrapContentWidth()

@@ -59,4 +59,5 @@
     <string name="add">Add</string>
     <string name="search_screen_text">Start adding new words, or try to guess already searched words</string>
     <string name="filter_favourites">Filter favourites</string>
+    <string name="translate_to">Translate to</string>
 </resources>

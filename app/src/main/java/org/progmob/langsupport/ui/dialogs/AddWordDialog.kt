@@ -19,9 +19,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,28 +34,34 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import org.progmob.langsupport.R
+import org.progmob.langsupport.model.DataViewModel
+import org.progmob.langsupport.model.TranslatorRepository
 import org.progmob.langsupport.model.WordData
 import org.progmob.langsupport.ui.composables.LanguageSpinner
 import org.progmob.langsupport.ui.theme.LangSupportTheme
-import org.progmob.langsupport.util.LanguageManager
 
 @Composable
 fun AddWordDialog(
     inputWord: String,
-    preselectedLanguage: String,
-    onTranslateClick: (String, String) -> Unit,
+    viewModel: DataViewModel,
     onDismissClick: () -> Unit,
     onConfirmClick: (WordData) -> Unit,
-    modifier: Modifier = Modifier,
-    suggestedTranslation: String = ""
+    modifier: Modifier = Modifier
 ) {
+    val coroutineScope = rememberCoroutineScope()
     var word by remember { mutableStateOf(inputWord) }
-    var translation: String? by remember { mutableStateOf(null) }
-    var language by remember { mutableStateOf(preselectedLanguage) }
+    var translation: String by remember { mutableStateOf("") }
+    var language by remember { mutableStateOf(viewModel.lastLang ?: "en") }
     var info by remember { mutableStateOf("") }
 
     Dialog(onDismissRequest = onDismissClick) {
@@ -72,7 +81,7 @@ fun AddWordDialog(
                 )
             ) {
                 Row(
-                    verticalAlignment = Alignment.CenterVertically,
+                    verticalAlignment = Alignment.Bottom,
                     horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier.fillMaxWidth()
                 ) {
@@ -85,23 +94,23 @@ fun AddWordDialog(
                             focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
                             unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant
                         ),
+                        textStyle = MaterialTheme.typography.bodyLarge.copy(fontSize = 18.sp),
                         modifier = Modifier.fillMaxWidth(0.55f)
                     )
                     LanguageSpinner(
-                        languages = LanguageManager.getLanguages(),
-                        preselected = preselectedLanguage,
+                        preselected = language,
                         onSelectionChanged = { selected -> language = selected },
                         modifier = Modifier.wrapContentSize()
                     )
                 }
 
                 Row(
-                    verticalAlignment = Alignment.CenterVertically,
+                    verticalAlignment = Alignment.Bottom,
                     horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     TextField(
-                        value = translation ?: suggestedTranslation,
+                        value = translation,
                         label = { Text(stringResource(id = R.string.translation)) },
                         singleLine = true,
                         onValueChange = { translation = it },
@@ -109,15 +118,23 @@ fun AddWordDialog(
                             focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
                             unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant
                         ),
+                        textStyle = MaterialTheme.typography.bodyLarge.copy(fontSize = 18.sp),
                         modifier = Modifier.fillMaxWidth(0.55f)
                     )
+
                     Button(
-                        onClick = { onTranslateClick(word, language) },
+                        onClick = {
+                            coroutineScope.launch(Dispatchers.IO) {
+                                translation = TranslatorRepository
+                                    .translateWordReturn(
+                                        word, language, viewModel.translateLang.first()
+                                    ).orEmpty()
+                            }
+                            // viewModel.translateWord(word, language)
+                        },
                         colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary),
                         shape = MaterialTheme.shapes.small,
-                        modifier = Modifier
-                            .wrapContentSize()
-                            .align(Alignment.CenterVertically)
+                        modifier = Modifier.wrapContentSize()
                     ) {
                         Image(
                             painter = painterResource(id = R.drawable.translate_24),
@@ -127,20 +144,10 @@ fun AddWordDialog(
                     }
                 }
 
-                val spacerColor = MaterialTheme.colorScheme.background
                 Spacer(
                     modifier = Modifier
                         .height(16.dp)
                         .fillMaxWidth()
-                        .drawBehind {
-                            drawLine(
-                                color = spacerColor,
-                                Offset(size.width * 0.1f, size.height),
-                                Offset(size.width * 0.9f, size.height),
-                                strokeWidth = 8f,
-                                cap = StrokeCap.Round
-                            )
-                        }
                 )
 
                 TextField(
@@ -148,7 +155,8 @@ fun AddWordDialog(
                     label = { Text(stringResource(id = R.string.info)) },
                     maxLines = 2,
                     onValueChange = { input -> info = input },
-                    modifier = Modifier.fillMaxWidth(0.5f)
+                    textStyle = MaterialTheme.typography.bodyLarge.copy(fontSize = 18.sp),
+                    modifier = Modifier.fillMaxWidth(0.7f)
                 )
 
                 Spacer(modifier = Modifier
@@ -164,30 +172,16 @@ fun AddWordDialog(
                         Text(text = stringResource(id = R.string.dismiss))
                     }
                     Button(
-                        onClick = { onConfirmClick(WordData(word, listOf(translation!!), language, info)) },
+                        onClick = {
+                            val tr = translation.lowercase().trim()
+                            onConfirmClick(WordData(word, listOf(tr), language, info))
+                        },
                         enabled = (word.isNotEmpty() && !translation.isNullOrEmpty())
                     ) {
                         Text(text = stringResource(id = R.string.confirm))
                     }
                 }
             }
-        }
-    }
-}
-
-
-@Preview
-@Composable
-fun DialogPreview() {
-    LangSupportTheme {
-        Surface(Modifier.fillMaxSize()) {
-            var show by remember { mutableStateOf(false) }
-
-            AddWordDialog("Test", "de",
-                onTranslateClick =  { _, _ -> },
-                onDismissClick = { show = false },
-                onConfirmClick = { show = false }
-            )
         }
     }
 }

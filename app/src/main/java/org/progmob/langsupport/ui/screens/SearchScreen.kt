@@ -37,7 +37,6 @@ fun SearchScreen(
     var selectedWord: WordData? by remember { mutableStateOf(null) }
     var showAddDialog by remember { mutableStateOf(false) }
 
-    val suggestedTranslationState by viewModel.translatedWord.observeAsState()
     val activeWordsState by viewModel.activeWords.observeAsState(initial = listOf())
 
     Surface(modifier.fillMaxSize()) {
@@ -80,11 +79,7 @@ fun SearchScreen(
         if(showAddDialog) {
             AddWordDialog(
                 inputWord = search,
-                preselectedLanguage = viewModel.lastLang ?: "en",
-                suggestedTranslation = suggestedTranslationState ?: "",
-                onTranslateClick = { word, lang ->
-                    viewModel.translateWord(word, lang)
-                },
+                viewModel = viewModel,
                 onDismissClick = { showAddDialog = false },
                 onConfirmClick = {
                     viewModel.addNewWord(it)

@@ -9,11 +9,10 @@ import com.google.mlkit.nl.translate.Translation
 import com.google.mlkit.nl.translate.Translator
 import com.google.mlkit.nl.translate.TranslatorOptions
 import kotlinx.coroutines.tasks.await
-import java.util.Locale
 
 object TranslatorRepository {
     private val activeTranslators: MutableMap<String, Translator> = mutableMapOf()
-    val translatorResult: MutableLiveData<String?> = MutableLiveData()
+    val translatorResult: MutableLiveData<String> = MutableLiveData("")
 
     suspend fun setNewTranslator(mainLang: String, translateLang: String) {
         val sourceLangTag = TranslateLanguage.fromLanguageTag(translateLang) ?: return
@@ -35,16 +34,27 @@ object TranslatorRepository {
         }
     }
 
-    suspend fun translateWord(word: String, lang: String) {
+    @Deprecated("This method and its related object will soon be deleted")
+    suspend fun translateWord(word: String, lang: String, translateLang: String) {
         val langTag = TranslateLanguage.fromLanguageTag(lang)
         val translator = activeTranslators[langTag]
 
         translatorResult.postValue(
-            if(lang != Locale.getDefault().language)
-                translator?.translate(word)?.await()
+            if(lang != translateLang)
+                translator?.translate(word)?.await()?.lowercase()?.trim()
             else
                 word
         )
+    }
+
+    suspend fun translateWordReturn(word: String, fromLang: String, toLang: String): String? {
+        val langTag = TranslateLanguage.fromLanguageTag(fromLang)
+        val translator = activeTranslators[langTag]
+
+        return if(fromLang != toLang)
+                translator?.translate(word)?.await()?.lowercase()?.trim()
+            else
+                word
     }
 
     fun closeTranslators() {
