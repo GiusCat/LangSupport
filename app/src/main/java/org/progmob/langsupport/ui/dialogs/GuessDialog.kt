@@ -1,6 +1,5 @@
 package org.progmob.langsupport.ui.dialogs
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -69,34 +68,41 @@ fun GuessDialog(
     var addMeaningValue by remember { mutableStateOf("") }
 
     val translationList = remember { mutableStateListOf(*word.translation.map { it }.toTypedArray()) }
-    var translationEnabled by remember { mutableStateOf(true) }
     var translationsExpanded by remember { mutableStateOf(false) }
 
     val focusRequester = remember { FocusRequester() }
     val dismissAction = {
-        word.apply {
-            this.translation = translationList.toList()
-            this.info = info.trim()
-            this.searched += if(guessed != null) 1 else 0
-            this.guessed += if(guessed == true) 1 else 0
-        }
-        onDismissClick(word)
+        onDismissClick(word.apply {
+            if(guessed != null) {
+                this.translation = translationList.toList()
+                this.info = info.trim()
+                this.searched += 1
+                this.guessed += if(guessed!!) 1 else 0
+            }
+        })
     }
 
-    val backgroundColor = when(guessed) {
-        null -> LocalGuessDialogPalette.current.defaultContainer
-        true -> LocalGuessDialogPalette.current.correctContainer
-        false -> LocalGuessDialogPalette.current.wrongContainer
+    val palette = LocalGuessDialogPalette.current
+    val backgroundColor = remember(guessed) {
+        when(guessed) {
+            null -> palette.defaultContainer
+            true -> palette.correctContainer
+            false -> palette.wrongContainer
+        }
     }
-    val primaryColor = when(guessed) {
-        null -> LocalGuessDialogPalette.current.default
-        true -> LocalGuessDialogPalette.current.correct
-        false -> LocalGuessDialogPalette.current.wrong
+    val primaryColor = remember(guessed) {
+        when(guessed) {
+            null -> palette.default
+            true -> palette.correct
+            false -> palette.wrong
+        }
     }
-    val dialogTitle = when(guessed) {
-        null -> stringResource(id = R.string.guess_the_word)
-        true -> stringResource(id = R.string.correct)
-        false -> stringResource(id = R.string.wrong)
+    val dialogTitle = remember(guessed) {
+        when(guessed) {
+            null -> R.string.guess_the_word
+            true -> R.string.correct
+            false -> R.string.wrong
+        }
     }
 
     Dialog(onDismissRequest = dismissAction) {
@@ -126,7 +132,7 @@ fun GuessDialog(
                             .padding(16.dp)
                     ) {
                         Text(
-                            text = dialogTitle,
+                            text = stringResource(id = dialogTitle),
                             style = MaterialTheme.typography.labelLarge.copy(
                                 fontSize = 18.sp
                             ),
@@ -167,7 +173,7 @@ fun GuessDialog(
                     value = translation,
                     label = { Text(text = stringResource(id = R.string.insert_translation)) },
                     singleLine = true,
-                    enabled = translationEnabled,
+                    enabled = guessed == null,
                     onValueChange = { translation = it },
                     colors = TextFieldDefaults.colors(
                         unfocusedContainerColor = backgroundColor,
@@ -200,7 +206,6 @@ fun GuessDialog(
                         onClick = {
                             guessed = translation.lowercase().trim() in word.translation
                             translationsExpanded = !guessed!!
-                            translationEnabled = false
                         },
                         colors = ButtonDefaults.buttonColors(
                             containerColor = primaryColor
@@ -253,62 +258,71 @@ fun GuessDialog(
                     }
                 }
 
-                AnimatedVisibility(visible = translationsExpanded) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
-                        modifier = Modifier.fillMaxWidth()
+                if(translationsExpanded) {
+                    Surface(
+                        shape = MaterialTheme.shapes.large,
+                        color = backgroundColor,
+                        border = BorderStroke(1.dp, primaryColor),
+                        modifier = Modifier.fillMaxWidth(0.8f)
                     ) {
-                        LazyColumn(
+                        Column(
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.spacedBy(8.dp),
-                            contentPadding = PaddingValues(vertical = 8.dp),
-                            modifier = Modifier.requiredHeight(96.dp)
-                        ) {
-                            itemsIndexed(translationList) {index, tr ->
-                                TranslationListItem(
-                                    index = index+1,
-                                    translation = tr,
-                                    textColor = primaryColor,
-                                    modifier = Modifier.fillMaxWidth()
-                                )
-                            }
-                        }
-
-                        TextField(
-                            value = addMeaningValue,
-                            label = {
-                                Text(
-                                    text = stringResource(id = R.string.add_meaning),
-                                    style = MaterialTheme.typography.labelSmall
-                                )
-                            },
-                            trailingIcon = {
-                                SubmitButton(
-                                    size = 16.dp,
-                                    onClick = {
-                                        translationList.add(addMeaningValue.lowercase().trim())
-                                        addMeaningValue = ""
-                                    },
-                                    enabled = addMeaningValue.isNotEmpty(),
-                                    iconColor = backgroundColor,
-                                    backgroundColor = primaryColor
-                                )
-                            },
-                            singleLine = true,
-                            onValueChange = { addMeaningValue = it },
-                            colors = TextFieldDefaults.colors(
-                                focusedContainerColor = backgroundColor,
-                                unfocusedContainerColor = backgroundColor,
-                                focusedLabelColor = primaryColor,
-                                unfocusedLabelColor = primaryColor,
-                                unfocusedIndicatorColor = primaryColor,
-                                focusedIndicatorColor = primaryColor
-                            ),
                             modifier = Modifier
-                                .fillMaxWidth(0.8f)
-                                .padding(horizontal = 16.dp)
-                        )
+                                .fillMaxWidth()
+                                .padding(vertical = 8.dp)
+                        ) {
+                            LazyColumn(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.spacedBy(8.dp),
+                                contentPadding = PaddingValues(vertical = 8.dp),
+                                modifier = Modifier.requiredHeight(96.dp)
+                            ) {
+                                itemsIndexed(translationList) {index, tr ->
+                                    TranslationListItem(
+                                        index = index+1,
+                                        translation = tr,
+                                        textColor = primaryColor,
+                                        modifier = Modifier.fillMaxWidth()
+                                    )
+                                }
+                            }
+
+                            TextField(
+                                value = addMeaningValue,
+                                label = {
+                                    Text(
+                                        text = stringResource(id = R.string.add_meaning),
+                                        style = MaterialTheme.typography.labelSmall
+                                    )
+                                },
+                                trailingIcon = {
+                                    SubmitButton(
+                                        size = 16.dp,
+                                        onClick = {
+                                            translationList.add(addMeaningValue.lowercase().trim())
+                                            addMeaningValue = ""
+                                        },
+                                        enabled = addMeaningValue.isNotEmpty(),
+                                        iconColor = backgroundColor,
+                                        backgroundColor = primaryColor
+                                    )
+                                },
+                                singleLine = true,
+                                onValueChange = { addMeaningValue = it },
+                                colors = TextFieldDefaults.colors(
+                                    focusedContainerColor = backgroundColor,
+                                    unfocusedContainerColor = backgroundColor,
+                                    focusedLabelColor = primaryColor,
+                                    unfocusedLabelColor = primaryColor,
+                                    unfocusedIndicatorColor = primaryColor,
+                                    focusedIndicatorColor = primaryColor
+                                ),
+                                modifier = Modifier
+                                    .fillMaxWidth(0.8f)
+                                    .padding(horizontal = 16.dp)
+                            )
+                        }
                     }
                 }
             }

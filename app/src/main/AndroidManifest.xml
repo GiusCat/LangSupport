@@ -27,18 +27,6 @@
 
             <nav-graph android:value="@navigation/mobile_nav" />
         </activity>
-
-        <!-- Use this to avoid the EditText upwards shift -->
-        <activity android:name=".activity.LoginActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-
-        <activity
-            android:name=".popup.GuessPopUp"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
     </application>
 
 </manifest>
